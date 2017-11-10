@@ -9,7 +9,7 @@
 
 # 接口
 
-https://callme.brocadesoar.cn/callme.php?
+https://callme.brocadesoar.cn/?
 
 # 数据库
 
@@ -49,6 +49,8 @@ mysql\> DESC wxapp_info;
 + 2017-11-11 00:33:45 将callme完全从wuaiwulu中剥离并开始做开发日记的编写，虽然任然实际上使用同一个服务器。
 
 + 2017-11-11 00:54:48 申请了callme.brocadesoar.cn的SSL域名认证
+
++ 2017-11-11 01:43:52 实现了callme.brocadesoar.cn的SSL域名认证,接口改为 https://callme.brocadesoar.cn/?
 
 # 参考
 
