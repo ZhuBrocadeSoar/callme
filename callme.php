@@ -39,7 +39,7 @@
             $sessionKey = fread($urandFh, 16);
             fclose($urandFh);
             // 存储session
-            $retval = mysqli_query($connToMysql, "INSERT INTO session_record (openid, sessionkey, time_session) VALUES (" . $loginInfo['openid'] ", " . $sessionKey ", NOW())");
+            $retval = mysqli_query($connToMysql, "INSERT INTO session_record (openid, sessionkey, time_session) VALUES (" . $loginInfo['openid'] . ", " . $sessionKey . ", NOW())");
             $resultArray = array('loginsuccess' => true, 'sessionkey' => $sessionKey);
             echo json_encode($resultArray);
         }else if($_GET['query'] == "seller_list"){ // 商家列表请求
