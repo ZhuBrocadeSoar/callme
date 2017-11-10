@@ -6,7 +6,7 @@
         echo "Error: " . mysqli_connect_error();
     }
     // 处理请求
-    if($_GET['query'] != NULL && $_GET['sessionkey'] != NULL){
+    if(isset($_GET['query']) && isset($_GET['sessionkey'])){
         // 检查session
         $retval = mysqli_query($connToMysql, "SELECT openid, sessionkey, time_session FROM session_record WHERE sessionkey = " . $_GET['sessionkey']);
         $row = mysqli_fetch_array($retval, MYSQLI_NUM);
