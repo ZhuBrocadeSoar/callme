@@ -37,6 +37,7 @@
             // echo $loginInfo;// test
             $loginInfo = json_decode($loginInfo);
             // 生成3rd_session
+            echo json_encode(array('openid' => $loginInfo['openid'], 'session_key' => $loginInfo['session_key'])); // test
             $urandFh = fopen("/dev/urandom", "r");
             $sessionKey = fread($urandFh, 16);
             fclose($urandFh);
