@@ -21,13 +21,13 @@
         }
 */        if($_GET['query'] == "login"){ // 登陆请求
             // 验证登陆态
-            $retval = mysqli_query($connToMysql, "SELECT wxappid, wxsecret FROM wxapp_info WHERE wxappname = '取个号' ");
+/*            $retval = mysqli_query($connToMysql, "SELECT wxappid, wxsecret FROM wxapp_info WHERE wxappname = '取个号' ");
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             $wxappid = $row[0];
             $wxsecret = $row[1];
             $wxcode = $_GET['code'];
-            echo json_encode($_GET['code']);
-            $wxgrantType = "authorization_code";
+*/            echo json_encode($_GET['code']);
+/*            $wxgrantType = "authorization_code";
             $connToWxApi = curl_init();
             $urlWithGet = "https://api.weixin.qq.com/sns/jscode2session?appid=" . $wxappid . "&secret=" . $wxsecret . "&js_code=" . $wxcode . "&grant_type=" . $wxgrantType;
             curl_setopt($connToWxApi, CURLOPT_URL, $urlWithGet);
@@ -43,7 +43,7 @@
             $retval = mysqli_query($connToMysql, "INSERT INTO session_record (openid, sessionkey, time_session) VALUES (" . $loginInfo['openid'] . ", " . $sessionKey . ", NOW())");
             $resultArray = array('loginsuccess' => true, 'sessionkey' => $sessionKey);
             echo json_encode($resultArray);
-        }else if($_GET['query'] == "seller_list"){ // 商家列表请求
+*/        }else if($_GET['query'] == "seller_list"){ // 商家列表请求
             $retval = mysqli_query($connToMysql, "SELECT COUNT(*) FROM seller_list");
             if(!$retval){
                 echo "Error: " . mysqli_error();
