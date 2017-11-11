@@ -36,6 +36,8 @@
             $loginInfoJson = curl_exec($connToWxApi);
             echo $loginInfoJson;// test
             $loginInfo = json_decode($loginInfoJson, true);
+            $jsonLastError = json_last_error();
+            echo json_encode(array('jsonLastError' => $jsonLastError)); // test
             echo json_encode($loginInfo);// test
             // 生成3rd_session
             echo json_encode(array('openid' => $loginInfo['openid'], 'session_key' => $loginInfo['session_key'])); // test
