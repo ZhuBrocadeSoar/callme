@@ -34,8 +34,8 @@
             curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($connToWxApi, CURLOPT_HEADER, true);
             $loginInfo = curl_exec($connToWxApi);
-            $loginInfo = json_decode($loginInfo);
             echo $loginInfo;
+            $loginInfo = json_decode($loginInfo);
             // 生成3rd_session
             $urandFh = fopen("/dev/urandom", "r");
             $sessionKey = fread($urandFh, 16);
