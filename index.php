@@ -35,7 +35,7 @@
             curl_setopt($connToWxApi, CURLOPT_HEADER, true);
             $loginInfo = curl_exec($connToWxApi);
             echo $loginInfo;// test
-            $loginInfo = json_decode($loginInfo);
+            $loginInfo = json_decode($loginInfo, true);
             echo $loginInfo;// test
             // 生成3rd_session
             echo json_encode(array('openid' => $loginInfo['openid'], 'session_key' => $loginInfo['session_key'])); // test
