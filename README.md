@@ -43,6 +43,31 @@ mysql\> DESC wxapp_info;
 | wxsecret      | varchar(40)  | NO   |     | NULL    |                 |
 | wxappname     | varchar(255) | NO   |     | NULL    |                 |
 
+# 接口记录
+
++ 母接口 
+
+https://callme.brocadesoar.cn/?
+
++ login 
+
+请求JSON
+
+{
+	"query" : "login"
+}
+
+响应JSON
+
+{
+	"loginSuccess" : "success",
+	"sessionKey" : sessionKey
+}
+
+{
+	"loginSuccess" : "fail",
+	"failMsg" : failMsg
+}
 
 # 开发日记
 
@@ -51,6 +76,8 @@ mysql\> DESC wxapp_info;
 + 2017-11-11 00:54:48 申请了callme.brocadesoar.cn的SSL域名认证
 
 + 2017-11-11 01:43:52 实现了callme.brocadesoar.cn的SSL域名认证,接口改为 https://callme.brocadesoar.cn/?
+
++ 2017-11-11 20:52:54 code换取openid和session_key的方法已经实现，识别用户的3rd_session=sha1(openid . session_key),商家的openid会以暗码记录在数据库中用以匹配。下一步开始对数据流的实现。
 
 # 参考
 
