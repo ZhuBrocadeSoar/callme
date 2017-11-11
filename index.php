@@ -37,12 +37,13 @@
             $loginInfoJson = substr($response, curl_getinfo($connToWxApi, CURLINFO_HEADER_SIZE));
             $loginInfo = json_decode($loginInfoJson, true);
             // 生成3rd_session
-            $urandFh = fopen("/dev/urandom", "r");
-            $sessionKey = fread($urandFh, 16);
-            fclose($urandFh);
+            //$urandFh = fopen("/dev/urandom", "r");
+            //$sessionKey = fread($urandFh, 16);
+            //fclose($urandFh);
+            $sessionkey = $loginInfo['openid'] . $loginInfo['session_key'];
             // 存储session
-            $retval = mysqli_query($connToMysql, "INSERT INTO session_record (openid, sessionkey, time_session) VALUES (" . $loginInfo['openid'] . ", " . $sessionKey . ", NOW())");
-            $resultArray = array('loginsuccess' => true, 'sessionkey' => $sessionKey);
+            $retval = mysqli_query($connToMysql, "INSERT INTO session_record (openid, sessionkey, time_session) VALUES (" . $loginInfo['openid'] . ", " . $sessionkey . ", NOW())");
+            $resultArray = array('loginsuccess' => true, 'sessionkey' => $sessionkey);
             echo json_encode($resultArray);
         }else if($_GET['query'] == "seller_list"){ // 商家列表请求
             $retval = mysqli_query($connToMysql, "SELECT COUNT(*) FROM seller_list");
