@@ -33,8 +33,8 @@
             curl_setopt($connToWxApi, CURLOPT_URL, $urlWithGet);
             curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($connToWxApi, CURLOPT_HEADER, true);
-            $loginInfoJson = curl_exec($connToWxApi);
-            $loginInfoJson = str_replace(PHP_EOL, '', $loginInfoJson);
+            $response = curl_exec($connToWxApi);
+            $loginInfoJson = substr($response, curl_getinfo($connToWxApi, CURLINFO_HEADER_SIZE));
             echo $loginInfoJson;// test
             $loginInfo = json_decode($loginInfoJson, true);
             $jsonLastError = json_last_error();
