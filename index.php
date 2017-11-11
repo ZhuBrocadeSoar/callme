@@ -34,6 +34,7 @@
             curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($connToWxApi, CURLOPT_HEADER, true);
             $loginInfoJson = curl_exec($connToWxApi);
+            $loginInfoJson = str_replace(PHP_EOL, '', $loginInfoJson);
             echo $loginInfoJson;// test
             $loginInfo = json_decode($loginInfoJson, true);
             $jsonLastError = json_last_error();
