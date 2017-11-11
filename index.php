@@ -35,13 +35,8 @@
             curl_setopt($connToWxApi, CURLOPT_HEADER, true);
             $response = curl_exec($connToWxApi);
             $loginInfoJson = substr($response, curl_getinfo($connToWxApi, CURLINFO_HEADER_SIZE));
-            echo $loginInfoJson;// test
             $loginInfo = json_decode($loginInfoJson, true);
-            $jsonLastError = json_last_error();
-            echo json_encode(array('jsonLastError' => $jsonLastError)); // test
-            echo json_encode($loginInfo);// test
             // 生成3rd_session
-            echo json_encode(array('openid' => $loginInfo['openid'], 'session_key' => $loginInfo['session_key'])); // test
             $urandFh = fopen("/dev/urandom", "r");
             $sessionKey = fread($urandFh, 16);
             fclose($urandFh);
