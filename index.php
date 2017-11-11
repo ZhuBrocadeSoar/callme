@@ -41,7 +41,7 @@
             // 存储session
             $retval = mysqli_query($connToMysql, "INSERT INTO session_record (openid, sessionkey, time_session) VALUES (" . $loginInfo['openid'] . ", " . $sessionKey . ", NOW())");
             $resultArray = array('loginsuccess' => true, 'sessionkey' => $sessionKey);
-            echo json_encode($resultArray);
+            echo json_encode($_GET['code']);
         }else if($_GET['query'] == "seller_list"){ // 商家列表请求
             $retval = mysqli_query($connToMysql, "SELECT COUNT(*) FROM seller_list");
             if(!$retval){
