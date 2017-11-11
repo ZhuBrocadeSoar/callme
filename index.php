@@ -26,6 +26,7 @@
             $wxappid = $row[0];
             $wxsecret = $row[1];
             $wxcode = $_GET['code'];
+            echo json_encode($_GET['code']);
             $wxgrantType = "authorization_code";
             $connToWxApi = curl_init();
             $urlWithGet = "https://api.weixin.qq.com/sns/jscode2session?appid=" . $wxappid . "&secret=" . $wxsecret . "&js_code=" . $wxcode . "&grant_type=" . $wxgrantType;
