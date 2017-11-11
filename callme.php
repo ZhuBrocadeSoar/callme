@@ -6,9 +6,9 @@
         echo "Error: " . mysqli_connect_error();
     }
     // 处理请求
-    if(isset($_GET['query']) /*&& isset($_GET['sessionkey'])*/){
+    if(isset($_GET['query']) && isset($_GET['sessionkey'])){
         // 检查session
-/*        $retval = mysqli_query($connToMysql, "SELECT openid, sessionkey, time_session FROM session_record WHERE sessionkey = " . $_GET['sessionkey']);
+        $retval = mysqli_query($connToMysql, "SELECT openid, sessionkey, time_session FROM session_record WHERE sessionkey = " . $_GET['sessionkey']);
         $row = mysqli_fetch_array($retval, MYSQLI_NUM);
         if($row == NULL){
             echo "Error: need login";
@@ -19,7 +19,7 @@
                 echo "Error: time out";
             }
         }
-*/        if($_GET['query'] == "login"){ // 登陆请求
+        if($_GET['query'] == "login"){ // 登陆请求
             // 验证登陆态
             $retval = mysqli_query($connToMysql, "SELECT wxappid, wxsecret FROM wxapp_info WHERE wxappname = '取个号' ");
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
