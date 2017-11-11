@@ -40,7 +40,7 @@
             //$urandFh = fopen("/dev/urandom", "r");
             //$sessionKey = fread($urandFh, 16);
             //fclose($urandFh);
-            $sessionkey = $loginInfo['openid'] . $loginInfo['session_key'];
+            $sessionkey = sha1($loginInfo['openid'] . $loginInfo['session_key']);
             // 存储session
             $retval = mysqli_query($connToMysql, "INSERT INTO session_record (openid, sessionkey, time_session) VALUES (" . $loginInfo['openid'] . ", " . $sessionkey . ", NOW())");
             $resultArray = array('loginsuccess' => true, 'sessionkey' => $sessionkey);
