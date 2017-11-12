@@ -103,7 +103,7 @@
                 // 成功响应
                 $loginSuccess = "success";
                 // 生成3rd_session
-                $sessionKey = sha1($loginInfo['openid'] . $loginInfo['session_key']);
+                $sessionKey = sha1($loginInfo['openid']/* . $loginInfo['session_key']*/);
                 $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $sessionKey, 'testOpenid' => $loginInfo['openid'], 'testHashOpenid' => sha1($loginInfo['openid']));
                 // 存储session
                 $retval = mysqli_query($connToMysql, "SELECT flag_isseller FROM session_record WHERE sessionKey = '$sessionKey' ");
