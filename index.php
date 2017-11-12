@@ -7,7 +7,17 @@
     }
     // 处理请求
     if(isset($_GET['query']) /*&& isset($_GET['sessionkey'])*/){
-        // 检查session
+        // 是不是login请求
+        if($_GET['query'] == "login"){
+            // 登陆请求合法
+            $flagQueryErr = false;
+        }else if(isset($_GET['sessionKey'])){
+            // 包含sessionKey 合法，检查session有效
+            $flagQueryErr = false;
+        }else{
+            // 不包含sessionKey 不合法
+            $flagQueryErr = true;
+        }
 /*        $retval = mysqli_query($connToMysql, "SELECT openid, sessionkey, time_session FROM session_record WHERE sessionkey = " . $_GET['sessionkey']);
         $row = mysqli_fetch_array($retval, MYSQLI_NUM);
         if($row == NULL){
@@ -90,7 +100,7 @@
             }
             $retval = mysqli_query($connToMysql, "INSERT INTO session_record (3rd_session_key, time_session) VALUES (" . $sessionKey . ", NOW())");
             // 返回json
-            echo json_encode($resultArray);
+            // echo json_encode($resultArray);
         }else if($_GET['query'] == "seller_list"){ // 商家列表请求
             // 查询列表记录数量
             $retval = mysqli_query($connToMysql, "SELECT COUNT(*) FROM seller_list");
@@ -116,11 +126,17 @@
                 }
                 $resultArray['list'] = $sellerArray;
             }
-            echo json_encode($resultArray);
+            // echo json_encode($resultArray);
         }else if($GET['query'] == "good_list"){ // 货单请求
+        }else if($GET['query'] == "fetch"){
+
         }else{
             echo "Error: 非法请求";
         }
+        if($flagQueryErr){
+            $resultArray = array('queryErr' = 'illegal query');
+        }
+        echo json_encode($resultArray);
     }
 ?>
 
