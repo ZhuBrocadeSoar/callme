@@ -36,13 +36,26 @@
             $response = curl_exec($connToWxApi);
             $loginInfoJson = substr($response, curl_getinfo($connToWxApi, CURLINFO_HEADER_SIZE));
             $loginInfo = json_decode($loginInfoJson, true);
-            if($loginInfo == null){
+            if($_GET['isseller']){
+                $retval = mysqli_query($connToMysql, "SELECT id_seller FROM seller_list WHERE hash_openid = " . sha1($loginInfo['openid']));
+                $row = mysqli_fetch_array($row, MYSQLI_NUM);
+                if($row[0] != NULL){
+                    $sellerJustice = true;
+                }else{
+                    $sellerJustice = false;
+                }
+            }
+            if($loginInfo == NULL){
                 $loginSuccess = "fail";
                 $failMsg = "API Error";
                 $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $failMsg);
             }else if(isset($loginInfo['errcode'])){
                 $loginSuccess = "fail";
                 $failMsg = "Login Error";
+                $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $failMsg);
+            }else if($_GET['isseller'] == true && $sellerJustice == false){
+                $loginSuccess = "fail";
+                $failMsg = "Seller Openid Error";
                 $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $failMsg);
             }else{
                 $loginSuccess = "success";

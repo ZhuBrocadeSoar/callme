@@ -21,9 +21,9 @@ mysql\> DESC seller_list;
 |-----------------|--------------|------|-----|---------|-----------------|
 | id\_seller      | int(11)      | NO   | PRI | NULL    | auto\_increment |
 | name\_seller    | varchar(255) | NO   |     | NULL    |                 |
-| index\_goodList | int(11)      | NO   |     | NULL    |                 |
 | path\_photo     | varchar(255) | YES  |     | NULL    |                 |
 | json\_menu      | text         | YES  |     | NULL    |                 |
+| hash_openid     | char(40)     | NO   |     | NULL    |                 |
 
 mysql\> DESC session_record;
 
@@ -54,7 +54,13 @@ https://callme.brocadesoar.cn/?
 请求JSON
 
 {
-	"query" : "login"
+	"query" : "login",
+	"isseller" : true
+}
+
+{
+	"query" : "login",
+	"isseller" : false
 }
 
 响应JSON
@@ -66,6 +72,27 @@ https://callme.brocadesoar.cn/?
 
 {
 	"loginSuccess" : "fail",
+	"failMsg" : failMsg
+}
+
++ 取号
+
+请求JSON
+
+{
+	"query" : "fetch",
+	"sessionKey" : sessionKey
+}
+
+响应JSON
+
+{
+	"fetchSuccess" : "success",
+	"marchSn" : marchSn
+}
+
+{
+	"fetchSuccess" : "fail",
 	"failMsg" : failMsg
 }
 
