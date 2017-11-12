@@ -45,7 +45,7 @@ mysql\> DESC wxapp_info;
 
 # 接口记录
 
-+ 母接口 
+* 母接口 
 
 https://callme.brocadesoar.cn/?
 
