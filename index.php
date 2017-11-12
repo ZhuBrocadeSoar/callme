@@ -49,6 +49,8 @@
                 }else{
                     $sellerJustice = false;
                 }
+            }else{
+                $sellerJustice = false;
             }
             if($loginInfo == NULL){
                 $loginSuccess = "fail";
