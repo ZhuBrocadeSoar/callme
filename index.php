@@ -41,10 +41,11 @@
             $response = curl_exec($connToWxApi);
             $loginInfoJson = substr($response, curl_getinfo($connToWxApi, CURLINFO_HEADER_SIZE));
             $loginInfo = json_decode($loginInfoJson, true);
+            echo json_encode($loginInfo); // test
             if($_GET['isseller'] == "yes"){
-                $retval = mysqli_query($connToMysql, "SELECT id_seller FROM seller_list WHERE hash_openid = " . sha1($loginInfo['openid']));
+                $retval = mysqli_query($connToMysql, "SELECT id_seller FROM seller_list WHERE hash_openid = " . sha1($loginInfo['openid'] ));
                 $row = mysqli_fetch_array($row, MYSQLI_NUM);
-                echo json_encode($row);
+                echo json_encode($row); // test
                 if($row[0] != NULL){
                     $sellerJustice = true;
                 }else{
@@ -64,7 +65,7 @@
             }else if($_GET['isseller'] == "yes" && $sellerJustice == false){
                 $loginSuccess = "fail";
                 $failMsg = "Seller Openid Error";
-                $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg);
+                $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg, 'testOpenid' => $loginInfo['openid'], 'testHashOpenid' => sha1($loginInfo['openid']));
             }else{
                 $loginSuccess = "success";
                 // 生成3rd_session
