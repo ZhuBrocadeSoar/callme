@@ -22,11 +22,11 @@
 */        if($_GET['query'] == "login"){ // 登陆请求
             // 验证登陆态
             if($_GET['isseller']){
-                $wxAppName = "取个号商家版";
+                $idWxAppInfo = 2;
             }else{
-                $wxAppName = "取个号";
+                $idWxAppInfo = 1;
             }
-            $retval = mysqli_query($connToMysql, "SELECT wxappid, wxsecret FROM wxapp_info WHERE wxappname = " . $wxAppName);
+            $retval = mysqli_query($connToMysql, "SELECT wxappid, wxsecret FROM wxapp_info WHERE id_wxappInfo = " . $idWxAppInfo);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             $wxappid = $row[0];
             $wxsecret = $row[1];
