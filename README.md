@@ -49,35 +49,28 @@ mysql\> DESC wxapp_info;
 
 https://callme.brocadesoar.cn/?
 
-+ login 
+	+ login 
 
-请求JSON
+		+ 商家请求JSON
 
-商家
+		{
+			"query" : "login",
+			"isseller" : "yes"
+		}
 
-{
-	"query" : "login",
-	"isseller" : true
-}
+			+ 登陆成功响应JSON
 
-吃客
+				{
+					"loginSuccess" : "success",
+					"sessionKey" : sessionKey
+				}
 
-{
-	"query" : "login",
-	"isseller" : false
-}
+			+ 接口错误响应JSON
 
-响应JSON
-
-{
-	"loginSuccess" : "success",
-	"sessionKey" : sessionKey
-}
-
-{
-	"loginSuccess" : "fail",
-	"failMsg" : failMsg
-}
+			{
+				"loginSuccess" : "fail",
+				"failMsg" : "API Error"
+			}
 
 + 取号
 
