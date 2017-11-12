@@ -45,27 +45,27 @@ mysql\> DESC wxapp_info;
 
 # 接口记录
 
-* 母接口 
+- 母接口 
 
 https://callme.brocadesoar.cn/?
 
-	+ login 
+	- login 
 
-		+ 商家请求JSON
+		- 商家请求JSON
 
 		{
 			"query" : "login",
 			"isseller" : "yes"
 		}
 
-			+ 登陆成功响应JSON
+			- 登陆成功响应JSON
 
 				{
 					"loginSuccess" : "success",
 					"sessionKey" : sessionKey
 				}
 
-			+ 接口错误响应JSON
+			- 接口错误响应JSON
 
 			{
 				"loginSuccess" : "fail",
