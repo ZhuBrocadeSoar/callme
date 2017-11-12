@@ -21,7 +21,12 @@
         }
 */        if($_GET['query'] == "login"){ // 登陆请求
             // 验证登陆态
-            $retval = mysqli_query($connToMysql, "SELECT wxappid, wxsecret FROM wxapp_info WHERE wxappname = '取个号' ");
+            if($_GET['isseller']){
+                $wxAppName = "取个号商家版";
+            }else{
+                $wxAppName = "取个号";
+            }
+            $retval = mysqli_query($connToMysql, "SELECT wxappid, wxsecret FROM wxapp_info WHERE wxappname = " . $wxAppName);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             $wxappid = $row[0];
             $wxsecret = $row[1];
@@ -48,15 +53,15 @@
             if($loginInfo == NULL){
                 $loginSuccess = "fail";
                 $failMsg = "API Error";
-                $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $failMsg);
+                $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg);
             }else if(isset($loginInfo['errcode'])){
                 $loginSuccess = "fail";
                 $failMsg = "Login Error";
-                $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $failMsg);
+                $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg);
             }else if($_GET['isseller'] == true && $sellerJustice == false){
                 $loginSuccess = "fail";
                 $failMsg = "Seller Openid Error";
-                $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $failMsg);
+                $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg);
             }else{
                 $loginSuccess = "success";
                 // 生成3rd_session
