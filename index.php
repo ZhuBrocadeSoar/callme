@@ -43,7 +43,7 @@
             $loginInfo = json_decode($loginInfoJson, true);
             // echo json_encode($loginInfo); // test
             if($_GET['isseller'] == "yes"){
-                $sql = 'SELECT id_seller FROM seller_list WHERE hash_openid = \"' . sha1($loginInfo['openid']) . '\"';
+                $sql = 'SELECT id_seller FROM callme.seller_list WHERE hash_openid = \"' . sha1($loginInfo['openid']) . '\"';
                 // $retval = mysqli_query($connToMysql, "SELECT id_seller FROM seller_list WHERE hash_openid = " . sha1($loginInfo['openid'] ));
                 $retval = mysqli_query($connToMysql, $sql);
                 echo json_encode(array('mysqli_query_success' => $retval, 'mysqli_error' => mysqli_error())); // test
