@@ -50,7 +50,7 @@
                 // echo json_encode($row); // test
                 if($row[0] != NULL){
                     $sellerJustice = true;
-                    $sessionR
+                    //$sessionR
                 }else{
                     $sellerJustice = false;
                 }
