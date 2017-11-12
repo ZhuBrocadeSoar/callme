@@ -44,6 +44,7 @@
             if($_GET['isseller'] == "yes"){
                 $retval = mysqli_query($connToMysql, "SELECT id_seller FROM seller_list WHERE hash_openid = " . sha1($loginInfo['openid']));
                 $row = mysqli_fetch_array($row, MYSQLI_NUM);
+                echo json_encode($row);
                 if($row[0] != NULL){
                     $sellerJustice = true;
                 }else{
