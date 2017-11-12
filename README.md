@@ -45,7 +45,7 @@ mysql\> DESC wxapp_info;
 
 # 接口记录
 
-- 母接口 
+ 母接口 
 
 https://callme.brocadesoar.cn/?
 
@@ -65,33 +65,98 @@ https://callme.brocadesoar.cn/?
 					"sessionKey" : sessionKey
 				}
 
-			- 接口错误响应JSON
+			- 接口错误(code换取openid和session_key时出错)响应JSON
 
 			{
 				"loginSuccess" : "fail",
 				"failMsg" : "API Error"
 			}
 
-+ 取号
+			- 登陆错误(提交的code无效)响应JSON
 
-请求JSON
+			{
+				"loginSuccess" : "fail",
+				"failMsg" : "Login Error"
+			}
 
-{
-	"query" : "fetch",
-	"sessionKey" : sessionKey
-}
+			- 商家匹配错误(商家的openid与数据库记录不匹配)响应JSON
 
-响应JSON
+			{
+				"loginSuccess" : "fail",
+				"failMsg" : "Seller Openid Error"
+			}
 
-{
-	"fetchSuccess" : "success",
-	"marchSn" : marchSn
-}
+		- 吃客请求JSON
 
-{
-	"fetchSuccess" : "fail",
-	"failMsg" : failMsg
-}
+		{
+			"query" : "login",
+			"isseller" : "no"
+		}
+
+			- 登陆成功响应JSON
+
+			{
+				"loginSuccess" : "success",
+				"sessionKey" : sessionKey
+			}
+
+			- 接口错误(code换取openid和session_key时出错)响应JSON
+
+			{
+				"loginSuccess" : "fail",
+				"failMsg" : "API Error"
+			}
+
+			- 登陆错误(提交的code无效)响应JSON
+
+			{
+				"loginSuccess" : "fail",
+				"failMsg" : "Login Error"
+			}
+
+	- 吃客请求商家列表请求JSON
+
+	{
+		"query" : "seller_list",
+		"sessionKey" : sessionKey
+	}
+
+		- 列表成功响应JSON
+
+		{
+			"seller_listSuccess" : "success",
+			"count" : count,
+			"list" : {
+				list
+			}
+		}
+
+		- 列表错误(无列表)响应JSON
+
+		{
+			"seller_listSuccess" : "fail",
+			"failMsg" : "Null List Error"
+		}
+
+	- 商家取号请求JSON
+
+	{
+		"query" : "fetch",
+		"sessionKey" : sessionKey
+	}
+
+		- 取号成功响应JSON
+
+		{
+			"fetchSuccess" : "success",
+			"marchSn" : marchSn
+		}
+
+		- 取号错误响应JSON
+		{
+			"fetchSuccess" : "fail",
+			"failMsg" : failMsg
+		}
 
 # 开发日记
 

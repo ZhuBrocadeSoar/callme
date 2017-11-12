@@ -20,86 +20,102 @@
             }
         }
 */        if($_GET['query'] == "login"){ // 登陆请求
-            // 验证登陆态
+            // 决定使用哪个小程序信息
             if($_GET['isseller']){
                 $idWxAppInfo = 2;
             }else{
                 $idWxAppInfo = 1;
             }
+            // 从数据库获取小程序信息
             $retval = mysqli_query($connToMysql, "SELECT wxappid, wxsecret FROM wxapp_info WHERE id_wxappInfo = " . $idWxAppInfo);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            // 设置code换取openid和session_key的API参数
             $wxappid = $row[0];
             $wxsecret = $row[1];
             $wxcode = $_GET['code'];
-            // echo json_encode($_GET['code']);
             $wxgrantType = "authorization_code";
+            // curl 调用API
             $connToWxApi = curl_init();
             $urlWithGet = "https://api.weixin.qq.com/sns/jscode2session?appid=" . $wxappid . "&secret=" . $wxsecret . "&js_code=" . $wxcode . "&grant_type=" . $wxgrantType;
             curl_setopt($connToWxApi, CURLOPT_URL, $urlWithGet);
             curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($connToWxApi, CURLOPT_HEADER, true);
             $response = curl_exec($connToWxApi);
+            // 分割响应头只保留body的JSON
             $loginInfoJson = substr($response, curl_getinfo($connToWxApi, CURLINFO_HEADER_SIZE));
+            // JSON 解码为数组
             $loginInfo = json_decode($loginInfoJson, true);
-            // echo json_encode($loginInfo); // test
+            // 判断是否为商家请求
             if($_GET['isseller'] == "yes"){
-                // $sql = 'SELECT id_seller FROM callme.seller_list WHERE hash_openid = \"' . sha1($loginInfo['openid']) . '\"';
-                // $retval = mysqli_query($connToMysql, $sql);
-                // $retval = mysqli_query($connToMysql, "SELECT id_seller FROM seller_list WHERE hash_openid = " . sha1($loginInfo['openid'] ));
+                // 查询数据库获得是否匹配openid
                 $hashopenid = sha1($loginInfo['openid']);
-                // $retval = mysqli_query($connToMysql, "SELECT id_seller FROM seller_list WHERE hash_openid = ' $hashopenid ' ");
                 $retval = mysqli_query($connToMysql, "SELECT id_seller FROM seller_list WHERE hash_openid = '$hashopenid' ");
                 $row = mysqli_fetch_array($retval, MYSQLI_NUM);
                 if($row[0] != NULL){
                     $sellerJustice = true;
+                    $flagIsseller = "1";
                     //$sessionR
                 }else{
                     $sellerJustice = false;
+                    $flagIsseller = "0";
                 }
             }else{
                 $sellerJustice = false;
+                $flagIsseller = "0";
             }
+            // 响应
             if($loginInfo == NULL){
+                // API 错误
                 $loginSuccess = "fail";
                 $failMsg = "API Error";
                 $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg);
             }else if(isset($loginInfo['errcode'])){
+                // 登陆错误
                 $loginSuccess = "fail";
                 $failMsg = "Login Error";
                 $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg);
             }else if($_GET['isseller'] == "yes" && $sellerJustice == false){
+                // 商家id不匹配错误
                 $loginSuccess = "fail";
                 $failMsg = "Seller Openid Error";
                 $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg, 'testOpenid' => $loginInfo['openid'], 'testHashOpenid' => sha1($loginInfo['openid']));
             }else{
+                // 成功响应
                 $loginSuccess = "success";
                 // 生成3rd_session
                 $sessionKey = sha1($loginInfo['openid'] . $loginInfo['session_key']);
                 $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $sessionKey, 'testOpenid' => $loginInfo['openid'], 'testHashOpenid' => sha1($loginInfo['openid']));
+                // 存储session
+                $retval = mysqli_query($connToMysql, "INSERT INTO session_record (sessionkey, time_session, flag_isseller)VALUES('$sessionKey', NOW(), '$flagIsseller')");
             }
-            // 存储session
-            //
             $retval = mysqli_query($connToMysql, "INSERT INTO session_record (3rd_session_key, time_session) VALUES (" . $sessionKey . ", NOW())");
             // 返回json
             echo json_encode($resultArray);
         }else if($_GET['query'] == "seller_list"){ // 商家列表请求
+            // 查询列表记录数量
             $retval = mysqli_query($connToMysql, "SELECT COUNT(*) FROM seller_list");
             if(!$retval){
-                echo "Error: " . mysqli_error();
+                // 列表记录为0
+                $seller_listSuccess = "fail";
+                $failMsg = "Null List Error";
+                $resultArray = array('seller_listSuccess' => $seller_listSuccess, 'failMsg' => $failMsg );
+            }else{
+                // 列表数量不为0
+                $resultArray['seller_listSuccess'] = "success";
+                // 查询列表记录数量(商家数量)
+                $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+                $resultArray['count'] = $row[0];
+                // 查询列表内容
+                $retval = mysqli_query($connToMysql, "SELECT id_seller, name_seller, path_photo FROM seller_list");
+                // 组成返回JSON
+                $sellerArray = array();
+                $i = '1';
+                while($row = mysqli_fetch_array($retval, MYSQLI_NUM)){
+                    $sellerArray[$i] = array("id" => $row[0], "name" => $row[1], "imageURL" => $row[2]);
+                    $i++;
+                }
+                $resultArray['list'] = $sellerArray;
             }
-            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
-            $resultArray['count'] = $row[0];
-            $retval = mysqli_query($connToMysql, "SELECT id_seller, name_seller, path_photo FROM seller_list");
-            if(!$retval){
-                echo "Error: " . mysqli_error();
-            }
-            $sellerArray = array();
-            $i = '1';
-            while($row = mysqli_fetch_array($retval, MYSQLI_NUM)){
-                $sellerArray[$i] = array("id" => $row[0], "name" => $row[1], "imageURL" => $row[2]);
-                $i++;
-            }
-            $resultArray['list'] = $sellerArray;
             echo json_encode($resultArray);
         }else if($GET['query'] == "good_list"){ // 货单请求
         }else{
