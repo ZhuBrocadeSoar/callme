@@ -69,6 +69,7 @@
                 $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $sessionKey);
             }
             // 存储session
+            //
             $retval = mysqli_query($connToMysql, "INSERT INTO session_record (3rd_session_key, time_session) VALUES (" . $sessionKey . ", NOW())");
             // 返回json
             echo json_encode($resultArray);
