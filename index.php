@@ -41,7 +41,7 @@
             $response = curl_exec($connToWxApi);
             $loginInfoJson = substr($response, curl_getinfo($connToWxApi, CURLINFO_HEADER_SIZE));
             $loginInfo = json_decode($loginInfoJson, true);
-            if($_GET['isseller']){
+            if($_GET['isseller'] == true){
                 $retval = mysqli_query($connToMysql, "SELECT id_seller FROM seller_list WHERE hash_openid = " . sha1($loginInfo['openid']));
                 $row = mysqli_fetch_array($row, MYSQLI_NUM);
                 if($row[0] != NULL){
