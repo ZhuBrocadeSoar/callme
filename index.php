@@ -134,7 +134,7 @@
             echo "Error: 非法请求";
         }
         if($flagQueryErr){
-            $resultArray = array('queryErr' = 'illegal query');
+            $resultArray = array('queryErr' => 'illegal query');
         }
         echo json_encode($resultArray);
     }
