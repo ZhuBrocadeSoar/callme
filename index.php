@@ -8,11 +8,21 @@
     // 处理请求
     if(isset($_GET['query']) /*&& isset($_GET['sessionkey'])*/){
         // 是不是login请求
+        $sessionTimeOut = false;
         if($_GET['query'] == "login"){
             // 登陆请求合法
             $flagQueryErr = false;
         }else if(isset($_GET['sessionKey'])){
             // 包含sessionKey 合法，检查session有效
+            $sessionKey = $_GET['sessionKey'];
+            $retval = mysqli_query($connToMysql, "SELECT flag_isseller FROM session_record WHERE sessionKey = '$sessionKey' ");
+            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            if($row != NULL){
+                // sessionKey 匹配
+            }else{
+                // sessionKey 不匹配
+                $sessionTimeOut = true;
+            }
             $flagQueryErr = false;
         }else{
             // 不包含sessionKey 不合法
@@ -96,9 +106,15 @@
                 $sessionKey = sha1($loginInfo['openid'] . $loginInfo['session_key']);
                 $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $sessionKey, 'testOpenid' => $loginInfo['openid'], 'testHashOpenid' => sha1($loginInfo['openid']));
                 // 存储session
-                $retval = mysqli_query($connToMysql, "INSERT INTO session_record (sessionkey, time_session, flag_isseller)VALUES('$sessionKey', NOW(), '$flagIsseller')");
+                $retval = mysqli_query($connToMysql, "SELECT flag_isseller FROM session_record WHERE sessionKey = '$sessionKey' ");
+                $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+                if($row != NULL){
+                    // sessionKey 匹配 无需再记录
+                }else{
+                    // sessionKey 不匹配 需要记录
+                    $retval = mysqli_query($connToMysql, "INSERT INTO session_record (sessionkey, time_session, flag_isseller)VALUES('$sessionKey', NOW(), '$flagIsseller')");
+                }
             }
-            $retval = mysqli_query($connToMysql, "INSERT INTO session_record (3rd_session_key, time_session) VALUES (" . $sessionKey . ", NOW())");
             // 返回json
             // echo json_encode($resultArray);
         }else if($_GET['query'] == "seller_list"){ // 商家列表请求
@@ -129,12 +145,16 @@
             // echo json_encode($resultArray);
         }else if($GET['query'] == "good_list"){ // 货单请求
         }else if($GET['query'] == "fetch"){
-
         }else{
-            echo "Error: 非法请求";
+            $flagQueryErr = true;
         }
         if($flagQueryErr){
-            $resultArray = array('queryErr' => 'illegal query');
+            $resultArray = array('queryErr' => 'Illegal query');
+        }
+        if(isset($sessionTimeOut)){
+            if($sessionTimeOut == true){
+                $resultArray = array('queryErr' => 'Session Time Out');
+            }
         }
         echo json_encode($resultArray);
     }

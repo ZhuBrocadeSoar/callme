@@ -168,6 +168,8 @@ https://callme.brocadesoar.cn/?
 
 + 2017-11-11 20:52:54 code换取openid和session_key的方法已经实现，识别用户的3rd_session=sha1(openid . session_key),商家的openid会以暗码记录在数据库中用以匹配。下一步开始对数据流的实现。
 
++ 2017-11-12 16:36:36 整理了接口，数据库session记录每10分钟删除一次大于1小时的记录
+
 # 参考
 
 + NameVirtualHost *:80
