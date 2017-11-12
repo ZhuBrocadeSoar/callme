@@ -47,13 +47,9 @@
                 // $retval = mysqli_query($connToMysql, $sql);
                 // $retval = mysqli_query($connToMysql, "SELECT id_seller FROM seller_list WHERE hash_openid = " . sha1($loginInfo['openid'] ));
                 $hashopenid = sha1($loginInfo['openid']);
-                $sql = "SELECT id_seller FROM seller_list WHERE hash_openid = '$hashopenid' ";
-                echo json_encode(array('sql' => $sql));
                 // $retval = mysqli_query($connToMysql, "SELECT id_seller FROM seller_list WHERE hash_openid = ' $hashopenid ' ");
-                $retval = mysqli_query($connToMysql, $sql);
-                echo json_encode(array('mysqli_query_success' => $retval, 'mysqli_error' => mysqli_error())); // test
+                $retval = mysqli_query($connToMysql, "SELECT id_seller FROM seller_list WHERE hash_openid = '$hashopenid' ");
                 $row = mysqli_fetch_array($retval, MYSQLI_NUM);
-                echo json_encode($row); // test
                 if($row[0] != NULL){
                     $sellerJustice = true;
                     //$sessionR

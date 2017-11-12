@@ -53,10 +53,14 @@ https://callme.brocadesoar.cn/?
 
 请求JSON
 
+商家
+
 {
 	"query" : "login",
 	"isseller" : true
 }
+
+吃客
 
 {
 	"query" : "login",
