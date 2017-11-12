@@ -66,7 +66,7 @@
                 $loginSuccess = "success";
                 // 生成3rd_session
                 $sessionKey = sha1($loginInfo['openid'] . $loginInfo['session_key']);
-                $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $sessionKey);
+                $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $sessionKey, 'testOpenid' => $loginInfo['openid'], 'testHashOpenid' => $loginInfo['openid']);
             }
             // 存储session
             //
