@@ -142,7 +142,7 @@ https://callme.brocadesoar.cn/?
 
 	{
 		"query" : "fetch",
-		"sessionKey" : sessionKey
+		"sessionKey" : sessionKey,
 	}
 
 		- 取号成功响应JSON
@@ -175,3 +175,5 @@ https://callme.brocadesoar.cn/?
 + NameVirtualHost *:80
 
 + NameVirtualHost *:443
+
++ CREATE EVENT timeout30min ON SCHEDULE EVERY 1 MINUTE STARTS TIMESTAMP '2017-11-12 00:00:00' DO DELETE FROM session_record WHERE TIMEDIFF(NOW(), time_session) > '00:00:01';

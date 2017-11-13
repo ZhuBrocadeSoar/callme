@@ -74,6 +74,7 @@
                 if($row[0] != NULL){
                     $sellerJustice = true;
                     $flagIsseller = "1";
+                    $idSeller = $row[0];
                     //$sessionR
                 }else{
                     $sellerJustice = false;
@@ -112,7 +113,11 @@
                     // sessionKey 匹配 无需再记录
                 }else{
                     // sessionKey 不匹配 需要记录
-                    $retval = mysqli_query($connToMysql, "INSERT INTO session_record (sessionkey, time_session, flag_isseller)VALUES('$sessionKey', NOW(), '$flagIsseller')");
+                    if($flagIsseller == "1"){
+                        $retval = mysqli_query($connToMysql, "INSERT INTO session_record (sessionkey, time_session, flag_isseller, id_seller)VALUES('$sessionKey', NOW(), '$flagIsseller', '$idSeller')");
+                    }else{
+                        $retval = mysqli_query($connToMysql, "INSERT INTO session_record (sessionkey, time_session, flag_isseller)VALUES('$sessionKey', NOW(), '$flagIsseller')");
+                    }
                 }
             }
             // 返回json
@@ -145,6 +150,54 @@
             // echo json_encode($resultArray);
         }else if($GET['query'] == "good_list"){ // 货单请求
         }else if($GET['query'] == "fetch"){
+            // 查询数据库可用Sn
+            $sql = "SELECT id_order FROM order_list";
+            $retval = mysqli_query($connToMysql, $sql);
+            $j = 0;
+            $unvalidSn = array();
+            while($row = mysqli_fetch_array($retval, MYSQLI_NUM)){
+                $unvalidSn[$j] = $row[0];
+                $j++;
+            }
+            if(empty($unvalidSn)){
+                // 无记录，001号可用
+                $validSn = 1;
+            }else{
+                // 有记录，查询下一个可用号码
+                for($i = 1; $i <= 999; $i++){
+                    // 第$i号是否可用
+                    for($j = 0; $j < count($unvalidSn); $j++){
+                        if($unvalidSn[$j] == $i){
+                            // 第$i号不可用
+                            break;
+                        }
+                    }
+                    if($j == count($unvalidSn)){
+                        // 完整查询，第$i号可用
+                        break;
+                    }
+                }
+                if($i == 1000){
+                    // 无号码可用
+                    $validSn = 0;
+                }else{
+                    // 可用号码 $i
+                    $validSn = $i;
+                }
+            }
+            // 响应
+            if($validSn != 0){
+                $resultArray = array('fetchSuccess' => 'success', 'marchSn' => $validSn);
+                // 插入数据库
+                $sessionKey = $_GET['sessionKey'];
+                $flag_done = "0";
+                $retval = mysqli_query($connToMysql, "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'");
+                $row = mysqli_fetch_array($connToMysql, MYSQLI_NUM);
+                $id_seller = $row[0];
+                $sql = "INSERT INTO order_list (id_order, session_key_seller, flag_done, id_seller) VALUES ('$i', '$sessionkey', '$flag_done', '$id_seller')";
+            }else{
+                $resultArray = array('fetchSuccess' => 'fail', 'failMsg' = 'No Sn Valid');
+            }
         }else{
             $flagQueryErr = true;
         }
