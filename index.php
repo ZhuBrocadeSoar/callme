@@ -192,7 +192,7 @@
                 $retval = mysqli_query($connToMysql, "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'");
                 $row = mysqli_fetch_array($connToMysql, MYSQLI_NUM);
                 $id_seller = $row[0];
-                $sql = "INSERT INTO order_list (id_order, session_key_seller, flag_done, id_seller) VALUES ($i, '$sessionkey', $flag_done, $id_seller)";
+                $sql = "INSERT INTO order_list (id_order, session_key_seller, flag_done, id_seller) VALUES ($i, '$sessionkey', '$flag_done', $id_seller)";
             }else{
                 $resultArray = array('fetchSuccess' => 'fail', 'failMsg' => 'No Sn Valid');
             }
