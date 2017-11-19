@@ -191,7 +191,7 @@
                 $flag_done = "0";
                 $sql1 = "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'";
                 $retval = mysqli_query($connToMysql, $sql1);
-                $row = mysqli_fetch_array($connToMysql, MYSQLI_NUM);
+                $row = mysqli_fetch_array($retval, MYSQLI_NUM);
                 $id_seller = $row[0];
                 $sql2 = "INSERT INTO order_list (id_order, session_key_seller, flag_done, id_seller) VALUES ($validSn, '$sessionKey', '$flag_done', $id_seller)";
                 $resultArray['testMsg'] = $sql1 . "____" . $sql2; // test;
