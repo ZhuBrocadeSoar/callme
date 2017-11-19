@@ -231,6 +231,18 @@
                 // 无此记录
                 $resultArray = array('pushSuccess' => 'fail', 'failMsg' => 'Invalid Sn Error');
             }
+        }else if($_GET['query'] == "hungry"){
+            $marchSn = $_GET['marchSn'];
+            $sql = "SELECT flag_done FROM order_list WHERE id_order = $marchSn";
+            $retval = mysqli_query($connToMysql, $sql);
+            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            if($row[0] == "1"){
+                // 餐完成
+                $resultArray = array('hungrySuccess' => 'success');
+            }else{
+                // 餐未完成
+                $resultArray = array('hungrySuccess' => 'fail', 'failMsg' => 'Not Already Yet');
+            }
         }else{
             // 未定义的请求
             $flagQueryErr = true;
