@@ -36,7 +36,7 @@
                 echo "Error: time out";
             }
         }
-*/      if($_GET['query'] == "login"){ // 登陆请求
+*/      if($_GET['query'] == "login"){ // (Q00) 登陆请求
             // 决定使用哪个小程序信息
             if($_GET['isseller']){
                 $idWxAppInfo = 2;
@@ -119,7 +119,7 @@
             }
             // 返回json
             // echo json_encode($resultArray);
-        }else if($_GET['query'] == "seller_list"){ // 商家列表请求
+        }else if($_GET['query'] == "seller_list"){ // (Q03) 商家列表请求
             // 查询列表记录数量
             $retval = mysqli_query($connToMysql, "SELECT COUNT(*) FROM seller_list");
             if(!$retval){
@@ -145,7 +145,7 @@
                 $resultArray['list'] = $sellerArray;
             }
             // echo json_encode($resultArray);
-        }else if($_GET['query'] == "menu"){ // 货单请求
+        }else if($_GET['query'] == "menu"){ // (Q04) 菜单请求
             $sellerId = $_GET['sellerId'];
             $sql = "SELECT json_menu FROM seller_list WHERE id_seller = $sellerId";
             $retval = mysqli_query($connToMysql, $sql);
@@ -153,7 +153,7 @@
             $resultArray = array();
             $resultArray['menuSuccess'] = 'success';
             $resultArray['menuContent'] = json_decode($row[0]);
-        }else if($_GET['query'] == "fetch"){
+        }else if($_GET['query'] == "fetch"){ // (Q05) 取号
             // 查询数据库可用Sn
             $sql = "SELECT id_order FROM order_list";
             $retval = mysqli_query($connToMysql, $sql);
@@ -205,7 +205,7 @@
             }else{
                 $resultArray = array('fetchSuccess' => 'fail', 'failMsg' => 'No Sn Valid');
             }
-        }else if($_GET['query'] == "note"){
+        }else if($_GET['query'] == "note"){ // (Q06) 商家检查关联，获取备注
             $marchSn = $_GET['marchSn'];
             $sql = "SELECT note_order FROM order_list WHERE id_order = $marchSn";
             $retval = mysqli_query($connToMysql, $sql);
@@ -215,7 +215,7 @@
             }else{
                 $resultArray = array('noteSuccess' => 'fail', 'failMsg' => 'No Note Error');
             }
-        }else if($_GET['query'] == "push"){
+        }else if($_GET['query'] == "push"){ // (Q07) 买家推送备注
             $marchSn = $_GET['marchSn'];
             $noteContent = $_GET['noteContent'];
             $sql1 = "SELECT note_order FROM order_list WHERE id_order = $marchSn";
@@ -237,7 +237,7 @@
                 // 无此记录
                 $resultArray = array('pushSuccess' => 'fail', 'failMsg' => 'Invalid Sn Error');
             }
-        }else if($_GET['query'] == "hungry"){
+        }else if($_GET['query'] == "hungry"){ // (Q08) 买家查询是否可以取餐
             $marchSn = $_GET['marchSn'];
             $sql = "SELECT flag_done FROM order_list WHERE id_order = $marchSn";
             $retval = mysqli_query($connToMysql, $sql);
@@ -249,30 +249,31 @@
                 // 餐未完成
                 $resultArray = array('hungrySuccess' => 'fail', 'failMsg' => 'Not Ready Yet');
             }
-        }else if($_GET['query'] == "call"){
+        }else if($_GET['query'] == "call"){ // (Q09) 卖家叫号
             $marchSn = $_GET['marchSn'];
             $sql = "UPDATE order_list SET flag_done = '1' WHERE id_order = $marchSn";
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array('callSuccess' => 'success');
-        }else if($_GET['query'] == "done"){
+        }else if($_GET['query'] == "done"){ // (Q10) 买家有意识或无意识完成订单
             $marchSn = $_GET['marchSn'];
             $sql = "DELETE FROM order_list WHERE id_order = $marchSn";
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array('doneSuccess' => 'success');
-        }else{
-            // 未定义的请求
+        }else{ // 未知的请求
             $flagQueryErr = true;
         }
         // $flagQueryErr = false; // test
-        if($flagQueryErr){
+        if($flagQueryErr){ // 检查请求是否有效
             $resultArray = array('queryErr' => 'Illegal query');
         }
-        if(isset($sessionTimeOut)){
+        if(isset($sessionTimeOut)){ // 检查session是否过期
             if($sessionTimeOut == true){
                 $resultArray = array('queryErr' => 'Session Time Out');
             }
         }
-        echo json_encode($resultArray);
+        echo json_encode($resultArray); // (Response) 响应
+    }else{
+        // 无请求
     }
 ?>
 
