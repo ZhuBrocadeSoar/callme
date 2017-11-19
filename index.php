@@ -145,9 +145,9 @@
                 $resultArray['list'] = $sellerArray;
             }
             // echo json_encode($resultArray);
-        }else if($GET['query'] == "good_list"){ // 货单请求
+        }else if($_GET['query'] == "good_list"){ // 货单请求
             $resultArray = array('testMsg' => "test_good_list"); // test
-        }else if($GET['query'] == "fetch"){
+        }else if($_GET['query'] == "fetch"){
             // 查询数据库可用Sn
             $sql = "SELECT id_order FROM order_list";
             $retval = mysqli_query($connToMysql, $sql);
