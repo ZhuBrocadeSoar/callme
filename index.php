@@ -204,7 +204,7 @@
             $sql = "SELECT note_order FROM order_list WHERE id_order = $marchSn";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
-            if($row != NULL){
+            if($row[0] != NULL){
                 $resultArray = array('noteSuccess' => 'success', 'noteContent' => $row[0]);
             }else{
                 $resultArray = array('noteSuccess' => 'fail', 'failMsg' => 'No Note Error');
