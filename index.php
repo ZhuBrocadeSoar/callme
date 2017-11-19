@@ -241,8 +241,13 @@
                 $resultArray = array('hungrySuccess' => 'success');
             }else{
                 // 餐未完成
-                $resultArray = array('hungrySuccess' => 'fail', 'failMsg' => 'Not Already Yet');
+                $resultArray = array('hungrySuccess' => 'fail', 'failMsg' => 'Not Ready Yet');
             }
+        }else if($_GET['query'] == "call"){
+            $marchSn = $_GET['marchSn'];
+            $sql = "UPDATE order_list SET flag_done = '1' WHERE id_order = $marchSn";
+            $retval = mysqli_query($connToMysql, $sql);
+            $resultArray = array('callSuccess' => 'success');
         }else{
             // 未定义的请求
             $flagQueryErr = true;

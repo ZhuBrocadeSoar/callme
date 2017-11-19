@@ -202,22 +202,34 @@ https://callme.brocadesoar.cn/?
 			"failMsg" : "Taken Error"
 		}
 
-	- 买家查餐请求
+	- 买家查餐请求JSON
 	{
 		"query" : "hungry",
 		"sessionKey" : sessionKey,
 		"marchSn" : marchSn
 	}
 
-		- 餐完成响应
+		- 餐完成响应JSON
 		{
 			"hungrySuccess" : "success"
 		}
 
-		- 餐未完成响应
+		- 餐未完成响应JSON
 		{
 			"hungrySuccess" : "fail",
-			"failMsg" : "Not Already Yet"
+			"failMsg" : "Not Ready Yet"
+		}
+
+	- 卖家叫号请求JSON
+	{
+		"query" : "call",
+		"sessionKey" : sessionKey,
+		"marchSn" : marchSn
+	}
+
+		- 叫号成功响应JSON
+		{
+			"callSuccess" : "success"
 		}
 
 
