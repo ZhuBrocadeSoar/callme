@@ -36,7 +36,7 @@
                 echo "Error: time out";
             }
         }
-*/        if($_GET['query'] == "login"){ // 登陆请求
+*/      if($_GET['query'] == "login"){ // 登陆请求
             // 决定使用哪个小程序信息
             if($_GET['isseller']){
                 $idWxAppInfo = 2;
@@ -146,6 +146,7 @@
             }
             // echo json_encode($resultArray);
         }else if($GET['query'] == "good_list"){ // 货单请求
+            $resultArray = array('testMsg' => "test_good_list"); // test
         }else if($GET['query'] == "fetch"){
             // 查询数据库可用Sn
             $sql = "SELECT id_order FROM order_list";
