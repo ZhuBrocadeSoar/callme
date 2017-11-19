@@ -193,6 +193,7 @@
                 $row = mysqli_fetch_array($connToMysql, MYSQLI_NUM);
                 $id_seller = $row[0];
                 $sql = "INSERT INTO order_list (id_order, session_key_seller, flag_done, id_seller) VALUES ($i, '$sessionkey', '$flag_done', $id_seller)";
+                $resultArray['testMsg' => $sql]; // test;
             }else{
                 $resultArray = array('fetchSuccess' => 'fail', 'failMsg' => 'No Sn Valid');
             }
