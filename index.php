@@ -223,7 +223,7 @@
                 }else{
                     // 没有备注
                     $sql2 = "UPDATE order_list SET note_order = '$noteContent' WHERE id_order = $marchSn";
-                    $retval = mysqli_query($connToMysql, $sql);
+                    $retval = mysqli_query($connToMysql, $sql2);
                     $mysqlierror = mysqli_error();
                     $resultArray = array('pushSuccess' => 'success', 'testMsg1' => $sql2, 'testMsg2' => $retval, 'testMsg3' => $mysqlierror);
                 }
