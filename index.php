@@ -209,6 +209,27 @@
             }else{
                 $resultArray = array('noteSuccess' => 'fail', 'failMsg' => 'No Note Error');
             }
+        }else if($_GET['query'] == "push"){
+            $marchSn = $_GET['marchSn'];
+            $noteContent = $_GET['noteContent'];
+            $sql1 = "SELECT note_order FROM order_list WHERE id_order = $marchSn";
+            $retval = mysqli_query($connToMysql, $sql1);
+            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            if($row != NULL){
+                // 有记录
+                if($row[0] != NULL){
+                    // 已经有备注
+                    $resultArray = array('pushSuccess' => 'fail', 'failMsg' => 'Taken Error');
+                }else{
+                    // 没有备注
+                    $sql2 = "UPDATE order_list SET note_order = '$noteContent' WHERE id_order = $marchSn";
+                    $retval = mysqli_query($connToMysql, $sql);
+                    $resultArray = array('pushSuccess' => 'success');
+                }
+            }else{
+                // 无此记录
+                $resultArray = array('pushSuccess' => 'fail', 'failMsg' => 'Invalid Sn Error');
+            }
         }else{
             // 未定义的请求
             $flagQueryErr = true;

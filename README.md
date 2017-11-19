@@ -177,6 +177,30 @@ https://callme.brocadesoar.cn/?
 			"failMsg" : "No Note Error"
 		}
 
+	- 买家输入备注，备注提交请求JSON
+	{
+		"query" : "push",
+		"marchSn" : marchSn,
+		"noteContent" : noteContent
+	}
+
+		- 备注提交成功响应JSON
+		{
+			"pushSuccess" : "success"
+		}
+
+		- 备注提交失败(号码不匹配)响应JSON
+		{
+			"pushSuccess" : "fail",
+			"failMsg" : "Invalid Sn Error"
+		}
+
+		- 备注提交失败(备注栏已被填写)响应JSON
+		{
+			"pushSuccess" : "fail",
+			"failMsg" : "Taken Error"
+		}
+
 # 开发日记
 
 + 2017-11-11 00:33:45 将callme完全从wuaiwulu中剥离并开始做开发日记的编写，虽然任然实际上使用同一个服务器。
