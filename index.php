@@ -2,9 +2,6 @@
     //$_GET['query'] = "seller_list"; // 测试
     // 连接数据库
     $connToMysql = mysqli_connect("localhost", "nitmaker_cn", "nitmaker.cn", "callme");
-    if(mysqli_connect_errno()){
-        echo "Error: " . mysqli_connect_error();
-    }
     // 处理请求
     if(isset($_GET['query']) /*&& isset($_GET['sessionkey'])*/){
         // 是不是login请求
@@ -199,8 +196,10 @@
                 $resultArray = array('fetchSuccess' => 'fail', 'failMsg' => 'No Sn Valid');
             }
         }else{
+            // 未定义的请求
             $flagQueryErr = true;
         }
+        $flagQueryErr = false; // test
         if($flagQueryErr){
             $resultArray = array('queryErr' => 'Illegal query');
         }
