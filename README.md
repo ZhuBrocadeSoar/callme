@@ -180,6 +180,7 @@ https://callme.brocadesoar.cn/?
 	- 买家输入备注，备注提交请求JSON
 	{
 		"query" : "push",
+		"sessionKey" : sessionKey,
 		"marchSn" : marchSn,
 		"noteContent" : noteContent
 	}

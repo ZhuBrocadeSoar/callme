@@ -224,7 +224,7 @@
                     // 没有备注
                     $sql2 = "UPDATE order_list SET note_order = '$noteContent' WHERE id_order = $marchSn";
                     $retval = mysqli_query($connToMysql, $sql);
-                    $resultArray = array('pushSuccess' => 'success');
+                    $resultArray = array('pushSuccess' => 'success', 'testMsg' => $sql2 . "_____" . $retval);
                 }
             }else{
                 // 无此记录
