@@ -199,7 +199,7 @@
             // 未定义的请求
             $flagQueryErr = true;
         }
-        $flagQueryErr = false; // test
+        // $flagQueryErr = false; // test
         if($flagQueryErr){
             $resultArray = array('queryErr' => 'Illegal query');
         }
