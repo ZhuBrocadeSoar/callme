@@ -232,6 +232,18 @@ https://callme.brocadesoar.cn/?
 			"callSuccess" : "success"
 		}
 
+	- 买家(有意识或无意识)结束订单请求JSON
+	{
+		"query" : "done",
+		"sessionKey" : sessionKey,
+		"marchSn" : marchSn
+	}
+
+		- 结束订单成功响应JSON
+		{
+			"doneSuccess" : "success"
+		}
+
 
 # 开发日记
 

@@ -248,6 +248,11 @@
             $sql = "UPDATE order_list SET flag_done = '1' WHERE id_order = $marchSn";
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array('callSuccess' => 'success');
+        }else if($_GET['query'] == "done"){
+            $marchSn = $_GET['marchSn'];
+            $sql = "DELETE FROM order_list WHERE id_order = $marchSn";
+            $retval = mysqli_query($connToMysql, $sql);
+            $resultArray = array('doneSuccess' => 'success');
         }else{
             // 未定义的请求
             $flagQueryErr = true;
