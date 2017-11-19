@@ -158,6 +158,25 @@ https://callme.brocadesoar.cn/?
 			"failMsg" : failMsg
 		}
 
+	- 商家检查关联情况，备注请求JSON
+	{
+		"query" : "note",
+		"sessionKey" : sessionKey,
+		"marchSn" : marchSn
+	}
+
+		- 关联成功，备注响应JSON
+		{
+			"noteSuccess" : "success",
+			"noteContent" : noteContent
+		}
+
+		- 关联失败，尚无备注响应JSON
+		{
+			"noteSuccess" : "fail",
+			"failMsg" : "No Note Error"
+		}
+
 # 开发日记
 
 + 2017-11-11 00:33:45 将callme完全从wuaiwulu中剥离并开始做开发日记的编写，虽然任然实际上使用同一个服务器。
@@ -170,6 +189,8 @@ https://callme.brocadesoar.cn/?
 
 + 2017-11-12 16:36:36 整理了接口，数据库session记录每10分钟删除一次大于1小时的记录
 
++ 2017-11-20 01:02:10 考虑了一下，必须把GET方式改为POST，现在有postman用于调试了，主要是sessionkey字段太敏感，容易被session劫持
+
 # 参考
 
 + NameVirtualHost *:80
@@ -177,3 +198,4 @@ https://callme.brocadesoar.cn/?
 + NameVirtualHost *:443
 
 + CREATE EVENT timeout30min ON SCHEDULE EVERY 1 MINUTE STARTS TIMESTAMP '2017-11-12 00:00:00' DO DELETE FROM session_record WHERE TIMEDIFF(NOW(), time_session) > '00:00:01';
+
