@@ -15,33 +15,15 @@ https://callme.brocadesoar.cn/?
 
 mysql\> USE callme;
 
-mysql\> DESC seller_list;
+![mysql> SHOW TABLES](https://github.com/ZhuBrocadeSoar/callme/blob/master/images/build/tables.png)
 
-| Field           | Type         | Null | Key | Default | Extra           |
-|-----------------|--------------|------|-----|---------|-----------------|
-| id\_seller      | int(11)      | NO   | PRI | NULL    | auto\_increment |
-| name\_seller    | varchar(255) | NO   |     | NULL    |                 |
-| path\_photo     | varchar(255) | YES  |     | NULL    |                 |
-| json\_menu      | text         | YES  |     | NULL    |                 |
-| hash_openid     | char(40)     | NO   |     | NULL    |                 |
+![mysql> DESC wxapp_info](https://github.com/ZhuBrocadeSoar/callme/blob/master/images/build/wxapp_info.png)
 
-mysql\> DESC session_record;
+![mysql> DESC seller_list](https://github.com/ZhuBrocadeSoar/callme/blob/master/images/build/seller_list.png)
 
-| Field         | Type         | Null | Key | Default | Extra           |
-|---------------|--------------|------|-----|---------|-----------------|
-| id\_session   | int(11)      | NO   | PRI | NULL    | auto\_increment |
-| openid        | varchar(40)  | NO   |     | NULL    |                 |
-| sessionkey    | varchar(128) | NO   |     | NULL    |                 |
-| time\_session | datetime     | YES  |     | NULL    |                 |
+![mysql> DESC session_record](https://github.com/ZhuBrocadeSoar/callme/blob/master/images/build/session_record.png)
 
-mysql\> DESC wxapp_info;
-
-| Field         | Type         | Null | Key | Default | Extra           |
-|---------------|--------------|------|-----|---------|-----------------|
-| id\_wxappInfo | int(11)      | NO   | PRI | NULL    | auto\_increment |
-| wxappid       | varchar(20)  | NO   |     | NULL    |                 |
-| wxsecret      | varchar(40)  | NO   |     | NULL    |                 |
-| wxappname     | varchar(255) | NO   |     | NULL    |                 |
+![mysql> DESC order_list](https://github.com/ZhuBrocadeSoar/callme/blob/master/images/build/order_list.png)
 
 # 接口记录
 
