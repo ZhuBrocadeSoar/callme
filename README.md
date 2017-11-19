@@ -31,79 +31,79 @@ mysql\> USE callme;
 
 https://callme.brocadesoar.cn/?
 
-	- login 
+	- (Q00) login 
 
-		- 商家请求JSON
+		- (Q01) 商家请求JSON
 
 		{
 			"query" : "login",
 			"isseller" : "yes"
 		}
 
-			- 登陆成功响应JSON
+			- (Q01R00) 登陆成功响应JSON
 
 				{
 					"loginSuccess" : "success",
 					"sessionKey" : sessionKey
 				}
 
-			- 接口错误(code换取openid和session_key时出错)响应JSON
+			- (Q01R01) 接口错误(code换取openid和session_key时出错)响应JSON
 
 			{
 				"loginSuccess" : "fail",
 				"failMsg" : "API Error"
 			}
 
-			- 登陆错误(提交的code无效)响应JSON
+			- (Q01R02) 登陆错误(提交的code无效)响应JSON
 
 			{
 				"loginSuccess" : "fail",
 				"failMsg" : "Login Error"
 			}
 
-			- 商家匹配错误(商家的openid与数据库记录不匹配)响应JSON
+			- (Q01R03) 商家匹配错误(商家的openid与数据库记录不匹配)响应JSON
 
 			{
 				"loginSuccess" : "fail",
 				"failMsg" : "Seller Openid Error"
 			}
 
-		- 吃客请求JSON
+		- (Q02) 吃客请求JSON
 
 		{
 			"query" : "login",
 			"isseller" : "no"
 		}
 
-			- 登陆成功响应JSON
+			- (Q02R00) 登陆成功响应JSON
 
 			{
 				"loginSuccess" : "success",
 				"sessionKey" : sessionKey
 			}
 
-			- 接口错误(code换取openid和session_key时出错)响应JSON
+			- (Q02R01) 接口错误(code换取openid和session_key时出错)响应JSON
 
 			{
 				"loginSuccess" : "fail",
 				"failMsg" : "API Error"
 			}
 
-			- 登陆错误(提交的code无效)响应JSON
+			- (Q02R02) 登陆错误(提交的code无效)响应JSON
 
 			{
 				"loginSuccess" : "fail",
 				"failMsg" : "Login Error"
 			}
 
-	- 吃客请求商家列表请求JSON
+	- (Q03) 吃客请求商家列表请求JSON
 
 	{
 		"query" : "seller_list",
 		"sessionKey" : sessionKey
 	}
 
-		- 列表成功响应JSON
+		- (Q03R00) 列表成功响应JSON
 
 		{
 			"seller_listSuccess" : "success",
@@ -113,53 +113,73 @@ https://callme.brocadesoar.cn/?
 			}
 		}
 
-		- 列表错误(无列表)响应JSON
+		- (Q03R01) 列表错误(无列表)响应JSON
 
 		{
 			"seller_listSuccess" : "fail",
 			"failMsg" : "Null List Error"
 		}
 
-	- 商家取号请求JSON
+	- (Q04) 吃客获取商家备注列表请求JSON
+
+	{
+		"query" : "menu",
+		"sessionKey" : sessionKey,
+		"sellerId" : sellerId
+	}
+
+		- (Q04R00) 备注列表响应JSON
+
+		{
+			"menuSuccess" : "success",
+			"menuContent" : menuContant
+		}
+
+	- (Q05) 商家取号请求JSON
 
 	{
 		"query" : "fetch",
 		"sessionKey" : sessionKey,
 	}
 
-		- 取号成功响应JSON
+		- (Q05R00) 取号成功响应JSON
 
 		{
 			"fetchSuccess" : "success",
 			"marchSn" : marchSn
 		}
 
-		- 取号错误响应JSON
+		- (Q05R01) 取号错误响应JSON
+
 		{
 			"fetchSuccess" : "fail",
 			"failMsg" : failMsg
 		}
 
-	- 商家检查关联情况，备注请求JSON
+	- (Q06) 商家检查关联情况，备注请求JSON
+
 	{
 		"query" : "note",
 		"sessionKey" : sessionKey,
 		"marchSn" : marchSn
 	}
 
-		- 关联成功，备注响应JSON
+		- (Q06R00) 关联成功，备注响应JSON
+
 		{
 			"noteSuccess" : "success",
 			"noteContent" : noteContent
 		}
 
-		- 关联失败，尚无备注响应JSON
+		- (Q06R01) 关联失败，尚无备注响应JSON
+
 		{
 			"noteSuccess" : "fail",
 			"failMsg" : "No Note Error"
 		}
 
-	- 买家输入备注，备注提交请求JSON
+	- (Q07) 买家输入备注，备注提交请求JSON
+
 	{
 		"query" : "push",
 		"sessionKey" : sessionKey,
@@ -167,61 +187,71 @@ https://callme.brocadesoar.cn/?
 		"noteContent" : noteContent
 	}
 
-		- 备注提交成功响应JSON
+		- (Q07R00) 备注提交成功响应JSON
+
 		{
 			"pushSuccess" : "success"
 		}
 
-		- 备注提交失败(号码不匹配)响应JSON
+		- (Q07R01) 备注提交失败(号码不匹配)响应JSON
+
 		{
 			"pushSuccess" : "fail",
 			"failMsg" : "Invalid Sn Error"
 		}
 
-		- 备注提交失败(备注栏已被填写)响应JSON
+		- (Q07R02) 备注提交失败(备注栏已被填写)响应JSON
+
 		{
 			"pushSuccess" : "fail",
 			"failMsg" : "Taken Error"
 		}
 
-	- 买家查餐请求JSON
+	- (Q08) 买家查餐请求JSON
+
 	{
 		"query" : "hungry",
 		"sessionKey" : sessionKey,
 		"marchSn" : marchSn
 	}
 
-		- 餐完成响应JSON
+		- (Q08R00) 餐完成响应JSON
+
 		{
 			"hungrySuccess" : "success"
 		}
 
-		- 餐未完成响应JSON
+		- (Q08R01) 餐未完成响应JSON
+
 		{
 			"hungrySuccess" : "fail",
 			"failMsg" : "Not Ready Yet"
 		}
 
-	- 卖家叫号请求JSON
+	- (Q09) 卖家叫号请求JSON
+
 	{
 		"query" : "call",
 		"sessionKey" : sessionKey,
 		"marchSn" : marchSn
 	}
 
-		- 叫号成功响应JSON
+		- (Q09R00) 叫号成功响应JSON
+
 		{
 			"callSuccess" : "success"
 		}
 
-	- 买家(有意识或无意识)结束订单请求JSON
+	- (Q10) 买家(有意识或无意识)结束订单请求JSON
+
 	{
 		"query" : "done",
 		"sessionKey" : sessionKey,
 		"marchSn" : marchSn
 	}
 
-		- 结束订单成功响应JSON
+		- (Q10R00) 结束订单成功响应JSON
+
 		{
 			"doneSuccess" : "success"
 		}
@@ -240,6 +270,8 @@ https://callme.brocadesoar.cn/?
 + 2017-11-12 16:36:36 整理了接口，数据库session记录每10分钟删除一次大于1小时的记录
 
 + 2017-11-20 01:02:10 考虑了一下，必须把GET方式改为POST，现在有postman用于调试了，主要是sessionkey字段太敏感，容易被session劫持
+
++ 2017-11-20 03:36:58 完成基本所有数据流的接口并编号，更新了开发日记
 
 # 参考
 

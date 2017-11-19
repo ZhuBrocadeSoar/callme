@@ -145,8 +145,14 @@
                 $resultArray['list'] = $sellerArray;
             }
             // echo json_encode($resultArray);
-        }else if($_GET['query'] == "good_list"){ // 货单请求
-            $resultArray = array('testMsg' => "test_good_list"); // test
+        }else if($_GET['query'] == "menu"){ // 货单请求
+            $sellerId = $_GET['sellerId'];
+            $sql = "SELECT json_menu FROM seller_list WHERE id_seller = $sellerId";
+            $retval = mysqli_query($connToMysql, $sql);
+            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            $resultArray = array();
+            $resultArray['menuSuccess'] = 'success';
+            $resultArray['menuContent'] = json_decode($row[0]);
         }else if($_GET['query'] == "fetch"){
             // 查询数据库可用Sn
             $sql = "SELECT id_order FROM order_list";
