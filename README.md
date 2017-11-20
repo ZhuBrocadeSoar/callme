@@ -256,6 +256,28 @@ https://callme.brocadesoar.cn/?
 			"doneSuccess" : "success"
 		}
 
+	- (Q11) 管理员录入请求JSON
+
+	{
+		"query" : "signup",
+		"sessionKey" : sessionKey,
+		"tellNum" : tellNum
+	}
+
+		- (Q11R00) 录入成功响应JSON
+
+		{
+			"signupSuccess" : "success"
+		}
+
+	- (Q12) 商家提交信息
+
+	{
+		"query" : "info",
+		"sessionKey" : sessionKey,
+		""
+	}
+
 
 # 开发日记
 
@@ -274,6 +296,8 @@ https://callme.brocadesoar.cn/?
 + 2017-11-20 03:36:58 完成基本所有数据流的接口并编号，更新了开发日记
 
 + 2017-11-20 04:31:58 下一步要首先要做的是商家入驻方面，图片的上传，菜单的设置等等
+
++ 2017-11-20 19:21:31 要把号码池改为每个商家单独号码池
 
 # 参考
 

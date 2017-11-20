@@ -25,18 +25,7 @@
             // 不包含sessionKey 不合法
             $flagQueryErr = true;
         }
-/*        $retval = mysqli_query($connToMysql, "SELECT openid, sessionkey, time_session FROM session_record WHERE sessionkey = " . $_GET['sessionkey']);
-        $row = mysqli_fetch_array($retval, MYSQLI_NUM);
-        if($row == NULL){
-            echo "Error: need login";
-        }else{
-            $now = date("Y-m-d H:i:s", time());
-            $datatimediff = date_diff($now, $row[2]);
-            if($datatimediff['y'] > 0 || $datatimediff['m'] > 0 || $datatimediff['d'] > 0 || $datatimediff['h'] > 6){
-                echo "Error: time out";
-            }
-        }
-*/      if($_GET['query'] == "login"){ // (Q00) 登陆请求
+        if($_GET['query'] == "login"){ // (Q00) 登陆请求
             // 决定使用哪个小程序信息
             if($_GET['isseller']){
                 $idWxAppInfo = 2;
@@ -231,7 +220,7 @@
                     $sql2 = "UPDATE order_list SET note_order = '$noteContent' WHERE id_order = $marchSn";
                     $retval = mysqli_query($connToMysql, $sql2);
                     $mysqlierror = mysqli_error();
-                    $resultArray = array('pushSuccess' => 'success', 'testMsg1' => $sql2, 'testMsg2' => $retval, 'testMsg3' => $mysqlierror);
+                    $resultArray = array('pushSuccess' => 'success' /*, 'testMsg1' => $sql2, 'testMsg2' => $retval, 'testMsg3' => $mysqlierror*/);
                 }
             }else{
                 // 无此记录
