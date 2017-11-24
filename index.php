@@ -216,11 +216,11 @@
             if($row = mysqli_fetch_array($retval, MYSQLI_NUM) != NULL){
                 if($row[1] != NULL){
                     // 该记录有备注
-                    $notedList[$noted] = array('marchSn' => $row[0], 'noteContent' => $row[1]);
+                    $notedList[num2str($noted)] = array('marchSn' => $row[0], 'noteContent' => $row[1]);
                     $noted++;
                 }else{
                     // 该记录无备注
-                    $unnotedList[$unnoted] = array('marchSn' => $row[0], 'noteContent' => NULL);
+                    $unnotedList[num2str($unnoted)] = array('marchSn' => $row[0], 'noteContent' => NULL);
                     $unnoted++;
                 }
             }
