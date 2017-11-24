@@ -242,12 +242,7 @@
             $resultArray['noteSuccess'] = 'success';
             $resultArray['orderList'] = $orderList; 
         }else if($_GET['query'] == "push"){ // (Q07) 买家推送备注
-            // 获得商家id
-            $sessionKey = $_GET['sessionKey'];
-            $sql = "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'";
-            $retval = mysqli_query($connToMysql, $sql);
-            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
-            $sellerId = $row[0];
+            $sellerId = $_GET['sellerId'];
             $marchSn = $_GET['marchSn'];
             $noteContent = $_GET['noteContent'];
             $sql1 = "SELECT note_order FROM order_list WHERE sn_march = $marchSn, id_seller = $sellerId";

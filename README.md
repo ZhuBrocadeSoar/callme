@@ -177,6 +177,7 @@ https://callme.brocadesoar.cn/?
 		"query" : "push",
 		"sessionKey" : sessionKey,
 		"marchSn" : marchSn,
+        "sellerId" : sellerId,
 		"noteContent" : noteContent
 	}
 
@@ -293,6 +294,8 @@ https://callme.brocadesoar.cn/?
 + 2017-11-20 19:21:31 要把号码池改为每个商家单独号码池
 
 + 2017-11-24 20:52:00 将note请求改为传回两个列表
+
++ 2017-11-24 21:36:00 改为了独立号码池，每个号码池为1-99
 
 # 参考
 
