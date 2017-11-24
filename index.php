@@ -219,12 +219,14 @@
                 // $resultArray[$i] = $row; //test
                 if($row[1] != NULL){
                     // 该记录有备注
-                    $notedList[$noted] = array('marchSn' => $row[0], 'noteContent' => $row[1]);
-                    $noted++;
+                    $notedList = array_merge($notedList, array('marchSn' => $row[0], 'noteContent' => $row[1]))
+                    // $notedList[$noted] = array('marchSn' => $row[0], 'noteContent' => $row[1]);
+                    // $noted++;
                 }else{
                     // 该记录无备注
-                    $unnotedList[$unnoted] = array('marchSn' => $row[0], 'noteContent' => NULL);
-                    $unnoted++;
+                    $unnotedList = array_merge($unnotedList, array('marchSn' => $row[0], 'noteContent' => NULL));
+                    // $unnotedList[$unnoted] = array('marchSn' => $row[0], 'noteContent' => NULL);
+                    // $unnoted++;
                 }
             }
             $orderList = array('notedList' => $notedList, 'unnotedList' => $unnotedList);
