@@ -143,8 +143,14 @@
             $resultArray['menuSuccess'] = 'success';
             $resultArray['menuContent'] = json_decode($row[0]);
         }else if($_GET['query'] == "fetch"){ // (Q05) 取号
+            // 获得商家id
+            $sessionKey = $_GET['sessionKey'];
+            $sql = "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'";
+            $retval = mysqli_query($connToMysql, $sql);
+            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            $sellerId = $row[0];
             // 查询数据库可用Sn
-            $sql = "SELECT id_order FROM order_list";
+            $sql = "SELECT sn_march FROM order_list WHERE id_seller = $sellerId";
             $retval = mysqli_query($connToMysql, $sql);
             $j = 0;
             $unvalidSn = array();
@@ -188,13 +194,19 @@
                 $retval = mysqli_query($connToMysql, $sql1);
                 $row = mysqli_fetch_array($retval, MYSQLI_NUM);
                 $id_seller = $row[0];
-                $sql2 = "INSERT INTO order_list (id_order, session_key_seller, flag_done, id_seller) VALUES ($validSn, '$sessionKey', '$flag_done', $id_seller)";
+                $sql2 = "INSERT INTO order_list (sn_march, session_key_seller, flag_done, id_seller) VALUES ($validSn, '$sessionKey', '$flag_done', $id_seller)";
                 $retval = mysqli_query($connToMysql, $sql2);
                 // $resultArray['testMsg'] = $sql1 . "____" . $sql2; // test;
             }else{
                 $resultArray = array('fetchSuccess' => 'fail', 'failMsg' => 'No Sn Valid');
             }
         }else if($_GET['query'] == "note"){ // (Q06) 商家检查关联，获取备注
+            // 获得商家id
+            $sessionKey = $_GET['sessionKey'];
+            $sql = "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'";
+            $retval = mysqli_query($connToMysql, $sql);
+            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            $sellerId = $row[0];
             /*
             $marchSn = $_GET['marchSn'];
             $sql = "SELECT note_order FROM order_list WHERE id_order = $marchSn";
@@ -211,7 +223,7 @@
             $noted = 0;
             $unnotedList = array();
             $unnoted = 0;
-            $sql = "SELECT id_order, note_order FROM order_list";
+            $sql = "SELECT sn_march, note_order FROM order_list WHERE id_seller = '$sellerId'";
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array(); 
             // $i = 0; // test
@@ -234,9 +246,15 @@
             $resultArray['noteSuccess'] = 'success';
             $resultArray['orderList'] = $orderList; 
         }else if($_GET['query'] == "push"){ // (Q07) 买家推送备注
+            // 获得商家id
+            $sessionKey = $_GET['sessionKey'];
+            $sql = "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'";
+            $retval = mysqli_query($connToMysql, $sql);
+            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            $sellerId = $row[0];
             $marchSn = $_GET['marchSn'];
             $noteContent = $_GET['noteContent'];
-            $sql1 = "SELECT note_order FROM order_list WHERE id_order = $marchSn";
+            $sql1 = "SELECT note_order FROM order_list WHERE sn_march = $marchSn, id_seller = $sellerId";
             $retval = mysqli_query($connToMysql, $sql1);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             if($row != NULL){
@@ -246,7 +264,7 @@
                     $resultArray = array('pushSuccess' => 'fail', 'failMsg' => 'Taken Error');
                 }else{
                     // 没有备注
-                    $sql2 = "UPDATE order_list SET note_order = '$noteContent' WHERE id_order = $marchSn";
+                    $sql2 = "UPDATE order_list SET note_order = '$noteContent' WHERE sn_march = $marchSn, id_seller = '$sellerId'";
                     $retval = mysqli_query($connToMysql, $sql2);
                     $mysqlierror = mysqli_error();
                     $resultArray = array('pushSuccess' => 'success' /*, 'testMsg1' => $sql2, 'testMsg2' => $retval, 'testMsg3' => $mysqlierror*/);
@@ -257,7 +275,7 @@
             }
         }else if($_GET['query'] == "hungry"){ // (Q08) 买家查询是否可以取餐
             $marchSn = $_GET['marchSn'];
-            $sql = "SELECT flag_done FROM order_list WHERE id_order = $marchSn";
+            $sql = "SELECT flag_done FROM order_list WHERE sn_march = $marchSn, id_seller = '$sellerId'";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             if($row[0] == "1"){
@@ -269,12 +287,12 @@
             }
         }else if($_GET['query'] == "call"){ // (Q09) 卖家叫号
             $marchSn = $_GET['marchSn'];
-            $sql = "UPDATE order_list SET flag_done = '1' WHERE id_order = $marchSn";
+            $sql = "UPDATE order_list SET flag_done = '1' WHERE sn_march = $marchSn, id_seller = '$sellerId'";
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array('callSuccess' => 'success');
         }else if($_GET['query'] == "done"){ // (Q10) 买家有意识或无意识完成订单
             $marchSn = $_GET['marchSn'];
-            $sql = "DELETE FROM order_list WHERE id_order = $marchSn";
+            $sql = "DELETE FROM order_list WHERE sn_march = $marchSn, id_seller = '$sellerId'";
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array('doneSuccess' => 'success');
         }else{ // 未知的请求

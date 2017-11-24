@@ -164,18 +164,11 @@ https://callme.brocadesoar.cn/?
 		"marchSn" : marchSn
 	}
 
-		- (Q06R00) 关联成功，备注响应JSON
+		- (Q06R00) 返回两个列表，备注响应JSON
 
 		{
 			"noteSuccess" : "success",
 			"noteContent" : noteContent
-		}
-
-		- (Q06R01) 关联失败，尚无备注响应JSON
-
-		{
-			"noteSuccess" : "fail",
-			"failMsg" : "No Note Error"
 		}
 
 	- (Q07) 买家输入备注，备注提交请求JSON
@@ -298,6 +291,8 @@ https://callme.brocadesoar.cn/?
 + 2017-11-20 04:31:58 下一步要首先要做的是商家入驻方面，图片的上传，菜单的设置等等
 
 + 2017-11-20 19:21:31 要把号码池改为每个商家单独号码池
+
++ 2017-11-24 20:52:00 将note请求改为传回两个列表
 
 # 参考
 
