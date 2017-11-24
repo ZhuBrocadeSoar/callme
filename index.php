@@ -219,7 +219,7 @@
                 // $resultArray[$i] = $row; //test
                 if($row[1] != NULL){
                     // 该记录有备注
-                    $notedList = array_merge($notedList, array('marchSn' => $row[0], 'noteContent' => $row[1]))
+                    $notedList = array_merge($notedList, array('marchSn' => $row[0], 'noteContent' => $row[1]));
                     // $notedList[$noted] = array('marchSn' => $row[0], 'noteContent' => $row[1]);
                     // $noted++;
                 }else{
