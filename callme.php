@@ -1,7 +1,7 @@
 <?php
 
 use Workerman\Worker;
-require_once __DIR__ .  '/vender/autoload.php';
+require_once __DIR__ .  '/vendor/autoload.php';
 
 $ws_worker = new Worker("websocket://0.0.0.0:2000");
 
