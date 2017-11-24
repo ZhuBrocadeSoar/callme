@@ -9,7 +9,7 @@ $ws_worker->count = 4;
 
 $ws_worker->onConnect = function($connection){
     $connection->send('hello tester');
-}
+};
 
 $ws_worker->onMessage = function($connection, $data){
     $connection->send('hello', $data);
