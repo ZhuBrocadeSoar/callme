@@ -216,7 +216,7 @@
             $resultArray = array();
             $i = 0;
             if($row = mysqli_fetch_array($retval, MYSQLI_NUM) != NULL){
-                $rowindex = 'row' . num2str($i);
+                $rowindex = 'row' . '\'' . num2str($i) . '\'';
                 $resultArray[$rowindex] = $row;
                 if($row[1] != NULL){
                     // 该记录有备注
