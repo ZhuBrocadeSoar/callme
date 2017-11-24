@@ -195,6 +195,7 @@
                 $resultArray = array('fetchSuccess' => 'fail', 'failMsg' => 'No Sn Valid');
             }
         }else if($_GET['query'] == "note"){ // (Q06) 商家检查关联，获取备注
+            /*
             $marchSn = $_GET['marchSn'];
             $sql = "SELECT note_order FROM order_list WHERE id_order = $marchSn";
             $retval = mysqli_query($connToMysql, $sql);
@@ -204,6 +205,27 @@
             }else{
                 $resultArray = array('noteSuccess' => 'fail', 'failMsg' => 'No Note Error');
             }
+             */
+
+            $notedList = array();
+            $noted = 0;
+            $unnotedList = array();
+            $unnoted = 0;
+            $sql = "SELECT id_order, note_order FROM order_list";
+            $retval = mysqli_query($connToMysql, $sql);
+            if($row = mysqli_fetch_array($retval, MYSQLI_NUM) != NULL){
+                if($row[1] != NULL){
+                    // 该记录有备注
+                    $notedList[$noted] = array('marchSn' => $row[0], 'noteContent' = $row[1]);
+                    $noted++;
+                }else{
+                    // 该记录无备注
+                    $unnotedList[$unnoted] = array('marchSn' => $row[0], 'noteContent' = NULL);
+                    $unnoted++;
+                }
+            }
+            $orderList = array('notedList' => $notedList, 'unnotedList' => $unnotedList);
+            $resultArray = array('noteSuccess' => 'success', 'orderList' => $orderList);
         }else if($_GET['query'] == "push"){ // (Q07) 买家推送备注
             $marchSn = $_GET['marchSn'];
             $noteContent = $_GET['noteContent'];
