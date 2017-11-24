@@ -213,7 +213,11 @@
             $unnoted = 0;
             $sql = "SELECT id_order, note_order FROM order_list";
             $retval = mysqli_query($connToMysql, $sql);
+            $resultArray = array();
+            $i = 0;
             if($row = mysqli_fetch_array($retval, MYSQLI_NUM) != NULL){
+                $rowindex = 'row' . num2str($i);
+                $resultArray[$rowindex] = $row;
                 if($row[1] != NULL){
                     // 该记录有备注
                     $notedList[$noted] = array('marchSn' => $row[0], 'noteContent' => $row[1]);
@@ -225,7 +229,9 @@
                 }
             }
             $orderList = array('notedList' => $notedList, 'unnotedList' => $unnotedList);
-            $resultArray = array('noteSuccess' => 'success', 'orderList' => $orderList);
+            // $resultArray = array('noteSuccess' => 'success', 'orderList' => $orderList);
+            $resultArray['noteSuccess'] = 'success';
+            $resultArray['orderList'] = $orderList; 
         }else if($_GET['query'] == "push"){ // (Q07) 买家推送备注
             $marchSn = $_GET['marchSn'];
             $noteContent = $_GET['noteContent'];
