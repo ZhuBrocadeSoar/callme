@@ -220,7 +220,7 @@
                     $noted++;
                 }else{
                     // 该记录无备注
-                    $unnotedList[$unnoted] = array('marchSn' => $row[0], 'noteContent' = NULL);
+                    $unnotedList[$unnoted] = array('marchSn' => $row[0], 'noteContent' => NULL);
                     $unnoted++;
                 }
             }
