@@ -163,7 +163,7 @@
                 $validSn = 1;
             }else{
                 // 有记录，查询下一个可用号码
-                for($i = 1; $i <= 999; $i++){
+                for($i = 1; $i <= 99; $i++){
                     // 第$i号是否可用
                     for($j = 0; $j < count($unvalidSn); $j++){
                         if($unvalidSn[$j] == $i){
@@ -176,7 +176,7 @@
                         break;
                     }
                 }
-                if($i == 1000){
+                if($i == 100){
                     // 无号码可用
                     $validSn = 0;
                 }else{
