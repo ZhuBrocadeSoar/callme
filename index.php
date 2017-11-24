@@ -213,10 +213,10 @@
             $unnoted = 0;
             $sql = "SELECT id_order, note_order FROM order_list";
             $retval = mysqli_query($connToMysql, $sql);
-            $resultArray = array();
-            $i = 0;
-            if(($row = mysqli_fetch_array($retval, MYSQLI_NUM)) != NULL){
-                $resultArray[$i] = $row;
+            $resultArray = array(); 
+            // $i = 0; // test
+            while(($row = mysqli_fetch_array($retval, MYSQLI_NUM)) != NULL){
+                // $resultArray[$i] = $row; //test
                 if($row[1] != NULL){
                     // 该记录有备注
                     $notedList[$noted] = array('marchSn' => $row[0], 'noteContent' => $row[1]);
