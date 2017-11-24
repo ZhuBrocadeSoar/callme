@@ -215,7 +215,7 @@
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array();
             $i = 0;
-            if($row = mysqli_fetch_array($retval, MYSQLI_NUM) != NULL){
+            if(($row = mysqli_fetch_array($retval, MYSQLI_NUM)) != NULL){
                 $resultArray[$i] = $row;
                 if($row[1] != NULL){
                     // 该记录有备注
