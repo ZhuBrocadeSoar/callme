@@ -216,8 +216,7 @@
             $resultArray = array();
             $i = 0;
             if($row = mysqli_fetch_array($retval, MYSQLI_NUM) != NULL){
-                $rowindex = 'row' . '\'' . num2str($i) . '\'';
-                $resultArray[$rowindex] = $row;
+                $resultArray[$i] = $row;
                 if($row[1] != NULL){
                     // 该记录有备注
                     $notedList[$noted] = array('marchSn' => $row[0], 'noteContent' => $row[1]);
