@@ -291,7 +291,7 @@
         }else if($_GET['query'] == "done"){ // (Q10) 买家有意识或无意识完成订单
             $sellerId = $_GET['sellerId'];
             $marchSn = $_GET['marchSn'];
-            $sql = "DELETE FROM order_list WHERE sn_march = $marchSn AND id_seller = '$sellerId'";
+            $sql = "DELETE FROM order_list WHERE sn_march = $marchSn AND id_seller = $sellerId";
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array('doneSuccess' => 'success');
         }else{ // 未知的请求
