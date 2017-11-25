@@ -265,6 +265,7 @@
                 $resultArray = array('pushSuccess' => 'fail', 'failMsg' => 'Invalid Sn Error');
             }
         }else if($_GET['query'] == "hungry"){ // (Q08) 买家查询是否可以取餐
+            $sellerId = $_GET['sellerId'];
             $marchSn = $_GET['marchSn'];
             $sql = "SELECT flag_done FROM order_list WHERE sn_march = $marchSn AND id_seller = '$sellerId'";
             $retval = mysqli_query($connToMysql, $sql);
