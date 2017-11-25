@@ -219,7 +219,7 @@
             $noted = 0;
             $unnotedList = array();
             $unnoted = 0;
-            $sql = "SELECT sn_march, note_order FROM order_list WHERE id_seller = $sellerId";
+            $sql = "SELECT sn_march, note_order FROM order_list WHERE id_seller = $sellerId ORDER BY id_order";
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array(); 
             // $i = 0; // test
