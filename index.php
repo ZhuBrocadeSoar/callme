@@ -60,7 +60,7 @@
                 if($row[0] != NULL){
                     $sellerJustice = true;
                     $flagIsseller = "1";
-                    $idSeller = $row[0];
+                    $sellerId = $row[0];
                     //$sessionR
                 }else{
                     $sellerJustice = false;
@@ -85,13 +85,19 @@
                 // 商家id不匹配错误
                 $loginSuccess = "fail";
                 $failMsg = "Seller Openid Error";
-                $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg, 'testOpenid' => $loginInfo['openid'], 'testHashOpenid' => sha1($loginInfo['openid']));
+                $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg /*, 'testOpenid' => $loginInfo['openid'], 'testHashOpenid' => sha1($loginInfo['openid'])*/);
             }else{
+                // 商家id匹配
+                // 查询余额
+                $sql = "SELECT mon_balance FROM seller_list WHERE id_seller = $sellerId";
+                $retval = mysqli_query($connToMysql, $sql);
+                $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+                $balanceMon = $row[0];
                 // 成功响应
                 $loginSuccess = "success";
                 // 生成3rd_session
                 $sessionKey = sha1($loginInfo['openid']/* . $loginInfo['session_key']*/);
-                $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $sessionKey, 'testOpenid' => $loginInfo['openid'], 'testHashOpenid' => sha1($loginInfo['openid']));
+                $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $sessionKey, 'balanceMon' => $balanceMon /*, 'testOpenid' => $loginInfo['openid'], 'testHashOpenid' => sha1($loginInfo['openid'])*/);
                 // 存储session
                 $retval = mysqli_query($connToMysql, "SELECT flag_isseller FROM session_record WHERE sessionKey = '$sessionKey' ");
                 $row = mysqli_fetch_array($retval, MYSQLI_NUM);
@@ -100,7 +106,7 @@
                 }else{
                     // sessionKey 不匹配 需要记录
                     if($flagIsseller == "1"){
-                        $retval = mysqli_query($connToMysql, "INSERT INTO session_record (sessionkey, time_session, flag_isseller, id_seller)VALUES('$sessionKey', NOW(), '$flagIsseller', '$idSeller')");
+                        $retval = mysqli_query($connToMysql, "INSERT INTO session_record (sessionkey, time_session, flag_isseller, id_seller)VALUES('$sessionKey', NOW(), '$flagIsseller', '$sellerId')");
                     }else{
                         $retval = mysqli_query($connToMysql, "INSERT INTO session_record (sessionkey, time_session, flag_isseller)VALUES('$sessionKey', NOW(), '$flagIsseller')");
                     }
@@ -110,7 +116,7 @@
             // echo json_encode($resultArray);
         }else if($_GET['query'] == "seller_list"){ // (Q03) 商家列表请求
             // 查询列表记录数量
-            $retval = mysqli_query($connToMysql, "SELECT COUNT(*) FROM seller_list");
+            $retval = mysqli_query($connToMysql, "SELECT COUNT(*) FROM seller_list WHERE mon_balance > 0");
             if(!$retval){
                 // 列表记录为0
                 $seller_listSuccess = "fail";
@@ -123,7 +129,7 @@
                 $row = mysqli_fetch_array($retval, MYSQLI_NUM);
                 $resultArray['count'] = $row[0];
                 // 查询列表内容
-                $retval = mysqli_query($connToMysql, "SELECT id_seller, name_seller, path_photo FROM seller_list");
+                $retval = mysqli_query($connToMysql, "SELECT id_seller, name_seller, path_photo FROM seller_list WHERE mon_balance > 0");
                 // 组成返回JSON
                 $sellerArray = array();
                 $i = '1';
@@ -136,12 +142,14 @@
             // echo json_encode($resultArray);
         }else if($_GET['query'] == "menu"){ // (Q04) 菜单请求
             $sellerId = $_GET['sellerId'];
-            $sql = "SELECT json_menu FROM seller_list WHERE id_seller = $sellerId";
+            $sql = "SELECT json_menu FROM seller_list WHERE id_seller = $sellerId AND mon_balance > 0";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
-            $resultArray = array();
-            $resultArray['menuSuccess'] = 'success';
-            $resultArray['menuContent'] = json_decode($row[0]);
+            if($row != NULL){
+                $resultArray = array('menuSuccess' => 'success', 'menuContent' => json_decode($row[0]));
+            }else{
+                $resultArray = array('menuSuccess' => 'fail', 'failMsg' => 'Illegal Seller Error');
+            }
         }else if($_GET['query'] == "fetch"){ // (Q05) 取号
             // 获得商家id
             $sessionKey = $_GET['sessionKey'];
@@ -149,6 +157,11 @@
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             $sellerId = $row[0];
+            // 获取商家注册日期
+            $sql = "SELECT mon_balance FROM seller_list WHERE id_seller = $sellerId";
+            $retval = mysqli_query($connToMysql, $sql);
+            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            $balance = $row[0];
             // 查询数据库可用Sn
             $sql = "SELECT sn_march FROM order_list WHERE id_seller = $sellerId";
             $retval = mysqli_query($connToMysql, $sql);
@@ -185,7 +198,10 @@
                 }
             }
             // 响应
-            if($validSn != 0){
+            if($balance == 0){
+                // 可用月数余额不足
+                $resultArray = array('fetchSuccess' => 'fail', 'failMsg' => 'Out Of Duty Error');
+            }else if($validSn != 0){
                 $resultArray = array('fetchSuccess' => 'success', 'marchSn' => $validSn);
                 // 插入数据库
                 $sessionKey = $_GET['sessionKey'];

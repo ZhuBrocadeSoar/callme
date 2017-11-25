@@ -44,7 +44,8 @@ https://callme.brocadesoar.cn/?
 
 				{
 					"loginSuccess" : "success",
-					"sessionKey" : sessionKey
+					"sessionKey" : sessionKey,
+                    "balanceMon" : balanceMon
 				}
 
 			- (Q01R01) 接口错误(code换取openid和session_key时出错)响应JSON
@@ -155,6 +156,13 @@ https://callme.brocadesoar.cn/?
 			"fetchSuccess" : "fail",
 			"failMsg" : failMsg
 		}
+
+        - (Q05R02) 到期错误响应JSON
+
+        {
+            "fetchSuccess" : "fail",
+            "failMsg" : "Due Date Error"
+        }
 
 	- (Q06) 商家检查关联情况，备注请求JSON
 
@@ -274,6 +282,26 @@ https://callme.brocadesoar.cn/?
 		""
 	}
 
+    - (Q13) 管理员登陆判断请求JSON
+
+    {
+        "query" : "admin",
+        "sessionKey" : sessionKey
+    }
+
+        - (Q13R00) 登陆者为管理员响应JSON
+
+        {
+            "adminSuccess" : "success"
+        }
+
+        - (Q13R01) 登陆者不是管理员响应JSON
+
+        {
+            "adminSuccess" : "fail",
+            "failMsg" : "Not Admin Error"
+        }
+
 
 # 开发日记
 
@@ -298,6 +326,8 @@ https://callme.brocadesoar.cn/?
 + 2017-11-24 20:52:00 将note请求改为传回两个列表
 
 + 2017-11-24 21:36:00 改为了独立号码池，每个号码池为1-99
+
++ 2017-11-25 21:48:00 需要新增几个请求和响应，fetch 判断过期 login 返回到期时间 商家提交信息 管理员登陆判断 管理员号码购买日期输入 注册暂时表
 
 # 参考
 
