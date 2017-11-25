@@ -277,6 +277,12 @@
                 $resultArray = array('hungrySuccess' => 'fail', 'failMsg' => 'Not Ready Yet');
             }
         }else if($_GET['query'] == "call"){ // (Q09) 卖家叫号
+            // 获得商家id
+            $sessionKey = $_GET['sessionKey'];
+            $sql = "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'";
+            $retval = mysqli_query($connToMysql, $sql);
+            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            $sellerId = $row[0];
             $marchSn = $_GET['marchSn'];
             $sql = "UPDATE order_list SET flag_done = '1' WHERE sn_march = $marchSn AND id_seller = '$sellerId'";
             $retval = mysqli_query($connToMysql, $sql);
