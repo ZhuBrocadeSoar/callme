@@ -61,6 +61,11 @@
                     $sellerJustice = true;
                     $flagIsseller = "1";
                     $sellerId = $row[0];
+                    // 查询余额
+                    $sql = "SELECT mon_balance FROM seller_list WHERE id_seller = $sellerId";
+                    $retval = mysqli_query($connToMysql, $sql);
+                    $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+                    $balanceMon = $row[0];
                     //$sessionR
                 }else{
                     $sellerJustice = false;
@@ -88,11 +93,6 @@
                 $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg /*, 'testOpenid' => $loginInfo['openid'], 'testHashOpenid' => sha1($loginInfo['openid'])*/);
             }else{
                 // 商家id匹配
-                // 查询余额
-                $sql = "SELECT mon_balance FROM seller_list WHERE id_seller = $sellerId";
-                $retval = mysqli_query($connToMysql, $sql);
-                $row = mysqli_fetch_array($retval, MYSQLI_NUM);
-                $balanceMon = $row[0];
                 // 成功响应
                 $loginSuccess = "success";
                 // 生成3rd_session
@@ -112,8 +112,6 @@
                     }
                 }
             }
-            // 返回json
-            // echo json_encode($resultArray);
         }else if($_GET['query'] == "seller_list"){ // (Q03) 商家列表请求
             // 查询列表记录数量
             $retval = mysqli_query($connToMysql, "SELECT COUNT(*) FROM seller_list WHERE mon_balance > 0");
