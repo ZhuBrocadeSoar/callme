@@ -219,7 +219,7 @@
             $noted = 0;
             $unnotedList = array();
             $unnoted = 0;
-            $sql = "SELECT sn_march, note_order FROM order_list WHERE id_seller = '$sellerId'";
+            $sql = "SELECT sn_march, note_order FROM order_list WHERE id_seller = $sellerId";
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array(); 
             // $i = 0; // test
@@ -255,7 +255,7 @@
                     $resultArray = array('pushSuccess' => 'fail', 'failMsg' => 'Taken Error');
                 }else{
                     // 没有备注
-                    $sql2 = "UPDATE order_list SET note_order = '$noteContent' WHERE sn_march = $marchSn AND id_seller = '$sellerId'";
+                    $sql2 = "UPDATE order_list SET note_order = '$noteContent' WHERE sn_march = $marchSn AND id_seller = $sellerId";
                     $retval = mysqli_query($connToMysql, $sql2);
                     $mysqlierror = mysqli_error();
                     $resultArray = array('pushSuccess' => 'success' /*, 'testMsg1' => $sql2, 'testMsg2' => $retval, 'testMsg3' => $mysqlierror*/);
@@ -267,7 +267,7 @@
         }else if($_GET['query'] == "hungry"){ // (Q08) 买家查询是否可以取餐
             $sellerId = $_GET['sellerId'];
             $marchSn = $_GET['marchSn'];
-            $sql = "SELECT flag_done FROM order_list WHERE sn_march = $marchSn AND id_seller = '$sellerId'";
+            $sql = "SELECT flag_done FROM order_list WHERE sn_march = $marchSn AND id_seller = $sellerId";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             if($row[0] == "1"){
@@ -285,7 +285,7 @@
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             $sellerId = $row[0];
             $marchSn = $_GET['marchSn'];
-            $sql = "UPDATE order_list SET flag_done = '1' WHERE sn_march = $marchSn AND id_seller = '$sellerId'";
+            $sql = "UPDATE order_list SET flag_done = '1' WHERE sn_march = $marchSn AND id_seller = $sellerId";
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array('callSuccess' => 'success');
         }else if($_GET['query'] == "done"){ // (Q10) 买家有意识或无意识完成订单
