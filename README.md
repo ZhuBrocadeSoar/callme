@@ -206,7 +206,8 @@ https://callme.brocadesoar.cn/?
 	{
 		"query" : "hungry",
 		"sessionKey" : sessionKey,
-		"marchSn" : marchSn
+		"marchSn" : marchSn,
+        "sellerId" : sellerId
 	}
 
 		- (Q08R00) 餐完成响应JSON
@@ -241,7 +242,8 @@ https://callme.brocadesoar.cn/?
 	{
 		"query" : "done",
 		"sessionKey" : sessionKey,
-		"marchSn" : marchSn
+		"marchSn" : marchSn,
+        "sellerId" : sellerId
 	}
 
 		- (Q10R00) 结束订单成功响应JSON
