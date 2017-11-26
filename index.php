@@ -360,7 +360,7 @@
                 $resultArray = array('queryErr' => 'Session Time Out');
             }
         }
-        echo json_encode($resultArray, JSON_FORCE_OBJECT); // (Response) 响应
+        echo json_encode($resultArray/*, JSON_FORCE_OBJECT*/); // (Response) 响应
     }else{
         // 无请求
     }

@@ -358,6 +358,8 @@ https://callme.brocadesoar.cn/?
 
 + 2017-11-26 01:09:05 后续还应考虑图片上传的请求 image 和menu的格式组成问题
 
++ 2017-11-27 12:59:45 login 返回余额测试 ，管理员登陆测试，管理员续费操作
+
 # 参考
 
 + NameVirtualHost *:80
