@@ -308,6 +308,46 @@
             $sql = "DELETE FROM order_list WHERE sn_march = $marchSn AND id_seller = $sellerId";
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array('doneSuccess' => 'success');
+        }else if($_GET['query'] == 'info'){ // (Q12) 商家提交信息请求
+        }else if($_GET['query'] == 'admin'){ // (Q13) 登陆管理员请求
+            $sessionKey = $_GET['sessionKey'];
+            $sql = "SELECT id_admin WHERE hash_openid = '$sessionKey'";
+            $retval = mysqli_query($connToMysql, $sql);
+            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            if($row != NULL){
+                $resultArray = array('adminSuccess' => 'success');
+            }else{
+                $resultArray = array('adminSuccess' => 'fail', 'failMsg' => 'Not Admin Error');
+            }
+        }else if($_GET['query'] == 'renew'){ // (Q14) 管理员续费请求
+            $sessionKey = $_GET['sessionKey'];
+            $telNum = $_GET['telNum'];
+            $term = $_GET['term'];
+            // 查询资格
+            $sql = "SELECT id_admin WHERE hash_openid = '$sessionKey'";
+            $retval = mysqli_query($connToMysql, $sql);
+            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            if($row != NULL){
+                // 是管理员
+                $resultArray = array('renewSuccess' => 'success');
+                // renew process
+                // 判断是否是新注册的
+                $sql = "SELECT id_seller FROM seller_list WHERE tel_banding = '$telNum'";
+                $retval = mysqli_query($connToMysql, $sql);
+                $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+                if($row != NULL){
+                    // 续费的
+                    $sql = "UPDATE seller_list SET mon_balance = mon_balance + $term WHERE tel_banding = '$telNum'";
+                }else{
+                    // 注册的
+                    $sql = "INSERT INTO seller_list (tel_banding, mon_balance) VALUES ('$telNum', $term)";
+                }
+                $retval = mysqli_query($connToMysql, $sql);
+                $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            }else{
+                // 不是管理员
+                $resultArray = array('renewSuccess' => 'fail', 'failMsg' => 'Not Admin Error');
+            }
         }else{ // 未知的请求
             $flagQueryErr = true;
         }

@@ -302,6 +302,14 @@ https://callme.brocadesoar.cn/?
             "failMsg" : "Not Admin Error"
         }
 
+    - (Q14) 管理员续费请求JSON
+
+    {
+        "query" : "renew",
+        "telNum" : telNum,
+        "term" : term
+    }
+
 
 # 开发日记
 
@@ -336,4 +344,10 @@ https://callme.brocadesoar.cn/?
 + NameVirtualHost *:443
 
 + CREATE EVENT timeout30min ON SCHEDULE EVERY 1 MINUTE STARTS TIMESTAMP '2017-11-12 00:00:00' DO DELETE FROM session_record WHERE TIMEDIFF(NOW(), time_session) > '00:00:01';
+
++ CREATE EVENT balancedown ON SCHEDULE EVERY 1 MONTH DO UPDATE seller_list SET mon_balance = mon_balance - 1 WHERE mon_balance > 0; 
+
++ SHOW VARIABLES LIKE 'EVENT_SCHEDULER';
+
++ SET GLOBAL EVENT_SCHEDULER = 1;
 
