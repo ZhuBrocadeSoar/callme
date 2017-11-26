@@ -48,7 +48,7 @@
             curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($connToWxApi, CURLOPT_HEADER, true);
             $response = curl_exec($connToWxApi);
-            echo $response;
+            // echo $response;
             // 分割响应头只保留body的JSON
             $loginInfoJson = substr($response, curl_POSTinfo($connToWxApi, CURLINFO_HEADER_SIZE));
             echo $loginInfoJson;
