@@ -50,11 +50,9 @@
             $response = curl_exec($connToWxApi);
             // echo $response;
             // 分割响应头只保留body的JSON
-            $loginInfoJson = substr($response, curl_POSTinfo($connToWxApi, CURLINFO_HEADER_SIZE));
-            echo $loginInfoJson;
+            $loginInfoJson = substr($response, curl_getinfo($connToWxApi, CURLINFO_HEADER_SIZE));
             // JSON 解码为数组
             $loginInfo = json_decode($loginInfoJson, true);
-            echo json_encode($loginInfo);
             // 判断是否为商家请求
             if($_POST['isseller'] == "yes"){
                 // 查询数据库获得是否匹配openid
@@ -116,7 +114,6 @@
                     }
                 }
             }
-            // $resultArray = $loginInfo;
         }else if($_POST['query'] == "seller_list"){ // (Q03) 商家列表请求
             // 查询列表记录数量
             $retval = mysqli_query($connToMysql, "SELECT COUNT(*) FROM seller_list WHERE mon_balance > 0");
