@@ -48,6 +48,7 @@
             curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($connToWxApi, CURLOPT_HEADER, true);
             $response = curl_exec($connToWxApi);
+            echo $response;
             // 分割响应头只保留body的JSON
             $loginInfoJson = substr($response, curl_POSTinfo($connToWxApi, CURLINFO_HEADER_SIZE));
             // JSON 解码为数组
@@ -113,7 +114,7 @@
                     }
                 }
             }
-            $resultArray = $loginInfo;
+            // $resultArray = $loginInfo;
         }else if($_POST['query'] == "seller_list"){ // (Q03) 商家列表请求
             // 查询列表记录数量
             $retval = mysqli_query($connToMysql, "SELECT COUNT(*) FROM seller_list WHERE mon_balance > 0");
