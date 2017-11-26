@@ -1,17 +1,17 @@
 <?php
-    //$_GET['query'] = "seller_list"; // 测试
+    //$_POST['query'] = "seller_list"; // 测试
     // 连接数据库
     $connToMysql = mysqli_connect("localhost", "nitmaker_cn", "nitmaker.cn", "callme");
     // 处理请求
-    if(isset($_GET['query']) /*&& isset($_GET['sessionkey'])*/){
+    if(isset($_POST['query']) /*&& isset($_POST['sessionkey'])*/){
         // 是不是login请求
         $sessionTimeOut = false;
-        if($_GET['query'] == "login"){
+        if($_POST['query'] == "login"){
             // 登陆请求合法
             $flagQueryErr = false;
-        }else if(isset($_GET['sessionKey'])){
+        }else if(isset($_POST['sessionKey'])){
             // 包含sessionKey 合法，检查session有效
-            $sessionKey = $_GET['sessionKey'];
+            $sessionKey = $_POST['sessionKey'];
             $retval = mysqli_query($connToMysql, "SELECT flag_isseller FROM session_record WHERE sessionKey = '$sessionKey' ");
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             if($row != NULL){
@@ -25,9 +25,10 @@
             // 不包含sessionKey 不合法
             $flagQueryErr = true;
         }
-        if($_GET['query'] == "login"){ // (Q00) 登陆请求
+        // 处理请求
+        if($_POST['query'] == "login"){ // (Q00) 登陆请求
             // 决定使用哪个小程序信息
-            if($_GET['isseller']){
+            if($_POST['isseller']){
                 $idWxAppInfo = 2;
             }else{
                 $idWxAppInfo = 1;
@@ -38,7 +39,7 @@
             // 设置code换取openid和session_key的API参数
             $wxappid = $row[0];
             $wxsecret = $row[1];
-            $wxcode = $_GET['code'];
+            $wxcode = $_POST['code'];
             $wxgrantType = "authorization_code";
             // curl 调用API
             $connToWxApi = curl_init();
@@ -48,11 +49,11 @@
             curl_setopt($connToWxApi, CURLOPT_HEADER, true);
             $response = curl_exec($connToWxApi);
             // 分割响应头只保留body的JSON
-            $loginInfoJson = substr($response, curl_getinfo($connToWxApi, CURLINFO_HEADER_SIZE));
+            $loginInfoJson = substr($response, curl_POSTinfo($connToWxApi, CURLINFO_HEADER_SIZE));
             // JSON 解码为数组
             $loginInfo = json_decode($loginInfoJson, true);
             // 判断是否为商家请求
-            if($_GET['isseller'] == "yes"){
+            if($_POST['isseller'] == "yes"){
                 // 查询数据库获得是否匹配openid
                 $hashopenid = sha1($loginInfo['openid']);
                 $retval = mysqli_query($connToMysql, "SELECT id_seller FROM seller_list WHERE hash_openid = '$hashopenid' ");
@@ -86,7 +87,7 @@
                 $loginSuccess = "fail";
                 $failMsg = "Login Error";
                 $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg);
-            }else if($_GET['isseller'] == "yes" && $sellerJustice == false){
+            }else if($_POST['isseller'] == "yes" && $sellerJustice == false){
                 // 商家id不匹配错误
                 $loginSuccess = "fail";
                 $failMsg = "Seller Openid Error";
@@ -112,7 +113,7 @@
                     }
                 }
             }
-        }else if($_GET['query'] == "seller_list"){ // (Q03) 商家列表请求
+        }else if($_POST['query'] == "seller_list"){ // (Q03) 商家列表请求
             // 查询列表记录数量
             $retval = mysqli_query($connToMysql, "SELECT COUNT(*) FROM seller_list WHERE mon_balance > 0");
             if(!$retval){
@@ -138,8 +139,8 @@
                 $resultArray['list'] = $sellerArray;
             }
             // echo json_encode($resultArray);
-        }else if($_GET['query'] == "menu"){ // (Q04) 菜单请求
-            $sellerId = $_GET['sellerId'];
+        }else if($_POST['query'] == "menu"){ // (Q04) 菜单请求
+            $sellerId = $_POST['sellerId'];
             $sql = "SELECT json_menu FROM seller_list WHERE id_seller = $sellerId AND mon_balance > 0";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
@@ -148,9 +149,9 @@
             }else{
                 $resultArray = array('menuSuccess' => 'fail', 'failMsg' => 'Illegal Seller Error');
             }
-        }else if($_GET['query'] == "fetch"){ // (Q05) 取号
+        }else if($_POST['query'] == "fetch"){ // (Q05) 取号
             // 获得商家id
-            $sessionKey = $_GET['sessionKey'];
+            $sessionKey = $_POST['sessionKey'];
             $sql = "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
@@ -202,7 +203,7 @@
             }else if($validSn != 0){
                 $resultArray = array('fetchSuccess' => 'success', 'marchSn' => $validSn);
                 // 插入数据库
-                $sessionKey = $_GET['sessionKey'];
+                $sessionKey = $_POST['sessionKey'];
                 $flag_done = "0";
                 $sql2 = "INSERT INTO order_list (sn_march, session_key_seller, flag_done, id_seller) VALUES ($validSn, '$sessionKey', '$flag_done', $sellerId)";
                 $retval = mysqli_query($connToMysql, $sql2);
@@ -210,15 +211,15 @@
             }else{
                 $resultArray = array('fetchSuccess' => 'fail', 'failMsg' => 'No Sn Valid');
             }
-        }else if($_GET['query'] == "note"){ // (Q06) 商家检查关联，获取备注
+        }else if($_POST['query'] == "note"){ // (Q06) 商家检查关联，获取备注
             // 获得商家id
-            $sessionKey = $_GET['sessionKey'];
+            $sessionKey = $_POST['sessionKey'];
             $sql = "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             $sellerId = $row[0];
             /*
-            $marchSn = $_GET['marchSn'];
+            $marchSn = $_POST['marchSn'];
             $sql = "SELECT note_order FROM order_list WHERE id_order = $marchSn";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
@@ -255,10 +256,10 @@
             // $resultArray = array('noteSuccess' => 'success', 'orderList' => $orderList);
             $resultArray['noteSuccess'] = 'success';
             $resultArray['orderList'] = $orderList; 
-        }else if($_GET['query'] == "push"){ // (Q07) 买家推送备注
-            $sellerId = $_GET['sellerId'];
-            $marchSn = $_GET['marchSn'];
-            $noteContent = $_GET['noteContent'];
+        }else if($_POST['query'] == "push"){ // (Q07) 买家推送备注
+            $sellerId = $_POST['sellerId'];
+            $marchSn = $_POST['marchSn'];
+            $noteContent = $_POST['noteContent'];
             $sql1 = "SELECT note_order FROM order_list WHERE sn_march = $marchSn AND id_seller = $sellerId";
             $retval = mysqli_query($connToMysql, $sql1);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
@@ -278,9 +279,9 @@
                 // 无此记录
                 $resultArray = array('pushSuccess' => 'fail', 'failMsg' => 'Invalid Sn Error');
             }
-        }else if($_GET['query'] == "hungry"){ // (Q08) 买家查询是否可以取餐
-            $sellerId = $_GET['sellerId'];
-            $marchSn = $_GET['marchSn'];
+        }else if($_POST['query'] == "hungry"){ // (Q08) 买家查询是否可以取餐
+            $sellerId = $_POST['sellerId'];
+            $marchSn = $_POST['marchSn'];
             $sql = "SELECT flag_done FROM order_list WHERE sn_march = $marchSn AND id_seller = $sellerId";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
@@ -291,26 +292,26 @@
                 // 餐未完成
                 $resultArray = array('hungrySuccess' => 'fail', 'failMsg' => 'Not Ready Yet');
             }
-        }else if($_GET['query'] == "call"){ // (Q09) 卖家叫号
+        }else if($_POST['query'] == "call"){ // (Q09) 卖家叫号
             // 获得商家id
-            $sessionKey = $_GET['sessionKey'];
+            $sessionKey = $_POST['sessionKey'];
             $sql = "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             $sellerId = $row[0];
-            $marchSn = $_GET['marchSn'];
+            $marchSn = $_POST['marchSn'];
             $sql = "UPDATE order_list SET flag_done = '1' WHERE sn_march = $marchSn AND id_seller = $sellerId";
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array('callSuccess' => 'success');
-        }else if($_GET['query'] == "done"){ // (Q10) 买家有意识或无意识完成订单
-            $sellerId = $_GET['sellerId'];
-            $marchSn = $_GET['marchSn'];
+        }else if($_POST['query'] == "done"){ // (Q10) 买家有意识或无意识完成订单
+            $sellerId = $_POST['sellerId'];
+            $marchSn = $_POST['marchSn'];
             $sql = "DELETE FROM order_list WHERE sn_march = $marchSn AND id_seller = $sellerId";
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array('doneSuccess' => 'success');
-        }else if($_GET['query'] == 'signup'){
-            $sessionKey = $_GET['sessionKey'];
-            $telNum = $_GET['telNum'];
+        }else if($_POST['query'] == 'signup'){
+            $sessionKey = $_POST['sessionKey'];
+            $telNum = $_POST['telNum'];
             $sql = "SELECT mon_balance FROM seller_list WHERE tel_banding = '$telNum'";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
@@ -329,8 +330,8 @@
                 // 无记录
                 $resultArray = array('signupSuccess' => 'fail', 'failMsg' => 'Invalid Tel Error');
             }
-        }else if($_GET['query'] == 'info'){ // (Q12) 商家提交信息请求
-            $sessionKey = $_GET['sessionKey'];
+        }else if($_POST['query'] == 'info'){ // (Q12) 商家提交信息请求
+            $sessionKey = $_POST['sessionKey'];
             // 获取商家信息
             $sql = "SELECT name_seller, path_photo, json_menu FROM seller_list WHERE hash_openid = '$sessionKey'";
             $retval = mysqli_query($connToMysql, $sql);
@@ -343,8 +344,8 @@
             }else{
                 $resultArray = array('infoSuccess' => 'fail', 'failMsg' => 'Invalid Session Error');
             }
-        }else if($_GET['query'] == 'admin'){ // (Q13) 登陆管理员请求
-            $sessionKey = $_GET['sessionKey'];
+        }else if($_POST['query'] == 'admin'){ // (Q13) 登陆管理员请求
+            $sessionKey = $_POST['sessionKey'];
             $sql = "SELECT id_admin FROM admin_list WHERE hash_openid = '$sessionKey'";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
@@ -353,10 +354,10 @@
             }else{
                 $resultArray = array('adminSuccess' => 'fail', 'failMsg' => 'Not Admin Error');
             }
-        }else if($_GET['query'] == 'renew'){ // (Q14) 管理员续费请求
-            $sessionKey = $_GET['sessionKey'];
-            $telNum = $_GET['telNum'];
-            $term = $_GET['term'];
+        }else if($_POST['query'] == 'renew'){ // (Q14) 管理员续费请求
+            $sessionKey = $_POST['sessionKey'];
+            $telNum = $_POST['telNum'];
+            $term = $_POST['term'];
             // 查询资格
             $sql = "SELECT id_admin FROM admin_list WHERE hash_openid = '$sessionKey'";
             $retval = mysqli_query($connToMysql, $sql);
@@ -395,8 +396,33 @@
             }
         }
         echo json_encode($resultArray/*, JSON_FORCE_OBJECT*/); // (Response) 响应
-    }else{
-        // 无请求
+    }else if(isset($_POST['query'])){ // post请求
+        /*
+        // 是不是login请求
+        $sessionTimeOut = false;
+        if($_POST['query'] == "login"){
+            // 登陆请求合法
+            $flagQueryErr = false;
+        }else if(isset($_POST['sessionKey'])){
+            // 包含sessionKey 合法，检查session有效
+            $sessionKey = $_POST['sessionKey'];
+            $retval = mysqli_query($connToMysql, "SELECT flag_isseller FROM session_record WHERE sessionKey = '$sessionKey' ");
+            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            if($row != NULL){
+                // sessionKey 匹配
+            }else{
+                // sessionKey 不匹配
+                $sessionTimeOut = true;
+            }
+            $flagQueryErr = false;
+        }else{
+            // 不包含sessionKey 不合法
+            $flagQueryErr = true;
+        }
+        // 处理请求
+        if($_POST['query'] == "update"){
+        }
+         */
     }
 ?>
 
