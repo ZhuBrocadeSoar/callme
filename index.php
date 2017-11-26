@@ -53,6 +53,7 @@
             $loginInfoJson = substr($response, curl_POSTinfo($connToWxApi, CURLINFO_HEADER_SIZE));
             // JSON 解码为数组
             $loginInfo = json_decode($loginInfoJson, true);
+            echo json_encode($loginInfo);
             // 判断是否为商家请求
             if($_POST['isseller'] == "yes"){
                 // 查询数据库获得是否匹配openid
