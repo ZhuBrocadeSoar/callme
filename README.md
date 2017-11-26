@@ -17,6 +17,8 @@ mysql\> USE callme;
 
 ![mysql> SHOW TABLES](https://github.com/ZhuBrocadeSoar/callme/blob/master/images/build/tables.png)
 
+![mysql> SHOW EVENTS](https://github.com/ZhuBrocadeSoar/callme/blob/master/images/build/events.png)
+
 ![mysql> DESC wxapp_info](https://github.com/ZhuBrocadeSoar/callme/blob/master/images/build/wxapp_info.png)
 
 ![mysql> DESC seller_list](https://github.com/ZhuBrocadeSoar/callme/blob/master/images/build/seller_list.png)
@@ -24,6 +26,8 @@ mysql\> USE callme;
 ![mysql> DESC session_record](https://github.com/ZhuBrocadeSoar/callme/blob/master/images/build/session_record.png)
 
 ![mysql> DESC order_list](https://github.com/ZhuBrocadeSoar/callme/blob/master/images/build/order_list.png)
+
+![mysql> DESC admin_list](https://github.com/ZhuBrocadeSoar/callme/blob/master/images/build/admin_list.png)
 
 # 接口记录
 
@@ -274,7 +278,7 @@ https://callme.brocadesoar.cn/?
 			"signupSuccess" : "success"
 		}
 
-	- (Q12) 商家提交信息
+	- (Q12) 商家提交信息(未完成)
 
 	{
 		"query" : "info",
@@ -310,6 +314,19 @@ https://callme.brocadesoar.cn/?
         "term" : term
     }
 
+        - (Q14R00) 续费成功响应JSON
+
+        {
+            "renewSuccess" : "success"
+        }
+
+        - (Q14R01) 不是管理员错误响应JSON
+
+        {
+            "renewSuccess" : "fail",
+            "failMsg" : "Not Admin Error"
+        }
+
 
 # 开发日记
 
@@ -336,6 +353,10 @@ https://callme.brocadesoar.cn/?
 + 2017-11-24 21:36:00 改为了独立号码池，每个号码池为1-99
 
 + 2017-11-25 21:48:00 需要新增几个请求和响应，fetch 判断过期 login 返回到期时间 商家提交信息 管理员登陆判断 管理员号码购买日期输入 注册暂时表
+
++ 2017-11-26 01:02:15 完成并测试了fetch过期判断，完成login 返回月数余额但未测试，商家提交信息未写，管理员登陆判断完成但未测试，管理员续费操作已完成但未测试
+
++ 2017-11-26 01:09:05 后续还应考虑图片上传的请求 image 和menu的格式组成问题
 
 # 参考
 
