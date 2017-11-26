@@ -113,6 +113,7 @@
                     }
                 }
             }
+            $resultArray = $loginInfo;
         }else if($_POST['query'] == "seller_list"){ // (Q03) 商家列表请求
             // 查询列表记录数量
             $retval = mysqli_query($connToMysql, "SELECT COUNT(*) FROM seller_list WHERE mon_balance > 0");
