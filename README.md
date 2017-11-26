@@ -305,7 +305,16 @@ https://callme.brocadesoar.cn/?
 
         {
             "infoSuccess" : 'success',
-            "infomation" : infomation
+            "sellerName" : sellerName,
+            "imageUrl" : imageUrl,
+            "menuList" : menuList
+        }
+
+        - (Q12R01) session错误
+
+        {
+            "infoSuccess" : "fail",
+            "failMsg" : "Invalid Session Error";
         }
 
     - (Q13) 管理员登陆判断请求JSON
