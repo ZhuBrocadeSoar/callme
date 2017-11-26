@@ -51,6 +51,7 @@
             echo $response;
             // 分割响应头只保留body的JSON
             $loginInfoJson = substr($response, curl_POSTinfo($connToWxApi, CURLINFO_HEADER_SIZE));
+            echo $loginInfoJson;
             // JSON 解码为数组
             $loginInfo = json_decode($loginInfoJson, true);
             echo json_encode($loginInfo);
