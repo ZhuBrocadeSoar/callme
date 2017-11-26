@@ -271,7 +271,7 @@ https://callme.brocadesoar.cn/?
     {
         "query" : "signup",
         "sessionKey" : sessionKey,
-        "tellNum" : tellNum
+        "telNum" : telNum
     }
 
         - (Q11R00) 录入成功响应JSON
@@ -358,6 +358,15 @@ https://callme.brocadesoar.cn/?
             "renewSuccess" : "fail",
             "failMsg" : "Not Admin Error"
         }
+
+    - (Q15) 商家更新信息
+
+    {
+        "query" : "update",
+        "sessionKey" : sessionKey,
+        "class" : class,
+        "content" : content
+    }
 
 
 # 开发日记
