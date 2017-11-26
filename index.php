@@ -340,8 +340,9 @@
             if($row != NULL){
                 $sellerName = $row[0];
                 $imageUrl = $row[1];
-                // $menuList = $row[2];
-                $menuList = array(0 => $row[2]);
+                $menuList = $row[2];
+                $menuList[0] = '[';
+                $menuList[strlen($menuList) - 1] = ']';
                 $resultArray = array('infoSuccess' => 'success', 'sellerName' => $sellerName, 'imageUrl' => $imageUrl, 'menuList' => $menuList);
             }else{
                 $resultArray = array('infoSuccess' => 'fail', 'failMsg' => 'Invalid Session Error');
