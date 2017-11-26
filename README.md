@@ -41,7 +41,8 @@ https://callme.brocadesoar.cn/?
 
 		{
 			"query" : "login",
-			"isseller" : "yes"
+			"isseller" : "yes",
+            "code" : code
 		}
 
 			- (Q01R00) 登陆成功响应JSON
@@ -77,7 +78,8 @@ https://callme.brocadesoar.cn/?
 
 		{
 			"query" : "login",
-			"isseller" : "no"
+			"isseller" : "no",
+            "code" : code
 		}
 
 			- (Q02R00) 登陆成功响应JSON
