@@ -308,6 +308,27 @@
             $sql = "DELETE FROM order_list WHERE sn_march = $marchSn AND id_seller = $sellerId";
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array('doneSuccess' => 'success');
+        }else if($_GET['query'] == 'signup'){
+            $sessionKey = $_GET['sessionKey'];
+            $telNum = $_GET['telNum'];
+            $sql = "SELECT mon_balance FROM seller_list WHERE tel_banding = '$telNum'";
+            $retval = mysqli_query($connToMysql, $sql);
+            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            if($row != NULL){
+                // 有记录
+                if($row[0] == 0){
+                    // 需要续费
+                    $resultArray = array('signupSuccess' => 'fail', 'failMsg' => 'Need Renew Error');
+                }else{
+                    // 匹配成功
+                    $resultArray = array('signupSuccess' => 'success');
+                    $sql = "UPDATE seller_list SET hash_openid = '$sessionKey' WHERE tel_banding = '$telNum'";
+                    $retval = mysqli_query($connToMysql, $sql);
+                }
+            }else{
+                // 无记录
+                $resultArray = array('signupSuccess' => 'fail', 'failMsg' => 'Invalid Tel Error');
+            }
         }else if($_GET['query'] == 'info'){ // (Q12) 商家提交信息请求
         }else if($_GET['query'] == 'admin'){ // (Q13) 登陆管理员请求
             $sessionKey = $_GET['sessionKey'];

@@ -266,7 +266,7 @@ https://callme.brocadesoar.cn/?
             "doneSuccess" : "success"
         }
 
-    - (Q11) 管理员录入请求JSON
+    - (Q11) 商家入驻请求JSON
 
     {
         "query" : "signup",
@@ -280,13 +280,33 @@ https://callme.brocadesoar.cn/?
             "signupSuccess" : "success"
         }
 
-    - (Q12) 商家提交信息(未完成)
+        - (Q11R01) 入驻失败(无该号码记录)响应JSON
+
+        {
+            "signupSuccess" : "fail",
+            "failMsg" : "Invalid Tel Error"
+        }
+
+        - (Q11R02) 入驻失败(需要续费)响应JSON
+
+        {
+            "signupSuccess" : "fail",
+            "failMsg" : "Need Renew Error"
+        }
+
+    - (Q12) 商家获取信息(未完成)
 
     {
         "query" : "info",
         "sessionKey" : sessionKey,
-        ""
     }
+
+        - (Q12R00) 返回已有商家信息
+
+        {
+            "infoSuccess" : 'success',
+            "infomation" : infomation
+        }
 
     - (Q13) 管理员登陆判断请求JSON
 
