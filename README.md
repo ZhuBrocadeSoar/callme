@@ -35,133 +35,133 @@ mysql\> USE callme;
 
 https://callme.brocadesoar.cn/?
 
-	- (Q00) login 
+    - (Q00) login 
 
-		- (Q01) 商家请求JSON
+        - (Q01) 商家请求JSON
 
-		{
-			"query" : "login",
-			"isseller" : "yes",
+        {
+            "query" : "login",
+            "isseller" : "yes",
             "code" : code
-		}
+        }
 
-			- (Q01R00) 登陆成功响应JSON
+            - (Q01R00) 登陆成功响应JSON
 
-				{
-					"loginSuccess" : "success",
-					"sessionKey" : sessionKey,
+                {
+                    "loginSuccess" : "success",
+                    "sessionKey" : sessionKey,
                     "balanceMon" : balanceMon
-				}
+                }
 
-			- (Q01R01) 接口错误(code换取openid和session_key时出错)响应JSON
+            - (Q01R01) 接口错误(code换取openid和session_key时出错)响应JSON
 
-			{
-				"loginSuccess" : "fail",
-				"failMsg" : "API Error"
-			}
+            {
+                "loginSuccess" : "fail",
+                "failMsg" : "API Error"
+            }
 
-			- (Q01R02) 登陆错误(提交的code无效)响应JSON
+            - (Q01R02) 登陆错误(提交的code无效)响应JSON
 
-			{
-				"loginSuccess" : "fail",
-				"failMsg" : "Login Error"
-			}
+            {
+                "loginSuccess" : "fail",
+                "failMsg" : "Login Error"
+            }
 
-			- (Q01R03) 商家匹配错误(商家的openid与数据库记录不匹配)响应JSON
+            - (Q01R03) 商家匹配错误(商家的openid与数据库记录不匹配)响应JSON
 
-			{
-				"loginSuccess" : "fail",
-				"failMsg" : "Seller Openid Error"
-			}
+            {
+                "loginSuccess" : "fail",
+                "failMsg" : "Seller Openid Error"
+            }
 
-		- (Q02) 吃客请求JSON
+        - (Q02) 吃客请求JSON
 
-		{
-			"query" : "login",
-			"isseller" : "no",
+        {
+            "query" : "login",
+            "isseller" : "no",
             "code" : code
-		}
+        }
 
-			- (Q02R00) 登陆成功响应JSON
+            - (Q02R00) 登陆成功响应JSON
 
-			{
-				"loginSuccess" : "success",
-				"sessionKey" : sessionKey
-			}
+            {
+                "loginSuccess" : "success",
+                "sessionKey" : sessionKey
+            }
 
-			- (Q02R01) 接口错误(code换取openid和session_key时出错)响应JSON
+            - (Q02R01) 接口错误(code换取openid和session_key时出错)响应JSON
 
-			{
-				"loginSuccess" : "fail",
-				"failMsg" : "API Error"
-			}
+            {
+                "loginSuccess" : "fail",
+                "failMsg" : "API Error"
+            }
 
-			- (Q02R02) 登陆错误(提交的code无效)响应JSON
+            - (Q02R02) 登陆错误(提交的code无效)响应JSON
 
-			{
-				"loginSuccess" : "fail",
-				"failMsg" : "Login Error"
-			}
+            {
+                "loginSuccess" : "fail",
+                "failMsg" : "Login Error"
+            }
 
-	- (Q03) 吃客请求商家列表请求JSON
+    - (Q03) 吃客请求商家列表请求JSON
 
-	{
-		"query" : "seller_list",
-		"sessionKey" : sessionKey
-	}
+    {
+        "query" : "seller_list",
+        "sessionKey" : sessionKey
+    }
 
-		- (Q03R00) 列表成功响应JSON
+        - (Q03R00) 列表成功响应JSON
 
-		{
-			"seller_listSuccess" : "success",
-			"count" : count,
-			"list" : {
-				list
-			}
-		}
+        {
+            "seller_listSuccess" : "success",
+            "count" : count,
+            "list" : {
+                list
+            }
+        }
 
-		- (Q03R01) 列表错误(无列表)响应JSON
+        - (Q03R01) 列表错误(无列表)响应JSON
 
-		{
-			"seller_listSuccess" : "fail",
-			"failMsg" : "Null List Error"
-		}
+        {
+            "seller_listSuccess" : "fail",
+            "failMsg" : "Null List Error"
+        }
 
-	- (Q04) 吃客获取商家备注列表请求JSON
+    - (Q04) 吃客获取商家备注列表请求JSON
 
-	{
-		"query" : "menu",
-		"sessionKey" : sessionKey,
-		"sellerId" : sellerId
-	}
+    {
+        "query" : "menu",
+        "sessionKey" : sessionKey,
+        "sellerId" : sellerId
+    }
 
-		- (Q04R00) 备注列表响应JSON
+        - (Q04R00) 备注列表响应JSON
 
-		{
-			"menuSuccess" : "success",
-			"menuContent" : menuContant
-		}
+        {
+            "menuSuccess" : "success",
+            "menuContent" : menuContant
+        }
 
-	- (Q05) 商家取号请求JSON
+    - (Q05) 商家取号请求JSON
 
-	{
-		"query" : "fetch",
-		"sessionKey" : sessionKey,
-	}
+    {
+        "query" : "fetch",
+        "sessionKey" : sessionKey,
+    }
 
-		- (Q05R00) 取号成功响应JSON
+        - (Q05R00) 取号成功响应JSON
 
-		{
-			"fetchSuccess" : "success",
-			"marchSn" : marchSn
-		}
+        {
+            "fetchSuccess" : "success",
+            "marchSn" : marchSn
+        }
 
-		- (Q05R01) 取号错误响应JSON
+        - (Q05R01) 取号错误响应JSON
 
-		{
-			"fetchSuccess" : "fail",
-			"failMsg" : failMsg
-		}
+        {
+            "fetchSuccess" : "fail",
+            "failMsg" : failMsg
+        }
 
         - (Q05R02) 到期错误响应JSON
 
@@ -170,123 +170,123 @@ https://callme.brocadesoar.cn/?
             "failMsg" : "Due Date Error"
         }
 
-	- (Q06) 商家检查关联情况，备注请求JSON
+    - (Q06) 商家检查关联情况，备注请求JSON
 
-	{
-		"query" : "note",
-		"sessionKey" : sessionKey,
-		"marchSn" : marchSn
-	}
+    {
+        "query" : "note",
+        "sessionKey" : sessionKey,
+        "marchSn" : marchSn
+    }
 
-		- (Q06R00) 返回两个列表，备注响应JSON
+        - (Q06R00) 返回两个列表，备注响应JSON
 
-		{
-			"noteSuccess" : "success",
-			"noteContent" : noteContent
-		}
+        {
+            "noteSuccess" : "success",
+            "noteContent" : noteContent
+        }
 
-	- (Q07) 买家输入备注，备注提交请求JSON
+    - (Q07) 买家输入备注，备注提交请求JSON
 
-	{
-		"query" : "push",
-		"sessionKey" : sessionKey,
-		"marchSn" : marchSn,
+    {
+        "query" : "push",
+        "sessionKey" : sessionKey,
+        "marchSn" : marchSn,
         "sellerId" : sellerId,
-		"noteContent" : noteContent
-	}
+        "noteContent" : noteContent
+    }
 
-		- (Q07R00) 备注提交成功响应JSON
+        - (Q07R00) 备注提交成功响应JSON
 
-		{
-			"pushSuccess" : "success"
-		}
+        {
+            "pushSuccess" : "success"
+        }
 
-		- (Q07R01) 备注提交失败(号码不匹配)响应JSON
+        - (Q07R01) 备注提交失败(号码不匹配)响应JSON
 
-		{
-			"pushSuccess" : "fail",
-			"failMsg" : "Invalid Sn Error"
-		}
+        {
+            "pushSuccess" : "fail",
+            "failMsg" : "Invalid Sn Error"
+        }
 
-		- (Q07R02) 备注提交失败(备注栏已被填写)响应JSON
+        - (Q07R02) 备注提交失败(备注栏已被填写)响应JSON
 
-		{
-			"pushSuccess" : "fail",
-			"failMsg" : "Taken Error"
-		}
+        {
+            "pushSuccess" : "fail",
+            "failMsg" : "Taken Error"
+        }
 
-	- (Q08) 买家查餐请求JSON
+    - (Q08) 买家查餐请求JSON
 
-	{
-		"query" : "hungry",
-		"sessionKey" : sessionKey,
-		"marchSn" : marchSn,
+    {
+        "query" : "hungry",
+        "sessionKey" : sessionKey,
+        "marchSn" : marchSn,
         "sellerId" : sellerId
-	}
+    }
 
-		- (Q08R00) 餐完成响应JSON
+        - (Q08R00) 餐完成响应JSON
 
-		{
-			"hungrySuccess" : "success"
-		}
+        {
+            "hungrySuccess" : "success"
+        }
 
-		- (Q08R01) 餐未完成响应JSON
+        - (Q08R01) 餐未完成响应JSON
 
-		{
-			"hungrySuccess" : "fail",
-			"failMsg" : "Not Ready Yet"
-		}
+        {
+            "hungrySuccess" : "fail",
+            "failMsg" : "Not Ready Yet"
+        }
 
-	- (Q09) 卖家叫号请求JSON
+    - (Q09) 卖家叫号请求JSON
 
-	{
-		"query" : "call",
-		"sessionKey" : sessionKey,
-		"marchSn" : marchSn
-	}
+    {
+        "query" : "call",
+        "sessionKey" : sessionKey,
+        "marchSn" : marchSn
+    }
 
-		- (Q09R00) 叫号成功响应JSON
+        - (Q09R00) 叫号成功响应JSON
 
-		{
-			"callSuccess" : "success"
-		}
+        {
+            "callSuccess" : "success"
+        }
 
-	- (Q10) 买家(有意识或无意识)结束订单请求JSON
+    - (Q10) 买家(有意识或无意识)结束订单请求JSON
 
-	{
-		"query" : "done",
-		"sessionKey" : sessionKey,
-		"marchSn" : marchSn,
+    {
+        "query" : "done",
+        "sessionKey" : sessionKey,
+        "marchSn" : marchSn,
         "sellerId" : sellerId
-	}
+    }
 
-		- (Q10R00) 结束订单成功响应JSON
+        - (Q10R00) 结束订单成功响应JSON
 
-		{
-			"doneSuccess" : "success"
-		}
+        {
+            "doneSuccess" : "success"
+        }
 
-	- (Q11) 管理员录入请求JSON
+    - (Q11) 管理员录入请求JSON
 
-	{
-		"query" : "signup",
-		"sessionKey" : sessionKey,
-		"tellNum" : tellNum
-	}
+    {
+        "query" : "signup",
+        "sessionKey" : sessionKey,
+        "tellNum" : tellNum
+    }
 
-		- (Q11R00) 录入成功响应JSON
+        - (Q11R00) 录入成功响应JSON
 
-		{
-			"signupSuccess" : "success"
-		}
+        {
+            "signupSuccess" : "success"
+        }
 
-	- (Q12) 商家提交信息(未完成)
+    - (Q12) 商家提交信息(未完成)
 
-	{
-		"query" : "info",
-		"sessionKey" : sessionKey,
-		""
-	}
+    {
+        "query" : "info",
+        "sessionKey" : sessionKey,
+        ""
+    }
 
     - (Q13) 管理员登陆判断请求JSON
 
