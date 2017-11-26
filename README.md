@@ -364,8 +364,9 @@ https://callme.brocadesoar.cn/?
     {
         "query" : "update",
         "sessionKey" : sessionKey,
-        "class" : class,
-        "content" : content
+        "sellerName" : sellerName,
+        "imageName" : imageName,
+        "menuList" : menuList
     }
 
 

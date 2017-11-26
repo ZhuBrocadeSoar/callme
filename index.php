@@ -340,7 +340,8 @@
             if($row != NULL){
                 $sellerName = $row[0];
                 $imageUrl = $row[1];
-                $menuList = $row[2];
+                // $menuList = $row[2];
+                $menuList = array(0 => $row[2]);
                 $resultArray = array('infoSuccess' => 'success', 'sellerName' => $sellerName, 'imageUrl' => $imageUrl, 'menuList' => $menuList);
             }else{
                 $resultArray = array('infoSuccess' => 'fail', 'failMsg' => 'Invalid Session Error');
@@ -384,6 +385,36 @@
                 // 不是管理员
                 $resultArray = array('renewSuccess' => 'fail', 'failMsg' => 'Not Admin Error');
             }
+        }else if($_POST['query'] == 'update'){
+            $sessionKey = $_POST['sessionKey'];
+            $sellerName = $_POST['sellerName'];
+            $imageName = $_POST['imageName'];
+            $menuList = $_POST['menuList'];
+            // 检查商家id
+            $sql = "SELECT id_seller, mon_balance WHERE hash_openid = '$sessionKey'";
+            $retval = mysqli_query($connToMysql, $sql);
+            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            if($row != NULL){
+                // sessionkey匹配
+                $sellerId = $row[0];
+                $balanceMon = $row[1];
+                if($balanceMon > 0){
+                    // 还有余额
+                    $resultArray = array('updateSuccess' => 'success');
+                    // 图片检查
+                    if($_FILE[$imageName]['size'] <= (512 * 1024)){
+                        // 在限制范围内
+                    }else{
+                        // 不再范围内
+                    }
+                }else{
+                    // 没有余额
+                    $resultArray = array('updateSuccess' => 'fail', 'failMsg' => 'Need Renew Error');
+                }
+            }else{
+                // sessionKey不匹配
+                $resultArray = array('updateSuccess' => 'fail', 'failMsg' => 'Need Signup Error');
+            }
         }else{ // 未知的请求
             $flagQueryErr = true;
         }
@@ -397,8 +428,7 @@
             }
         }
         echo json_encode($resultArray/*, JSON_FORCE_OBJECT*/); // (Response) 响应
-    }else if(isset($_POST['query'])){ // post请求
-        /*
+    }/*else if(isset($_POST['query'])){ // post请求
         // 是不是login请求
         $sessionTimeOut = false;
         if($_POST['query'] == "login"){
@@ -423,7 +453,6 @@
         // 处理请求
         if($_POST['query'] == "update"){
         }
-         */
-    }
+    }*/
 ?>
 
