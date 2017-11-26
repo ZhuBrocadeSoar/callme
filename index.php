@@ -311,7 +311,7 @@
         }else if($_GET['query'] == 'info'){ // (Q12) 商家提交信息请求
         }else if($_GET['query'] == 'admin'){ // (Q13) 登陆管理员请求
             $sessionKey = $_GET['sessionKey'];
-            $sql = "SELECT id_admin WHERE hash_openid = '$sessionKey'";
+            $sql = "SELECT id_admin FROM admin_list WHERE hash_openid = '$sessionKey'";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             if($row != NULL){
@@ -324,7 +324,7 @@
             $telNum = $_GET['telNum'];
             $term = $_GET['term'];
             // 查询资格
-            $sql = "SELECT id_admin WHERE hash_openid = '$sessionKey'";
+            $sql = "SELECT id_admin FROM admin_list WHERE hash_openid = '$sessionKey'";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             if($row != NULL){
