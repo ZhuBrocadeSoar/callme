@@ -426,13 +426,50 @@
                 $balanceMon = $row[1];
                 if($balanceMon > 0){
                     // 还有余额
-                    $resultArray = array('updateSuccess' => 'success');
                     // 检查是否上传图片
                     if(is_uploaded_file($_FILES[$imageName]['tmp_name'])){
-                        // 上传了图片
-                        // 检查图片大小
+                        // 上传了文件
+                        // 检查图片大小 和保存操作
+                        if($_FILES[$imageName]['size'] <= (512 * 1024)){
+                            // 大小符合
+                            // 保存名
+                            $saveName = $sellerId . '.png';
+                            // 检查存在性并保存
+                            if(file_exists('/images/seller/' . $saveName)){
+                                // 删除已存在
+                                if(!unlink('/images/seller/' . $saveName)){
+                                    $imageSavedFlag2 = 1;
+                                }else{
+                                    $imageSavedFlag2 = 0;
+                                    // 保存
+                                    if(!move_uploaded_file($_FILES[$imageName]['tmp_name'], '/images/seller/' . $saveName)){
+                                        $imageSavedFlag2 = 2;
+                                    }else{
+                                        $imageSavedFlag2 = 0;
+                                    }
+                                }
+                            }else{
+                                // 保存 
+                                if(!move_uploaded_file($_FILES[$imageName]['tmp_name'], '/images/seller/' . $saveName)){
+                                    $imageSavedFlag2 = 3;
+                                }else{
+                                    $imageSavedFlag2 = 0;
+                                }
+                            }
+                            $imageSavedFlag = $imageSavedFlag2;
+                        }else{
+                            // 大小不符合
+                            $imageSavedFlag = 4;
+                        }
+                        if($imageSavedFlag){
+                            $resultArray = array('updateSuccess' => 'success', 'updateImageSuccess' => 'success');
+                        }else{
+                            $imageSavedErrors = array('No Error', 'Unlink Error', 'Move 1 Error', 'Move 2 Error', 'Size Error');
+                            $resultArray = array('updateSuccess' => 'success', 'updateImageSuccess' => 'fail', 'failMsg' => $imageSavedErrors);
+                        }
                     }else{
                         // 未上传图片
+                        $resultArray = array('updateSuccess' => 'success', 'updateImageSuccess' => 'fail', 'failMsg' => 'No File Uploaded');
                     }
                     // 保存其他记录
                 }else{
