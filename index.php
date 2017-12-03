@@ -144,7 +144,7 @@
             $sellerId = $_POST['sellerId'];
             $sessionKey = $_POST['sessionKey'];
             // 检查是否有未完成的订单
-            $sql = "SELECT id_order, id_seller, sn_march  FROM order_list WHERE session_key_client = '$sessionKey'";
+            $sql = "SELECT id_order, id_seller, sn_march, note_order  FROM order_list WHERE session_key_client = '$sessionKey'";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             $takenFlag = false;
@@ -155,6 +155,7 @@
                 $takenFlag = true;
                 $takenSellerId = $row[1];
                 $takenMarchSn = $row[2];
+                $takenMenuName = $row[3];
             }else{
                 // 无订单
                 $takenFlag = false;
@@ -168,6 +169,7 @@
                     $resultArray['takenFlag'] = 'success';
                     $resultArray['takenSellerId'] = $takenSellerId;
                     $resultArray['takenMarchSn'] = $takenMarchSn;
+                    $resultArray['takenMenuName'] = $takenMenuName;
                 }else{
                     $resultArray['takenFlag'] = 'fail';
                 }
