@@ -437,10 +437,10 @@
                 if($balanceMon > 0){
                     // 还有余额
                     // 检查是否上传图片
-                    if(is_uploaded_file($_FILES[$imageName]['tmp_name'])){
+                    if(is_uploaded_file($_FILES['sellerImage']['tmp_name'])){
                         // 上传了文件
                         // 检查图片大小 和保存操作
-                        if($_FILES[$imageName]['size'] <= (512 * 1024)){
+                        if($_FILES['sellerImage']['size'] <= (512 * 1024)){
                             // 大小符合
                             // 保存名
                             $saveName = $sellerId . '.png';
@@ -452,7 +452,7 @@
                                 }else{
                                     $imageSavedFlag2 = 0;
                                     // 保存
-                                    if(!move_uploaded_file($_FILES[$imageName]['tmp_name'], '/images/seller/' . $saveName)){
+                                    if(!move_uploaded_file($_FILES['sellerImage']['tmp_name'], '/images/seller/' . $saveName)){
                                         $imageSavedFlag2 = 2;
                                     }else{
                                         $imageSavedFlag2 = 0;
@@ -460,7 +460,7 @@
                                 }
                             }else{
                                 // 保存 
-                                if(!move_uploaded_file($_FILES[$imageName]['tmp_name'], '/images/seller/' . $saveName)){
+                                if(!move_uploaded_file($_FILES['sellerImage']['tmp_name'], '/images/seller/' . $saveName)){
                                     $imageSavedFlag2 = 3;
                                 }else{
                                     $imageSavedFlag2 = 0;
