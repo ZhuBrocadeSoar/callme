@@ -369,14 +369,15 @@
         }else if($_POST['query'] == 'info'){ // (Q12) 商家提交信息请求
             $sessionKey = $_POST['sessionKey'];
             // 获取商家信息
-            $sql = "SELECT name_seller, path_photo, json_menu FROM seller_list WHERE hash_openid = '$sessionKey'";
+            $sql = "SELECT name_seller, path_photo, json_menu, mon_balance FROM seller_list WHERE hash_openid = '$sessionKey'";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             if($row != NULL){
                 $sellerName = $row[0];
                 $imageUrl = $row[1];
                 $menuList = $row[2];
-                $resultArray = array('infoSuccess' => 'success', 'sellerName' => $sellerName, 'imageUrl' => $imageUrl, 'menuList' => $menuList);
+                $balanceMon = $row[3];
+                $resultArray = array('infoSuccess' => 'success', 'sellerName' => $sellerName, 'imageUrl' => $imageUrl, 'menuList' => $menuList, 'balanceMon' => $balanceMon);
             }else{
                 $resultArray = array('infoSuccess' => 'fail', 'failMsg' => 'Invalid Session Error');
             }
