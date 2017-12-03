@@ -135,11 +135,22 @@ https://callme.brocadesoar.cn/?
         "sellerId" : sellerId
     }
 
-        - (Q04R00) 备注列表响应JSON
+        - (Q04R00) 备注列表(该买家尚有订单未完成)响应JSON
 
         {
             "menuSuccess" : "success",
-            "menuContent" : menuContant
+            "menuContent" : menuContant,
+            "takenFlag" : "success",
+            "takenSellerId" : takenSellerId,
+            "takenMarchSn" : takenMarchSn
+        }
+
+        - (Q04R01) 备注列表(该买家无订单未完成)响应JSON
+
+        {
+            "menuSuccess" : "success",
+            "menuContent" : menuContant,
+            "takenFlag" : "fail"
         }
 
     - (Q05) 商家取号请求JSON
