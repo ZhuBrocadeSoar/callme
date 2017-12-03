@@ -375,7 +375,10 @@
             if($row != NULL){
                 $sellerName = $row[0];
                 $imageUrl = $row[1];
-                $menuList = urldecode(json_decode($row[2]));
+                $menuList = json_decode($row[2]);
+                foreach($menuList as $key => $value){
+                    $menuList[$key] = urldecode($value);
+                }
                 $balanceMon = $row[3];
                 $personName = $row[4];
                 $resultArray = array('infoSuccess' => 'success', 'sellerName' => $sellerName, 'imageUrl' => $imageUrl, 'menuList' => $menuList, 'balanceMon' => $balanceMon, 'personName' => $personName);
