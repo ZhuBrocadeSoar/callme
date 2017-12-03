@@ -424,6 +424,7 @@
             $sessionKey = $_POST['sessionKey'];
             $sellerName = $_POST['sellerName'];
             $imageName = $_POST['imageName'];
+            $imageName = 'sellerImage';
             $menuList = $_POST['menuList'];
             // 检查商家id
             $sql = "SELECT id_seller, mon_balance FROM seller_list WHERE hash_openid = '$sessionKey'";
