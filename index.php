@@ -116,7 +116,7 @@
                     }
                 }
             }
-        }else if($_POST['query'] == "seller_list"){ // (Q03) 商家列表请求
+        }else if($_POST['query'] == 'seller_list'){ // (Q03) 商家列表请求
             // 查询列表记录数量
             $retval = mysqli_query($connToMysql, "SELECT COUNT(*) FROM seller_list WHERE mon_balance > 0");
             if(!$retval){
@@ -142,7 +142,7 @@
                 $resultArray['list'] = $sellerArray;
             }
             // echo json_encode($resultArray);
-        }else if($_POST['query'] == "menu"){ // (Q04) 菜单请求
+        }else if($_POST['query'] == 'menu'){ // (Q04) 菜单请求
             $sellerId = $_POST['sellerId'];
             $sessionKey = $_POST['sessionKey'];
             // 检查是否有未完成的订单
@@ -170,6 +170,10 @@
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             if($row != NULL){
+                $menuContent = json_decode($row[0]);
+                foreach($menuContent as $k => $v){
+                    $menuContent[$k] = urldecode($v);
+                }
                 $resultArray = array('menuSuccess' => 'success', 'menuContent' => $row[0]);
                 if($takenFlag){
                     $resultArray['takenFlag'] = 'success';
@@ -435,7 +439,6 @@
                 $menuListArray[$key] = urlencode($value);
             }
             $menuList = json_encode($menuListArray/*, JSON_FORCE_OBJECT*/);
-            echo '__' . $menuList . '___';
             $personName = $_POST['personName'];
             // 检查商家id
             $sql = "SELECT id_seller, mon_balance FROM seller_list WHERE hash_openid = '$sessionKey'";
