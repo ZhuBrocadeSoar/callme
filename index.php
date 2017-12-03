@@ -445,21 +445,16 @@
                             // 保存名
                             $saveName = $sellerId . '.png';
                             // 检查存在性并保存
-                            if(file_exists('/images/seller/' . $saveName)){
-                                echo '1__'; // test
+                            if(file_exists('/var/www/html/callme/images/seller/' . $saveName)){
                                 // 删除已存在
-                                if(!unlink('/images/seller/' . $saveName)){
-                                    echo '2__';
+                                if(!unlink('/vat/www/html/callme/images/seller/' . $saveName)){
                                     $imageSavedFlag2 = 1;
                                 }else{
-                                    echo '3__';
                                     $imageSavedFlag2 = 0;
                                     // 保存
-                                    if(!move_uploaded_file($_FILES['sellerImage']['tmp_name'], '/images/seller/' . $saveName)){
-                                        echo '4__';
+                                    if(!move_uploaded_file($_FILES['sellerImage']['tmp_name'], '/var/www/html/callme/images/seller/' . $saveName)){
                                         $imageSavedFlag2 = 2;
                                     }else{
-                                        echo '5__';
                                         $imageSavedFlag2 = 0;
                                     }
                                 }
@@ -467,10 +462,8 @@
                                 echo '6__';
                                 // 保存 
                                 if(!move_uploaded_file($_FILES['sellerImage']['tmp_name'], '/var/www/html/callme/images/seller/' . $saveName)){
-                                    echo '7__';
                                     $imageSavedFlag2 = 3;
                                 }else{
-                                    echo '8__';
                                     $imageSavedFlag2 = 0;
                                 }
                             }
