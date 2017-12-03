@@ -375,7 +375,7 @@
             if($row != NULL){
                 $sellerName = $row[0];
                 $imageUrl = $row[1];
-                $menuList = $row[2];
+                $menuList = json_decode($row[2]);
                 $balanceMon = $row[3];
                 $personName = $row[4];
                 $resultArray = array('infoSuccess' => 'success', 'sellerName' => $sellerName, 'imageUrl' => $imageUrl, 'menuList' => $menuList, 'balanceMon' => $balanceMon, 'personName' => $personName);
@@ -429,6 +429,7 @@
             $menuListStr = $_POST['menuList'];
             $menuListArray = explode(",", $menuListStr);
             $menuList = json_encode($menuListArray, JSON_FORCE_OBJECT);
+            echo '__' . $menuList . '___';
             $menuList = $_POST['menuList'];
             $personName = $_POST['personName'];
             // 检查商家id
