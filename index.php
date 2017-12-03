@@ -426,7 +426,7 @@
             $sellerName = $_POST['sellerName'];
             $imageName = $_POST['imageName'];
             $imageName = 'sellerImage';
-            $menuList = $_POST['menuList'];
+            $menuList = json_encode($_POST['menuList']);
             $personName = $_POST['personName'];
             // 检查商家id
             $sql = "SELECT id_seller, mon_balance FROM seller_list WHERE hash_openid = '$sessionKey'";
