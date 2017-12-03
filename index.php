@@ -6,7 +6,7 @@
     if(isset($_POST['query']) /*&& isset($_POST['sessionkey'])*/){
         // 是不是login请求
         $sessionTimeOut = false;
-        if($_POST['query'] == "login"){
+        if($_POST['query'] == 'login'){
             // 登陆请求合法
             $flagQueryErr = false;
         }else if(isset($_POST['sessionKey'])){
@@ -166,15 +166,16 @@
                 // 无订单
                 $takenFlag = false;
             }
-            $sql = "SELECT json_menu FROM seller_list WHERE id_seller = $sellerId AND mon_balance > 0";
+            $sql = "SELECT json_menu, name_seller FROM seller_list WHERE id_seller = $sellerId AND mon_balance > 0";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             if($row != NULL){
                 $menuContent = json_decode($row[0]);
+                $sellerName = $row[1];
                 foreach($menuContent as $k => $v){
                     $menuContent[$k] = urldecode($v);
                 }
-                $resultArray = array('menuSuccess' => 'success', 'menuContent' => $menuContent);
+                $resultArray = array('menuSuccess' => 'success', 'menuContent' => $menuContent, 'sellerName' => $sellerName);
                 if($takenFlag){
                     $resultArray['takenFlag'] = 'success';
                     $resultArray['takenSellerId'] = $takenSellerId;
@@ -506,6 +507,18 @@
             }else{
                 // sessionKey不匹配
                 $resultArray = array('updateSuccess' => 'fail', 'failMsg' => 'Need Signup Error');
+            }
+        }else if($_POST['query'] == 'qrcode'){
+            $sessionKey = $_POST['sessionKey'];
+            $sql = "SELECT id_seller FROM seller_list WHERE hash_openid = '$sessionKey'";
+            $retval = mysqli_query($connToMysql, $sql);
+            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            if($row[0] != NULL){
+                $sellerId = $row[0];
+                // 获取微信小程序信息
+                $sql = "SELECT wxappid, wxsecret FROM wxapp_info WHERE id_wxappInfo = 1";
+            }else{
+                $resultArray = array('qrcodeSuccess' => 'fail', 'failMsg' => 'Invalid Session Error');
             }
         }else{ // 未知的请求
             $flagQueryErr = true;
