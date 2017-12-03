@@ -459,7 +459,6 @@
                                     }
                                 }
                             }else{
-                                echo '6__';
                                 // 保存 
                                 if(!move_uploaded_file($_FILES['sellerImage']['tmp_name'], '/var/www/html/callme/images/seller/' . $saveName)){
                                     $imageSavedFlag2 = 3;
