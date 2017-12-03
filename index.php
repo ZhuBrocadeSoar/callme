@@ -369,7 +369,7 @@
         }else if($_POST['query'] == 'info'){ // (Q12) 商家提交信息请求
             $sessionKey = $_POST['sessionKey'];
             // 获取商家信息
-            $sql = "SELECT name_seller, path_photo, json_menu, mon_balance FROM seller_list WHERE hash_openid = '$sessionKey'";
+            $sql = "SELECT name_seller, path_photo, json_menu, mon_balance, name_person FROM seller_list WHERE hash_openid = '$sessionKey'";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             if($row != NULL){
@@ -377,7 +377,8 @@
                 $imageUrl = $row[1];
                 $menuList = $row[2];
                 $balanceMon = $row[3];
-                $resultArray = array('infoSuccess' => 'success', 'sellerName' => $sellerName, 'imageUrl' => $imageUrl, 'menuList' => $menuList, 'balanceMon' => $balanceMon);
+                $personName = $row[4];
+                $resultArray = array('infoSuccess' => 'success', 'sellerName' => $sellerName, 'imageUrl' => $imageUrl, 'menuList' => $menuList, 'balanceMon' => $balanceMon, 'personName' => $personName);
             }else{
                 $resultArray = array('infoSuccess' => 'fail', 'failMsg' => 'Invalid Session Error');
             }
@@ -426,6 +427,7 @@
             $imageName = $_POST['imageName'];
             $imageName = 'sellerImage';
             $menuList = $_POST['menuList'];
+            $personName = $_POST['personName'];
             // 检查商家id
             $sql = "SELECT id_seller, mon_balance FROM seller_list WHERE hash_openid = '$sessionKey'";
             $retval = mysqli_query($connToMysql, $sql);
@@ -483,7 +485,7 @@
                     }
                     // 保存其他记录
                     $imageUrlTmp = 'https://callme.brocadesoar.cn/images/seller/' . $sellerId . '.png';
-                    $sql = "UPDATE seller_list SET name_seller = '$sellerName', path_photo = '$imageUrlTmp', json_menu = '$menuList' WHERE id_seller = $sellerId";
+                    $sql = "UPDATE seller_list SET name_seller = '$sellerName', path_photo = '$imageUrlTmp', json_menu = '$menuList', name_person = '$personName'  WHERE id_seller = $sellerId";
                     $retval = mysqli_query($connToMysql, $sql);
                 }else{
                     // 没有余额
