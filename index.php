@@ -156,11 +156,15 @@
                 $takenSellerId = $row[1];
                 $takenMarchSn = $row[2];
                 $takenMenuName = $row[3];
+                $sql = "SELECT name_seller FROM seller_list WHERE id_seller = $takenSellerId";
+                $retval = mysqli_query($connToMysql, $sql);
+                $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+                $takenSellerName = $row[0];
             }else{
                 // 无订单
                 $takenFlag = false;
             }
-            $sql = "SELECT json_menu, name_seller FROM seller_list WHERE id_seller = $sellerId AND mon_balance > 0";
+            $sql = "SELECT json_menu FROM seller_list WHERE id_seller = $sellerId AND mon_balance > 0";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             if($row != NULL){
@@ -171,7 +175,7 @@
                     $resultArray['takenSellerName'] = $takenSellerName;
                     $resultArray['takenMarchSn'] = $takenMarchSn;
                     $resultArray['takenMenuName'] = $takenMenuName;
-                    $resultArray['takenSellerName'] = $row[1];
+                    $resultArray['takenSellerName'] = $takenSellerName;
                 }else{
                     $resultArray['takenFlag'] = 'fail';
                 }
