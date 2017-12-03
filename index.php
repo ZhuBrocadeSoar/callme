@@ -144,7 +144,7 @@
             $sellerId = $_POST['sellerId'];
             $sessionKey = $_POST['sessionKey'];
             // 检查是否有未完成的订单
-            $sql = "SELECT id_order, id_seller, sn_march  FROM order_list WHERE sessionKey = $sessionKey";
+            $sql = "SELECT id_order, id_seller, sn_march  FROM order_list WHERE sessionKey = '$sessionKey'";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             $takenFlag = false;
