@@ -143,7 +143,8 @@ https://callme.brocadesoar.cn/?
             "takenFlag" : "success",
             "takenSellerId" : takenSellerId,
             "takenMarchSn" : takenMarchSn,
-            "takenMenuName" : takenMenuName
+            "takenMenuName" : takenMenuName,
+            "takenSellerName" : takenSellerName
         }
 
         - (Q04R01) 备注列表(该买家无订单未完成)响应JSON

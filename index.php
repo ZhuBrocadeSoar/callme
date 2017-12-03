@@ -88,11 +88,13 @@
                 $loginSuccess = "fail";
                 $failMsg = "Login Error";
                 $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg);
+            /*
             }else if($_POST['isseller'] == "yes" && $sellerJustice == false){
                 // 商家id不匹配错误
                 $loginSuccess = "fail";
                 $failMsg = "Seller Openid Error";
-                $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg /*, 'testOpenid' => $loginInfo['openid'], 'testHashOpenid' => sha1($loginInfo['openid'])*/);
+                $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg);
+            */
             }else{
                 // 商家id匹配
                 // 成功响应
