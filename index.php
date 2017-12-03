@@ -428,7 +428,7 @@
             $imageName = 'sellerImage';
             $menuListStr = $_POST['menuList'];
             $menuListArray = explode(",", $menuListStr);
-            $menuList = json_encode($menuListArray, JSON_FORCE_OBJECT);
+            $menuList = json_encode($menuListArray/*, JSON_FORCE_OBJECT*/);
             echo '__' . $menuList . '___';
             $personName = $_POST['personName'];
             // 检查商家id
