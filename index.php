@@ -429,6 +429,7 @@
             $menuListStr = $_POST['menuList'];
             $menuListArray = explode(",", $menuListStr);
             $menuList = json_encode($menuListArray, JSON_FORCE_OBJECT);
+            $menuList = $_POST['menuList'];
             $personName = $_POST['personName'];
             // 检查商家id
             $sql = "SELECT id_seller, mon_balance FROM seller_list WHERE hash_openid = '$sessionKey'";
