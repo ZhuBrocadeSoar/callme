@@ -174,7 +174,7 @@
                 foreach($menuContent as $k => $v){
                     $menuContent[$k] = urldecode($v);
                 }
-                $resultArray = array('menuSuccess' => 'success', 'menuContent' => $row[0]);
+                $resultArray = array('menuSuccess' => 'success', 'menuContent' => $menuContent);
                 if($takenFlag){
                     $resultArray['takenFlag'] = 'success';
                     $resultArray['takenSellerId'] = $takenSellerId;
