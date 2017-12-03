@@ -426,7 +426,7 @@
             $imageName = $_POST['imageName'];
             $menuList = $_POST['menuList'];
             // 检查商家id
-            $sql = "SELECT id_seller, mon_balance WHERE hash_openid = '$sessionKey'";
+            $sql = "SELECT id_seller, mon_balance FROM seller_list WHERE hash_openid = '$sessionKey'";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             if($row != NULL){
