@@ -134,7 +134,7 @@
                 $retval = mysqli_query($connToMysql, "SELECT id_seller, name_seller, path_photo FROM seller_list WHERE mon_balance > 0");
                 // 组成返回JSON
                 $sellerArray = array();
-                $i = '1';
+                $i = 0;
                 while($row = mysqli_fetch_array($retval, MYSQLI_NUM)){
                     $sellerArray[$i] = array("id" => $row[0], "name" => $row[1], "imageURL" => $row[2]);
                     $i++;
