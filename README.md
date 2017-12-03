@@ -381,6 +381,22 @@ https://callme.brocadesoar.cn/?
         "menuList" : menuList
     }
 
+        - (Q15R00) 更新成功响应JSON
+
+        {
+            "updateSuccess" : "success",
+            "updateImageSuccess" : "success"
+        }
+
+        - (Q15R01) 更新成功但图片更新失败
+
+        {
+            "updateSuccess" : "success",
+            "updateImageSuccess" : "fail",
+            "failMsg" : failMsg
+        }
+
+
 # 开发日记
 
 + 2017-11-11 00:33:45 将callme完全从wuaiwulu中剥离并开始做开发日记的编写，虽然任然实际上使用同一个服务器。

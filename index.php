@@ -164,7 +164,7 @@
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             if($row != NULL){
-                $resultArray = array('menuSuccess' => 'success', 'menuContent' => json_decode($row[0]));
+                $resultArray = array('menuSuccess' => 'success', 'menuContent' => $row[0]);
                 if($takenFlag){
                     $resultArray['takenFlag'] = 'success';
                     $resultArray['takenSellerId'] = $takenSellerId;
