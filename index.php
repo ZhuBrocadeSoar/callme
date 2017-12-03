@@ -296,7 +296,7 @@
                     $resultArray = array('pushSuccess' => 'fail', 'failMsg' => 'Taken Error');
                 }else{
                     // 没有备注
-                    $sql2 = "UPDATE order_list SET note_order = '$noteContent', session_key_client = $sessionKey WHERE sn_march = $marchSn AND id_seller = $sellerId";
+                    $sql2 = "UPDATE order_list SET note_order = '$noteContent', session_key_client = '$sessionKey' WHERE sn_march = $marchSn AND id_seller = $sellerId";
                     $retval = mysqli_query($connToMysql, $sql2);
                     $mysqlierror = mysqli_error();
                     $resultArray = array('pushSuccess' => 'success' /*, 'testMsg1' => $sql2, 'testMsg2' => $retval, 'testMsg3' => $mysqlierror*/);
