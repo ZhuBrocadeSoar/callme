@@ -142,11 +142,35 @@
             // echo json_encode($resultArray);
         }else if($_POST['query'] == "menu"){ // (Q04) 菜单请求
             $sellerId = $_POST['sellerId'];
+            $sessionKey = $_POST['sessionKey'];
+            // 检查是否有未完成的订单
+            $sql = "SELECT id_order, id_seller, sn_march  FROM order_list WHERE sessionKey = $sessionKey";
+            $retval = mysqli_query($connToMysql, $sql);
+            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            $takenFlag = false;
+            $takenSellerId = NULL;
+            $takenMarchSn = NULL;
+            if($row != NULL){
+                // 有订单
+                $takenFlag = true;
+                $takenSellerId = $row[1];
+                $takenMarchSn = $row[2];
+            }else{
+                // 无订单
+                $takenFlag = false;
+            }
             $sql = "SELECT json_menu FROM seller_list WHERE id_seller = $sellerId AND mon_balance > 0";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             if($row != NULL){
                 $resultArray = array('menuSuccess' => 'success', 'menuContent' => json_decode($row[0]));
+                if($takenFlag){
+                    $resultArray['takenFlag'] = 'success';
+                    $resultArray['takenSellerId'] = $takenSellerId;
+                    $resultArray['takenMarchSn'] = $takenMarchSn;
+                }else{
+                    $resultArray['takenFlag'] = 'fail';
+                }
             }else{
                 $resultArray = array('menuSuccess' => 'fail', 'failMsg' => 'Illegal Seller Error');
             }
@@ -258,6 +282,7 @@
             $resultArray['noteSuccess'] = 'success';
             $resultArray['orderList'] = $orderList; 
         }else if($_POST['query'] == "push"){ // (Q07) 买家推送备注
+            $sessionKey = $_POST['sessionKey'];
             $sellerId = $_POST['sellerId'];
             $marchSn = $_POST['marchSn'];
             $noteContent = $_POST['noteContent'];
@@ -271,7 +296,7 @@
                     $resultArray = array('pushSuccess' => 'fail', 'failMsg' => 'Taken Error');
                 }else{
                     // 没有备注
-                    $sql2 = "UPDATE order_list SET note_order = '$noteContent' WHERE sn_march = $marchSn AND id_seller = $sellerId";
+                    $sql2 = "UPDATE order_list SET note_order = '$noteContent', session_key_client = $sessionKey WHERE sn_march = $marchSn AND id_seller = $sellerId";
                     $retval = mysqli_query($connToMysql, $sql2);
                     $mysqlierror = mysqli_error();
                     $resultArray = array('pushSuccess' => 'success' /*, 'testMsg1' => $sql2, 'testMsg2' => $retval, 'testMsg3' => $mysqlierror*/);
@@ -400,12 +425,14 @@
                 if($balanceMon > 0){
                     // 还有余额
                     $resultArray = array('updateSuccess' => 'success');
-                    // 图片检查
-                    if($_FILE[$imageName]['size'] <= (512 * 1024)){
-                        // 在限制范围内
+                    // 检查是否上传图片
+                    if(is_uploaded_file($_FILES[$imageName]['tmp_name'])){
+                        // 上传了图片
+                        // 检查图片大小
                     }else{
-                        // 不再范围内
+                        // 未上传图片
                     }
+                    // 保存其他记录
                 }else{
                     // 没有余额
                     $resultArray = array('updateSuccess' => 'fail', 'failMsg' => 'Need Renew Error');
