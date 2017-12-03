@@ -375,7 +375,7 @@
             if($row != NULL){
                 $sellerName = $row[0];
                 $imageUrl = $row[1];
-                $menuList = $row[2];
+                $menuList = json_decoe($row[2]);
                 $balanceMon = $row[3];
                 $personName = $row[4];
                 $resultArray = array('infoSuccess' => 'success', 'sellerName' => $sellerName, 'imageUrl' => $imageUrl, 'menuList' => $menuList, 'balanceMon' => $balanceMon, 'personName' => $personName);
