@@ -481,6 +481,9 @@
                         $resultArray = array('updateSuccess' => 'success', 'updateImageSuccess' => 'fail', 'failMsg' => 'No File Uploaded');
                     }
                     // 保存其他记录
+                    $imageUrlTmp = 'https://callme.brocadesoar.cn/images/seller/' . $sellerId . '.png';
+                    $sql = "UPDATE seller_list SET name_seller = '$sellerName', path_photo = '$imageUrlTmp', json_menu = '$menuList' WHERE id_seller = $sellerId";
+                    $retval = mysqli_query($connToMysql, $sql);
                 }else{
                     // 没有余额
                     $resultArray = array('updateSuccess' => 'fail', 'failMsg' => 'Need Renew Error');
