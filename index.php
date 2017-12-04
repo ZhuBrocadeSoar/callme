@@ -544,10 +544,9 @@
                 curl_setopt($connToWxApi, CURLOPT_POST, true);
                 curl_setopt($connToWxApi, CURLOPT_POSTFIELDS, $postData);
                 $response = curl_exec($connToWxApi);
-                echo $response;
                 $resultArray = $response;
                 // 响应
-                header("Content-type:image/jpeg");
+                // header("Content-type:image/jpeg");
                 // header("Location:$url");
                 /*$response = curl_exec($connToWxApi);
                 // echo $response;
@@ -556,7 +555,7 @@
                 // JSON 解码为数组
                  */
             }else{
-                $resultArray = array('qrcodeSuccess' => 'fail', 'failMsg' => 'Invalid Session Error');
+                $resultArray = json_encode(array('qrcodeSuccess' => 'fail', 'failMsg' => 'Invalid Session Error'));
             }
         }else{ // 未知的请求
             $flagQueryErr = true;
