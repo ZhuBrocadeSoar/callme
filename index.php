@@ -532,6 +532,7 @@
                 $response = curl_exec($connToWxApi);
                 // JSON 解码为数组
                 $tokenInfo = json_decode($response);
+                var_dump($tokenInfo);
                 $token = $tokenInfo['access_token'];
                 var_dump($token);
                 $url = "https://api.weixin.qq.com/wxa/getwxacode?access_token=$token";
