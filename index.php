@@ -554,7 +554,7 @@
                 curl_setopt($connToWxApi, CURLOPT_HEADER, true);
                 curl_setopt($connToWxApi, CURLOPT_POST, true);
                 curl_setopt($connToWxApi, CURLOPT_POSTFIELDS, $postData);
-                curl_setopt($connToWxApi, CURLOPT_FILE, $fp);
+                // curl_setopt($connToWxApi, CURLOPT_FILE, $fp);
                 $response = curl_exec($connToWxApi);
                 var_dump($response);
                 $resultArray = $response;
