@@ -537,7 +537,6 @@
                 // var_dump($token);
                 $url = "https://api.weixin.qq.com/wxa/getwxacode?access_token=$token";
                 // 获取二维码
-                /*
                 $connToWxApi = curl_init();
                 $pathWithGet = 'pages/qu/qu?sellerId=' . strval($sellerId);
                 $postData = array('path' => $pathWithGet, 'width' => 430, 'auto_color' => false, 'line_color' => '{"r" : "0", "g" : "0", "b": "0"}');
@@ -548,10 +547,9 @@
                 curl_setopt($connToWxApi, CURLOPT_POSTFIELDS, $postData);
                 $response = curl_exec($connToWxApi);
                 $resultArray = $response;
-                 */
                 // 响应
-                // header("Content-type:image/jpeg");
-                header("Location:$url");
+                header("Content-type:image/jpeg");
+                // header("Location:$url");
                 /*$response = curl_exec($connToWxApi);
                 // echo $response;
                 // 分割响应头只保留body的JSON
