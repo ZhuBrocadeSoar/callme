@@ -528,7 +528,7 @@
                 $urlWithGet = "https://api.weixin.qq.com/cgi-bin/token?appid=" . $wxappid . "&secret=" . $wxsecret . "&js_code=" . $wxcode . "&grant_type=" . $wxgrantType;
                 curl_setopt($connToWxApi, CURLOPT_URL, $urlWithGet);
                 curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($connToWxApi, CURLOPT_HEADER, true);
+                curl_setopt($connToWxApi, CURLOPT_HEADER, false);
                 $response = curl_exec($connToWxApi);
                 echo $response;
                 // 分割响应头只保留body的JSON
