@@ -543,8 +543,8 @@
                 // 获取二维码
                 $connToWxApi = curl_init();
                 $pathWithGet = 'pages/qu/qu?sellerId=' . strval($sellerId);
-                $width = 430;
-                $auto_color = false;
+                $width = '430';
+                $auto_color = 'false';
                 $line_color = json_encode(array('r' => '0', 'g' => '0', 'b' => '0'));
                 $postData = array('path' => $pathWithGet, 'width' => $width, 'auto_color' => $auto_color, 'line_color' => $line_color);
                 curl_setopt($connToWxApi, CURLOPT_URL, $url);
