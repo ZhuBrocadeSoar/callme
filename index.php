@@ -517,6 +517,46 @@
                 $sellerId = $row[0];
                 // 获取微信小程序信息
                 $sql = "SELECT wxappid, wxsecret FROM wxapp_info WHERE id_wxappInfo = 1";
+                $retval = mysqli_query($connToMysql, $sql);
+                $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+                $wxappid = $row[0];
+                $wxsecret = $row[1];
+                $wxgrantType = 'client_credential';
+                // 获取token
+                // curl 调用API
+                $connToWxApi = curl_init();
+                $urlWithGet = "https://api.weixin.qq.com/cgi-bin/token?appid=" . $wxappid . "&secret=" . $wxsecret . "&js_code=" . $wxcode . "&grant_type=" . $wxgrantType;
+                curl_setopt($connToWxApi, CURLOPT_URL, $urlWithGet);
+                curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($connToWxApi, CURLOPT_HEADER, true);
+                $response = curl_exec($connToWxApi);
+                // echo $response;
+                // 分割响应头只保留body的JSON
+                $tokenInfoJson = substr($response, curl_getinfo($connToWxApi, CURLINFO_HEADER_SIZE));
+                // JSON 解码为数组
+                $tokenInfo = json_decode($loginInfoJson, true);
+                $token = $tokenInfo['access_token'];
+                $url = "https://api.weixin.qq.com/wxa/getwxacode?access_token=$token";
+                // 获取二维码
+                /*$connToWxApi = curl_init();
+                $pathWithGet = 'pages/qu/qu?sellerId=' . strval($sellerId);
+                $postData = array('path' => $pathWithGet, 'width' => 430, 'auto_color' => false, 'line_color' => '{"r" : "0", "g" : "0", "b": "0"}');
+                curl_setopt($connToWxApi, CURLOPT_URL, $url);
+                curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($connToWxApi, CURLOPT_HEADER, false);
+                curl_setopt($connToWxApi, CURLOPT_POST, true);
+                curl_setopt($connToWxApi, CURLOPT_POSTFIELDS, $postData);
+                $response = curl_exec($connToWxApi);
+                // 响应
+                header("Content-type:image/jpeg");
+                 */
+                header("Location:$url");
+                /*$response = curl_exec($connToWxApi);
+                // echo $response;
+                // 分割响应头只保留body的JSON
+                $tokenInfoJson = substr($response, curl_getinfo($connToWxApi, CURLINFO_HEADER_SIZE));
+                // JSON 解码为数组
+                 */
             }else{
                 $resultArray = array('qrcodeSuccess' => 'fail', 'failMsg' => 'Invalid Session Error');
             }
