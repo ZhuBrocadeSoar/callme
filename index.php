@@ -550,18 +550,18 @@
                 $postData = array('path' => $pathWithGet, 'width' => $width, 'auto_color' => $auto_color, 'line_color' => $line_color);
                 // var_dump($postData);
                 curl_setopt($connToWxApi, CURLOPT_URL, $url);
-                curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, false);
-                curl_setopt($connToWxApi, CURLOPT_HEADER, false);
+                curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($connToWxApi, CURLOPT_HEADER, true);
                 curl_setopt($connToWxApi, CURLOPT_POST, true);
                 curl_setopt($connToWxApi, CURLOPT_POSTFIELDS, $postData);
-                curl_setopt($connToWxApi, CURLOPT_FILE, $fp);
+                // curl_setopt($connToWxApi, CURLOPT_FILE, $fp);
                 $response = curl_exec($connToWxApi);
-                // var_dump($response);
+                var_dump($response);
                 $resultArray = $response;
                 // var_dump($resultArray);
                 // 响应
-                header("Content-type:image/jpeg");
-                readfile($localUrl);
+                // header("Content-type:image/jpeg");
+                // readfile($localUrl);
                 // header("Location:$url");
                 /*$response = curl_exec($connToWxApi);
                 // echo $response;
