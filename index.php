@@ -536,6 +536,9 @@
                 $token = $tokenInfo['access_token'];
                 // var_dump($token);
                 $url = "https://api.weixin.qq.com/wxa/getwxacode?access_token=$token";
+                // 本地图片保存
+                $fp = tmpfile();
+                $localUrl = dirname($fp) . basename($fp);
                 // 获取二维码
                 $connToWxApi = curl_init();
                 $pathWithGet = 'pages/qu/qu?sellerId=' . strval($sellerId);
@@ -545,10 +548,11 @@
                 curl_setopt($connToWxApi, CURLOPT_HEADER, true);
                 curl_setopt($connToWxApi, CURLOPT_POST, true);
                 curl_setopt($connToWxApi, CURLOPT_POSTFIELDS, $postData);
+                curl_setopt($connToWxApi, CURLOPT_FILE, $fp);
                 $response = curl_exec($connToWxApi);
-                $resultArray = $response;
+                $resultArray = $response . $localUrl;
                 // 响应
-                header("Content-type:image/jpeg");
+                // header("Content-type:image/jpeg");
                 // header("Location:$url");
                 /*$response = curl_exec($connToWxApi);
                 // echo $response;
