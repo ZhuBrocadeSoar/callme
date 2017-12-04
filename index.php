@@ -545,7 +545,7 @@
                 $pathWithGet = 'pages/qu/qu?sellerId=' . strval($sellerId);
                 $postData = array('path' => $pathWithGet, 'width' => 430, 'auto_color' => false, 'line_color' => '{"r" : "0", "g" : "0", "b": "0"}');
                 curl_setopt($connToWxApi, CURLOPT_URL, $url);
-                curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, false);
+                curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($connToWxApi, CURLOPT_HEADER, true);
                 curl_setopt($connToWxApi, CURLOPT_POST, true);
                 curl_setopt($connToWxApi, CURLOPT_POSTFIELDS, $postData);
@@ -554,8 +554,8 @@
                 $resultArray = $response;
                 echo $resultArray;
                 // 响应
-                header("Content-type:image/jpeg");
-                readfile($fp);
+                //header("Content-type:image/jpeg");
+                // readfile($fp);
                 // header("Location:$url");
                 /*$response = curl_exec($connToWxApi);
                 // echo $response;
