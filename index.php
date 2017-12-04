@@ -530,12 +530,10 @@
                 curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($connToWxApi, CURLOPT_HEADER, false);
                 $response = curl_exec($connToWxApi);
-                echo $response;
-                // 分割响应头只保留body的JSON
-                $tokenInfoJson = substr($response, curl_getinfo($connToWxApi, CURLINFO_HEADER_SIZE));
                 // JSON 解码为数组
-                $tokenInfo = json_decode($loginInfoJson, true);
+                $tokenInfo = json_decode($loginInfoJson);
                 // $token = $tokenInfo['access_token'];
+                var_dump($tokenInfo);
                 $token = $tokenInfo;
                 $url = "https://api.weixin.qq.com/wxa/getwxacode?access_token=$token";
                 // 获取二维码
