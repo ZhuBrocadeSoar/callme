@@ -539,7 +539,7 @@
                 // 本地图片保存
                 $fp = tmpfile();
                 $localUrl = dirname($fp) . basename($fp);
-                echo "FILE: " . $localUrl;
+                // echo "FILE: " . $localUrl;
                 // 获取二维码
                 $connToWxApi = curl_init();
                 $pathWithGet = 'pages/qu/qu?sellerId=' . strval($sellerId);
@@ -553,7 +553,8 @@
                 $response = curl_exec($connToWxApi);
                 $resultArray = $response;
                 // 响应
-                // header("Content-type:image/jpeg");
+                header("Content-type:image/jpeg");
+                readfile($fp);
                 // header("Location:$url");
                 /*$response = curl_exec($connToWxApi);
                 // echo $response;
