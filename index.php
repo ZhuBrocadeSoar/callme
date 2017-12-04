@@ -531,7 +531,7 @@
                 curl_setopt($connToWxApi, CURLOPT_HEADER, false);
                 $response = curl_exec($connToWxApi);
                 // JSON 解码为数组
-                $tokenInfo = json_decode($loginInfoJson);
+                $tokenInfo = json_decode($response);
                 // $token = $tokenInfo['access_token'];
                 var_dump($tokenInfo);
                 $token = $tokenInfo;
