@@ -540,7 +540,7 @@
                 $postData = array('path' => $pathWithGet, 'width' => 430, 'auto_color' => false, 'line_color' => '{"r" : "0", "g" : "0", "b": "0"}');
                 curl_setopt($connToWxApi, CURLOPT_URL, $url);
                 curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($connToWxApi, CURLOPT_HEADER, false);
+                curl_setopt($connToWxApi, CURLOPT_HEADER, true);
                 curl_setopt($connToWxApi, CURLOPT_POST, true);
                 curl_setopt($connToWxApi, CURLOPT_POSTFIELDS, $postData);
                 $response = curl_exec($connToWxApi);
