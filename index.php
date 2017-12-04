@@ -530,7 +530,7 @@
                 curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($connToWxApi, CURLOPT_HEADER, true);
                 $response = curl_exec($connToWxApi);
-                // echo $response;
+                echo $response;
                 // 分割响应头只保留body的JSON
                 $tokenInfoJson = substr($response, curl_getinfo($connToWxApi, CURLINFO_HEADER_SIZE));
                 // JSON 解码为数组
@@ -551,7 +551,6 @@
                 // 响应
                 header("Content-type:image/jpeg");
                  */
-                echo $token;
                 // header("Location:$url");
                 /*$response = curl_exec($connToWxApi);
                 // echo $response;
