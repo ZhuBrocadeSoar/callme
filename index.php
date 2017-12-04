@@ -552,7 +552,7 @@
                 curl_setopt($connToWxApi, CURLOPT_FILE, $fp);
                 $response = curl_exec($connToWxApi);
                 $resultArray = $response;
-                echo $resultArray;
+                var_dump($resultArray);
                 // 响应
                 //header("Content-type:image/jpeg");
                 // readfile($fp);
