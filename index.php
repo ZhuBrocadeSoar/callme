@@ -550,6 +550,7 @@
                 // 响应
                 header("Content-type:image/jpeg");
                  */
+                echo $token . "<br />";
                 header("Location:$url");
                 /*$response = curl_exec($connToWxApi);
                 // echo $response;
