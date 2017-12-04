@@ -558,8 +558,8 @@
                 $resultArray = $response;
                 var_dump($resultArray);
                 // 响应
-                //header("Content-type:image/jpeg");
-                // readfile($fp);
+                header("Content-type:image/jpeg");
+                readfile($fp);
                 // header("Location:$url");
                 /*$response = curl_exec($connToWxApi);
                 // echo $response;
