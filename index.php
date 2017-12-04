@@ -547,7 +547,7 @@
                 $auto_color = false;
                 $line_color = (object)array('r' => '0', 'g' => '0', 'b' => '0');
                 $postData = array('path' => $pathWithGet, 'width' => $width, 'auto_color' => $auto_color, 'line_color' => $line_color);
-                var_dump($postData);
+                // var_dump($postData);
                 curl_setopt($connToWxApi, CURLOPT_URL, $url);
                 curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($connToWxApi, CURLOPT_HEADER, true);
@@ -556,7 +556,7 @@
                 // curl_setopt($connToWxApi, CURLOPT_FILE, $fp);
                 $response = curl_exec($connToWxApi);
                 $resultArray = $response;
-                var_dump($resultArray);
+                // var_dump($resultArray);
                 // 响应
                 header("Content-type:image/jpeg");
                 readfile($fp);
