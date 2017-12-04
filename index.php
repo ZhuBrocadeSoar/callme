@@ -550,8 +550,8 @@
                 // 响应
                 header("Content-type:image/jpeg");
                  */
-                echo $token . "__";
-                header("Location:$url");
+                echo $token;
+                // header("Location:$url");
                 /*$response = curl_exec($connToWxApi);
                 // echo $response;
                 // 分割响应头只保留body的JSON
