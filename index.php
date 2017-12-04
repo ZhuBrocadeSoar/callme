@@ -553,7 +553,7 @@
                 curl_setopt($connToWxApi, CURLOPT_HEADER, true);
                 curl_setopt($connToWxApi, CURLOPT_POST, true);
                 curl_setopt($connToWxApi, CURLOPT_POSTFIELDS, $postData);
-                 curl_setopt($connToWxApi, CURLOPT_FILE, $fp);
+                curl_setopt($connToWxApi, CURLOPT_FILE, $fp);
                 $response = curl_exec($connToWxApi);
                 $resultArray = $response;
                 // var_dump($resultArray);
@@ -583,7 +583,7 @@
             }
         }
         if($_POST['query'] == 'qrcode'){
-            echo $resultArray;
+            // echo $resultArray;
         }else{
             echo json_encode($resultArray/*, JSON_FORCE_OBJECT*/); // (Response) 响应
         }
