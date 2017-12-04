@@ -535,7 +535,7 @@
                 $token = $tokenInfo['access_token'];
                 $url = "https://api.weixin.qq.com/wxa/getwxacode?access_token=$token";
                 // 获取二维码
-                /*$connToWxApi = curl_init();
+                $connToWxApi = curl_init();
                 $pathWithGet = 'pages/qu/qu?sellerId=' . strval($sellerId);
                 $postData = array('path' => $pathWithGet, 'width' => 430, 'auto_color' => false, 'line_color' => '{"r" : "0", "g" : "0", "b": "0"}');
                 curl_setopt($connToWxApi, CURLOPT_URL, $url);
@@ -544,10 +544,10 @@
                 curl_setopt($connToWxApi, CURLOPT_POST, true);
                 curl_setopt($connToWxApi, CURLOPT_POSTFIELDS, $postData);
                 $response = curl_exec($connToWxApi);
+                $resultArray = $response;
                 // 响应
                 header("Content-type:image/jpeg");
-                 */
-                header("Location:$url");
+                // header("Location:$url");
                 /*$response = curl_exec($connToWxApi);
                 // echo $response;
                 // 分割响应头只保留body的JSON
@@ -569,7 +569,11 @@
                 $resultArray = array('queryErr' => 'Session Time Out');
             }
         }
-        echo json_encode($resultArray/*, JSON_FORCE_OBJECT*/); // (Response) 响应
+        if($_POST['query'] == 'qrcode'){
+            echo $resultArray;
+        }else{
+            echo json_encode($resultArray/*, JSON_FORCE_OBJECT*/); // (Response) 响应
+        }
     }/*else if(isset($_POST['query'])){ // post请求
         // 是不是login请求
         $sessionTimeOut = false;
