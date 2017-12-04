@@ -544,6 +544,7 @@
                 curl_setopt($connToWxApi, CURLOPT_POST, true);
                 curl_setopt($connToWxApi, CURLOPT_POSTFIELDS, $postData);
                 $response = curl_exec($connToWxApi);
+                echo $response;
                 $resultArray = $response;
                 // 响应
                 header("Content-type:image/jpeg");
