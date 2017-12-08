@@ -459,6 +459,7 @@
                             // 大小符合
                             // 保存名
                             $saveName = strval($sellerId) . '.png';
+                            var_dump($saveName);
                             // 检查存在性并保存
                             if(file_exists('/var/www/html/callme/images/seller/' . $saveName)){
                                 // 删除已存在
