@@ -559,13 +559,13 @@
                     'Content-Type:application/json',
                     'Content-Length:' . strlen($postData)
                 ));
-                curl_setopt($connToWxApi, CURLOPT_FILE, $fp);
+                // curl_setopt($connToWxApi, CURLOPT_FILE, $fp);
                 $response = curl_exec($connToWxApi);
-                var_dump($response);
+                // var_dump($response);
                 $resultArray = $response;
                 // var_dump($resultArray);
                 // 响应
-                // header("Content-type:image/jpeg");
+                header("Content-type:image/jpeg");
                 // readfile($localUrl);
                 // header("Location:$url");
                 /*$response = curl_exec($connToWxApi);
