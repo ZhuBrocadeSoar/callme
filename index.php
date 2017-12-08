@@ -544,6 +544,8 @@
                 $statOfFp = fstat($fp);
                 var_dump($statOfFp);
                 var_dump($statOfFp[7]);
+                $flagFseek = fseek($fp, 0);
+                var_dump($flagFseek);
                 $flagFread = fread($fp, $statOfFp[7]);
                 var_dump($flagFread);
                 // echo "FILE: " . $localUrl;
