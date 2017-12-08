@@ -486,11 +486,11 @@
                             // 大小不符合
                             $imageSavedFlag = 4;
                         }
-                        if($imageSavedFlag){
+                        if($imageSavedFlag == 0){
                             $resultArray = array('updateSuccess' => 'success', 'updateImageSuccess' => 'success');
                         }else{
                             $imageSavedErrors = array('No Error', 'Unlink Error', 'Move 1 Error', 'Move 2 Error', 'Size Error');
-                            $resultArray = array('updateSuccess' => 'success', 'updateImageSuccess' => 'fail', 'failMsg' => $imageSavedErrors);
+                            $resultArray = array('updateSuccess' => 'success', 'updateImageSuccess' => 'fail', 'failMsg' => $imageSavedErrors[imageSavedFlag - 1]);
                         }
                     }else{
                         // 未上传图片
