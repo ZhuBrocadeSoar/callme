@@ -539,9 +539,7 @@
                 // 本地图片保存
                 $fp = tmpfile();
                 fwrite($fp, 'test msg00000\n');
-                $localUrl = file($fp);
-                var_dump($localUrl);
-                echo readfile($localUrl);
+                echo fread($fp);
                 // echo "FILE: " . $localUrl;
                 // 获取二维码
                 $connToWxApi = curl_init();
