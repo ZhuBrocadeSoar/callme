@@ -537,8 +537,8 @@
                 // var_dump($token);
                 $url = "https://api.weixin.qq.com/wxa/getwxacode?access_token=$token";
                 // 本地图片保存
-                $fp = tmpfile();
-                $localUrl = dirname($fp) . basename($fp);
+                // $fp = tmpfile();
+                // $localUrl = dirname($fp) . basename($fp);
                 // echo "FILE: " . $localUrl;
                 // 获取二维码
                 $connToWxApi = curl_init();
@@ -552,7 +552,7 @@
                 // var_dump($postData);
                 curl_setopt($connToWxApi, CURLOPT_URL, $url);
                 curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($connToWxApi, CURLOPT_HEADER, false);
+                curl_setopt($connToWxApi, CURLOPT_HEADER, true);
                 curl_setopt($connToWxApi, CURLOPT_POST, true);
                 curl_setopt($connToWxApi, CURLOPT_POSTFIELDS, $postData);
                 curl_setopt($connToWxApi, CURLOPT_FOLLOWLOCATION, true);
@@ -560,13 +560,13 @@
                     'Content-Type:application/json',
                     'Content-Length:' . strlen($postData)
                 ));
-                curl_setopt($connToWxApi, CURLOPT_FILE, $fp);
+                // curl_setopt($connToWxApi, CURLOPT_FILE, $fp);
                 $response = curl_exec($connToWxApi);
                 // var_dump($response);
                 $resultArray = $response;
                 // var_dump($resultArray);
                 // 响应
-                header("Content-type:image/jpeg");
+                // header("Content-type:image/jpeg");
                 // readfile($localUrl);
                 // header("Location:$url");
                 /*$response = curl_exec($connToWxApi);
