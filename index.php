@@ -590,6 +590,7 @@
                 file_put_contents($qrcodeImagePath, $qrcodeImage);
                 $qrcodeImageUrl = 'https://callme.brocadesoar.cn/images/seller/qrcode.' . strval($sellerId) . '.jpg';
                 $resultArray = json_encode(array('qrcodeSuccess' => 'success', 'qrcodeImageUrl' => $qrcodeImageUrl));
+                fclose($fp);
                 // readfile($localUrl);
                 // header("Location:$url");
                 /*$response = curl_exec($connToWxApi);
