@@ -562,11 +562,11 @@
                 curl_setopt($connToWxApi, CURLOPT_FILE, $fp);
                 $response = curl_exec($connToWxApi);
                 // var_dump($response);
-                // $resultArray = $response;
+                $resultArray = $response;
                 // var_dump($resultArray);
                 // 响应
                 header("Content-type:image/jpeg");
-                readfile($localUrl);
+                // readfile($localUrl);
                 // header("Location:$url");
                 /*$response = curl_exec($connToWxApi);
                 // echo $response;
