@@ -575,12 +575,21 @@
                 $statOfFp = fstat($fp);
                 // var_dump($statOfFp);
                 fseek($fp, 0);
-                $resultArray = fread($fp, $statOfFp[7]);
+                $qrcodeImage = fread($fp, $statOfFp[7]);
                 // var_dump($resultArray);
                 // 响应
-                header('Content-Type:image/jpeg');
-                header('Content-Length:' . strlen($resultArray));
-                echo $resultArray;
+                // header('Content-Type:image/jpeg');
+                // header('Content-Length:' . strlen($resultArray));
+                // echo $resultArray;
+                $qrcodeImageDir = '/var/www/html/callme/images/seller/';
+                $qrcodeImageName = 'qrcode.' . $sellerId . '.jpg';
+                $qrcodeImagePath = $qrcodeImageDir . $qrcodeImageName;
+                if(file_exists($qrcodeImagePath)){
+                    unlink($qrcodeImagePath);
+                }
+                file_put_contents($qrcodeImagePath, $qrcodeImage);
+                $qrcodeImageUrl = 'https://callme.brocadesoar.cn/images/seller/qrcode.' . strval($sellerId) . '.jpg';
+                $resultArray = json_encode(array('qrcodeSuccess' => 'success', 'qrcodeImageUrl' => $qrcodeImageUrl));
                 // readfile($localUrl);
                 // header("Location:$url");
                 /*$response = curl_exec($connToWxApi);
