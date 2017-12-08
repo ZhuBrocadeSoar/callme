@@ -561,7 +561,7 @@
                 // var_dump($postData);
                 curl_setopt($connToWxApi, CURLOPT_URL, $url);
                 curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, false);
-                curl_setopt($connToWxApi, CURLOPT_HEADER, false);
+                curl_setopt($connToWxApi, CURLOPT_HEADER, true);
                 curl_setopt($connToWxApi, CURLOPT_POST, true);
                 curl_setopt($connToWxApi, CURLOPT_POSTFIELDS, $postData);
                 // curl_setopt($connToWxApi, CURLOPT_FOLLOWLOCATION, true);
