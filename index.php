@@ -546,14 +546,19 @@
                 $width = 430;
                 $auto_color = false;
                 // $line_color = (object)array('r' => '0', 'g' => '0', 'b' => '0');
-                $line_color = json_encode(array('r' => '0', 'g' => '0', 'b' => '0'));
-                $postData = array('path' => $pathWithGet, 'width' => $width, 'auto_color' => $auto_color, 'line_color' => $line_color);
+                // $line_color = json_encode(array('r' => '0', 'g' => '0', 'b' => '0'));
+                $line_color = array('r' => '0', 'g' => '0', 'b' => '0');
+                $postData = json_encode(array('path' => $pathWithGet, 'width' => $width, 'auto_color' => $auto_color, 'line_color' => $line_color));
                 // var_dump($postData);
                 curl_setopt($connToWxApi, CURLOPT_URL, $url);
                 curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
                 curl_setopt($connToWxApi, CURLOPT_HEADER, true);
                 curl_setopt($connToWxApi, CURLOPT_POST, true);
                 curl_setopt($connToWxApi, CURLOPT_POSTFIELDS, $postData);
+                curl_setopt($connToWxApi, HTTPHEADER, array(
+                    'Content-Type:application/json',
+                    'Content-Length:' . strlen($postData)
+                ));
                 // curl_setopt($connToWxApi, CURLOPT_FILE, $fp);
                 $response = curl_exec($connToWxApi);
                 var_dump($response);
