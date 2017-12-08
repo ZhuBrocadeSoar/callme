@@ -543,6 +543,7 @@
                 var_dump($flagFwrite);
                 $statOfFp = fstat($fp);
                 var_dump($statOfFp);
+                var_dump($statOfFp[7]);
                 $flagFread = fread($fp, $statOfFp[7]);
                 var_dump($flagFread);
                 // echo "FILE: " . $localUrl;
