@@ -552,10 +552,10 @@
                 // var_dump($postData);
                 curl_setopt($connToWxApi, CURLOPT_URL, $url);
                 curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, false);
-                curl_setopt($connToWxApi, CURLOPT_HEADER, true);
+                curl_setopt($connToWxApi, CURLOPT_HEADER, false);
                 curl_setopt($connToWxApi, CURLOPT_POST, true);
                 curl_setopt($connToWxApi, CURLOPT_POSTFIELDS, $postData);
-                curl_setopt($connToWxApi, CURLOPT_FOLLOWLOCATION, true);
+                // curl_setopt($connToWxApi, CURLOPT_FOLLOWLOCATION, true);
                 curl_setopt($connToWxApi, HTTPHEADER, array(
                     'Content-Type:application/json',
                     'Content-Length:' . strlen($postData)
@@ -566,7 +566,8 @@
                 $resultArray = $response;
                 // var_dump($resultArray);
                 // 响应
-                // header("Content-type:image/jpeg");
+                header('Content-Type:image/jpeg');
+                header('Content-Length:' . strlen($resultArray));
                 // readfile($localUrl);
                 // header("Location:$url");
                 /*$response = curl_exec($connToWxApi);
