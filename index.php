@@ -540,6 +540,7 @@
                 $fp = tmpfile();
                 fwrite($fp, 'test msg00000\n');
                 $localUrl = dirname($fp) . basename($fp);
+                var_dump($localUrl);
                 echo readfile($localUrl);
                 // echo "FILE: " . $localUrl;
                 // 获取二维码
