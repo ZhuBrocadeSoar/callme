@@ -540,7 +540,7 @@
                 $fp = tmpfile();
                 fwrite($fp, 'test msg00000\n');
                 $localUrl = dirname($fp) . basename($fp);
-                readfile($localUrl);
+                echo readfile($localUrl);
                 // echo "FILE: " . $localUrl;
                 // 获取二维码
                 $connToWxApi = curl_init();
