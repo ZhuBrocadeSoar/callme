@@ -573,6 +573,7 @@
                 $response = curl_exec($connToWxApi);
                 // var_dump($response);
                 $statOfFp = fstat($fp);
+                var_dump($statOfFp);
                 fseek($fp, 0);
                 $resultArray = fread($fp, $statOfFp[7]);
                 // var_dump($resultArray);
