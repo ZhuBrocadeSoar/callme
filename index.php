@@ -578,7 +578,7 @@
                 $resultArray = fread($fp, $statOfFp[7]);
                 // var_dump($resultArray);
                 // 响应
-                // header('Content-Type:image/jpeg');
+                header('Content-Type:image/jpeg');
                 header('Content-Length:' . strlen($resultArray));
                 echo $resultArray;
                 // readfile($localUrl);
