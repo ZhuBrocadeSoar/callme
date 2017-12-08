@@ -538,6 +538,7 @@
                 $url = "https://api.weixin.qq.com/wxa/getwxacode?access_token=$token";
                 // 本地图片保存
                 $fp = tmpfile();
+                var_dump($fp);
                 $flagFwrite = fwrite($fp, 'test msg00000\n');
                 var_dump($flagFwrite);
                 $flagFread = fread($fp);
