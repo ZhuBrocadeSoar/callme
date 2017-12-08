@@ -397,6 +397,20 @@ https://callme.brocadesoar.cn/?
             "failMsg" : failMsg
         }
 
+    -(Q16) 获取二维码
+
+    {
+        "query" : "qrcode",
+        "sessionKey" : sessionKey
+    }
+
+        -(Q16R00) 成功
+
+        {
+            "qrcodeSuccess" : "success",
+            "qrcodeImageUrl" : qrcodeImageUrl
+        }
+
 
 # 开发日记
 
@@ -429,6 +443,8 @@ https://callme.brocadesoar.cn/?
 + 2017-11-26 01:09:05 后续还应考虑图片上传的请求 image 和menu的格式组成问题
 
 + 2017-11-27 12:59:45 login 返回余额测试完成 ，管理员登陆测试完成，管理员续费操作完成
+
++ 2017-12-08 14:06:00 很久没写开发日志了，目前，商家注册、续费更新信息都已完成，图片的上传和二维码生成也都没什么问题了。README中数据库结构的图片尚未更新
 
 # 参考
 

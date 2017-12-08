@@ -353,7 +353,7 @@
         }else if($_POST['query'] == 'signup'){
             $sessionKey = $_POST['sessionKey'];
             $telNum = $_POST['telNum'];
-            $sql = "SELECT mon_balance FROM seller_list WHERE tel_banding = '$telNum'";
+            $sql = "SELECT mon_balance FROM seller_list WHERE tel_banding = '$telNum' AND hash_openid = 'NULL'";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             if($row != NULL){
