@@ -296,7 +296,7 @@
             // $resultArray = array('noteSuccess' => 'success', 'orderList' => $orderList);
             $resultArray['noteSuccess'] = 'success';
             $resultArray['orderList'] = $orderList; 
-        }else if($_POST['query'] == "push"){ // (Q07) 买家推送备注
+        }else if($_POST['query'] == 'push'){ // (Q07) 买家推送备注
             $sessionKey = $_POST['sessionKey'];
             $sellerId = $_POST['sellerId'];
             $marchSn = $_POST['marchSn'];
@@ -373,6 +373,8 @@
                     // 匹配成功
                     $resultArray = array('signupSuccess' => 'success');
                     $sql = "UPDATE seller_list SET hash_openid = '$sessionKey' WHERE tel_banding = '$telNum'";
+                    $retval = mysqli_query($connToMysql, $sql);
+                    $sql = "DELETE FROM session_record WHERE sessionkey = '$sessionKey'";
                     $retval = mysqli_query($connToMysql, $sql);
                 }
             }else{
