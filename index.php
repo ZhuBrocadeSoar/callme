@@ -542,6 +542,7 @@
                 $flagFwrite = fwrite($fp, 'test msg00000\n');
                 var_dump($flagFwrite);
                 $statOfFp = fstat($fp);
+                var_dump($statOfFp);
                 $flagFread = fread($fp, $statOfFp[7]);
                 var_dump($flagFread);
                 // echo "FILE: " . $localUrl;
