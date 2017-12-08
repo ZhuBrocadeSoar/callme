@@ -539,7 +539,7 @@
                 // 本地图片保存
                 $fp = tmpfile();
                 fwrite($fp, 'test msg00000\n');
-                $localUrl = dirname($fp) . basename($fp);
+                $localUrl = file($fp);
                 var_dump($localUrl);
                 echo readfile($localUrl);
                 // echo "FILE: " . $localUrl;
