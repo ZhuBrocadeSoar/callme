@@ -541,6 +541,7 @@
                 $flagFwrite = fwrite($fp, 'test msg00000\n');
                 var_dump($flagFwrite);
                 $flagFread = fread($fp);
+                var_dump($flagFread);
                 // echo "FILE: " . $localUrl;
                 // 获取二维码
                 $connToWxApi = curl_init();
