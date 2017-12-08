@@ -463,7 +463,7 @@
                             // 检查存在性并保存
                             if(file_exists('/var/www/html/callme/images/seller/' . $saveName)){
                                 // 删除已存在
-                                if(!unlink('/vat/www/html/callme/images/seller/' . $saveName)){
+                                if(!unlink('/var/www/html/callme/images/seller/' . $saveName)){
                                     $imageSavedFlag2 = 1;
                                 }else{
                                     $imageSavedFlag2 = 0;
