@@ -344,8 +344,16 @@
             $sql = "UPDATE order_list SET flag_done = '1' WHERE sn_march = $marchSn AND id_seller = $sellerId";
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array('callSuccess' => 'success');
-        }else if($_POST['query'] == "done"){ // (Q10) 买家有意识或无意识完成订单
-            $sellerId = $_POST['sellerId'];
+        }else if($_POST['query'] == 'done'){ // (Q10) 买家有意识或无意识完成订单
+            if(isset($_POST['isseller']) && $_POST['isseller'] == 'yes'){
+                $sessionKey = $_POST['sessionKey'];
+                $sql = "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'";
+                $retval = mysqli_query($connToMysql, $sql);
+                $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+                $sellerId = $row[0];
+            }else{
+                $sellerId = $_POST['sellerId'];
+            }
             $marchSn = $_POST['marchSn'];
             $sql = "DELETE FROM order_list WHERE sn_march = $marchSn AND id_seller = $sellerId";
             $retval = mysqli_query($connToMysql, $sql);
@@ -421,7 +429,8 @@
                     $sql = "UPDATE seller_list SET mon_balance = mon_balance + $term WHERE tel_banding = '$telNum'";
                 }else{
                     // 注册的
-                    $sql = "INSERT INTO seller_list (tel_banding, mon_balance) VALUES ('$telNum', $term)";
+                    $menuJson = json_encode(array(urlencode("空")));
+                    $sql = "INSERT INTO seller_list (tel_banding, mon_balance, json_menu) VALUES ('$telNum', $term, '$menuJson')";
                 }
                 $retval = mysqli_query($connToMysql, $sql);
                 $row = mysqli_fetch_array($retval, MYSQLI_NUM);
