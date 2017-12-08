@@ -551,7 +551,7 @@
                 $postData = json_encode(array('path' => $pathWithGet, 'width' => $width, 'auto_color' => $auto_color, 'line_color' => $line_color));
                 // var_dump($postData);
                 curl_setopt($connToWxApi, CURLOPT_URL, $url);
-                curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, false);
                 curl_setopt($connToWxApi, CURLOPT_HEADER, true);
                 curl_setopt($connToWxApi, CURLOPT_POST, true);
                 curl_setopt($connToWxApi, CURLOPT_POSTFIELDS, $postData);
