@@ -614,7 +614,7 @@
             }
         }
         if($_POST['query'] == 'qrcode'){
-            // echo $resultArray;
+            echo $resultArray;
         }else{
             echo json_encode($resultArray/*, JSON_FORCE_OBJECT*/); // (Response) 响应
         }
