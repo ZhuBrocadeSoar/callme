@@ -539,7 +539,7 @@
                 // 本地图片保存
                 $fp = tmpfile();
                 var_dump($fp);
-                $flagFwrite = fwrite($fp, 'test msg00000\n');
+                $flagFwrite = fwrite($fp, 'test msg00000');
                 var_dump($flagFwrite);
                 $statOfFp = fstat($fp);
                 var_dump($statOfFp);
