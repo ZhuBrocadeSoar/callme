@@ -537,8 +537,10 @@
                 // var_dump($token);
                 $url = "https://api.weixin.qq.com/wxa/getwxacode?access_token=$token";
                 // 本地图片保存
-                // $fp = tmpfile();
-                // $localUrl = dirname($fp) . basename($fp);
+                $fp = tmpfile();
+                fwrite($fp, 'test msg00000\n');
+                $localUrl = dirname($fp) . basename($fp);
+                readfile($localUrl);
                 // echo "FILE: " . $localUrl;
                 // 获取二维码
                 $connToWxApi = curl_init();
