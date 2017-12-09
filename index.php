@@ -409,7 +409,16 @@
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             if($row != NULL){
-                $resultArray = array('adminSuccess' => 'success');
+                // 获取列表
+                $sellerList = array();
+                $i = 0;
+                $sql = "SELECT name_seller, name_person, tel_banding, mon_balance FROM seller_list";
+                $retval = mysqli_query($connToMysql, $sql);
+                while(($row = mysqli_fetch_array($retval, MYSQLI_NUM)) != NULL){
+                    $sellerList[$i] = array('sellerName' => $row[0], 'personName' => $row[1], 'telNum' => $row[2], 'balanceMon' => $row[3]);
+                    $i++;
+                }
+                $resultArray = array('adminSuccess' => 'success', 'sellerList' => $sellerList);
             }else{
                 $resultArray = array('adminSuccess' => 'fail', 'failMsg' => 'Not Admin Error');
             }
