@@ -251,7 +251,7 @@
             }else{
                 $resultArray = array('fetchSuccess' => 'fail', 'failMsg' => 'No Sn Valid');
             }
-        }else if($_POST['query'] == "note"){ // (Q06) 商家检查关联，获取备注
+        }else if($_POST['query'] == 'note'){ // (Q06) 商家检查关联，获取备注
             // 获得商家id
             $sessionKey = $_POST['sessionKey'];
             $sql = "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'";
@@ -295,6 +295,7 @@
             $orderList = array('notedList' => $notedList, 'unnotedList' => $unnotedList);
             // $resultArray = array('noteSuccess' => 'success', 'orderList' => $orderList);
             $resultArray['noteSuccess'] = 'success';
+            $resultArray['sellerId'] = $sellerId;
             $resultArray['orderList'] = $orderList; 
         }else if($_POST['query'] == 'push'){ // (Q07) 买家推送备注
             $sessionKey = $_POST['sessionKey'];
