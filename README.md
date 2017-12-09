@@ -284,7 +284,9 @@ https://callme.brocadesoar.cn/?
     {
         "query" : "signup",
         "sessionKey" : sessionKey,
-        "telNum" : telNum
+        "telNum" : telNum,
+        "sellerName" : sellerName,
+        "personName" : personName
     }
 
         - (Q11R00) 录入成功响应JSON

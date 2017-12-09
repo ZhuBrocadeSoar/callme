@@ -362,6 +362,8 @@
         }else if($_POST['query'] == 'signup'){
             $sessionKey = $_POST['sessionKey'];
             $telNum = $_POST['telNum'];
+            $sellerName = $_POST['sellerName'];
+            $personName = $_POST['personName'];
             $sql = "SELECT mon_balance FROM seller_list WHERE tel_banding = '$telNum' AND hash_openid = '0'";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
@@ -373,7 +375,7 @@
                 }else{
                     // 匹配成功
                     $resultArray = array('signupSuccess' => 'success');
-                    $sql = "UPDATE seller_list SET hash_openid = '$sessionKey' WHERE tel_banding = '$telNum'";
+                    $sql = "UPDATE seller_list SET hash_openid = '$sessionKey', name_seller = '$sellerName', name_person = '$personName' WHERE tel_banding = '$telNum'";
                     $retval = mysqli_query($connToMysql, $sql);
                     $sql = "DELETE FROM session_record WHERE sessionkey = '$sessionKey'";
                     $retval = mysqli_query($connToMysql, $sql);
