@@ -13,21 +13,35 @@ POST JSON https://callme.brocadesoar.cn/
 
 ##### 对于合法的 queryStr
 
-    [login](https://github.com/ZhuBrocadeSoar/callme/blob/master/docs/api.md#login)
-    "seller_list"
-    "menu"
-    "fetch"
-    "note"
-    "push"
-    "hungry"
-    "call"
-    "done"
-    "signup"
-    "info"
-    "admin"
-    "renew"
-    "update"
-    "qrcode"
+[login](#login)
+
+seller\_list
+
+menu
+
+fetch
+
+note
+
+push
+
+hungry
+
+call
+
+done
+
+signup
+
+info
+
+admin
+
+renew
+
+update
+
+qrcode
 
     response
 
