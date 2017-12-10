@@ -55,6 +55,9 @@
             $loginInfo = json_decode($loginInfoJson, true);
             // 判断是否为商家请求
             if($_POST['isseller'] == "yes"){
+                // BUG : isseller 只是为了区别开商家版登陆请求还是用户版登陆请求
+                // 但是这里的逻辑却用来验证商家id是不是已注册的
+                // DEBUG : 商家版登陆请求会返回额外的字段 balanceMon，其值的获取在该分支下运行
                 // 查询数据库获得是否匹配openid
                 $hashopenid = sha1($loginInfo['openid']);
                 $retval = mysqli_query($connToMysql, "SELECT id_seller FROM seller_list WHERE hash_openid = '$hashopenid' ");
@@ -96,12 +99,16 @@
                 $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg);
             */
             }else{
-                // 商家id匹配
+                // DEBUG : 无论是哪种客户端只要换取成功均执行
                 // 成功响应
                 $loginSuccess = "success";
                 // 生成3rd_session
                 $sessionKey = sha1($loginInfo['openid']/* . $loginInfo['session_key']*/);
-                $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $sessionKey, 'balanceMon' => $balanceMon /*, 'testOpenid' => $loginInfo['openid'], 'testHashOpenid' => sha1($loginInfo['openid'])*/);
+                if(/*$_POST['isseller'] == 'yes'*/ 1){
+                    $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $sessionKey, 'balanceMon' => $balanceMon /*, 'testOpenid' => $loginInfo['openid'], 'testHashOpenid' => sha1($loginInfo['openid'])*/);
+                }else{
+                    $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $sessionKey);
+                }
                 // 存储session
                 $retval = mysqli_query($connToMysql, "SELECT flag_isseller FROM session_record WHERE sessionKey = '$sessionKey' ");
                 $row = mysqli_fetch_array($retval, MYSQLI_NUM);
@@ -182,7 +189,6 @@
                     $resultArray['takenSellerName'] = $takenSellerName;
                     $resultArray['takenMarchSn'] = $takenMarchSn;
                     $resultArray['takenMenuName'] = $takenMenuName;
-                    $resultArray['takenSellerName'] = $takenSellerName;
                 }else{
                     $resultArray['takenFlag'] = 'fail';
                 }
@@ -269,7 +275,6 @@
                 $resultArray = array('noteSuccess' => 'fail', 'failMsg' => 'No Note Error');
             }
              */
-
             $notedList = array();
             $noted = 0;
             $unnotedList = array();
