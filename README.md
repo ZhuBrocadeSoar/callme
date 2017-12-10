@@ -14,8 +14,5 @@
 
 ## 开发日志
 
-[开发日志](https://github.com/ZhuBrocadeSoar/callme/blob/master/docs/develop_log.md)
+[开发日志](https://github.com/ZhuBrocadeSoar/callme/blob/master/docs/log.md)
 
-## 发布日志
-
-[发布日志](https://github.com/ZhuBrocadeSoar/callme/blob/master/docs/release_log.md)
