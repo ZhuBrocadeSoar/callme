@@ -13,7 +13,7 @@ POST JSON https://callme.brocadesoar.cn/
 
 ##### 对于合法的 queryStr
 
-    [login](#login)
+    [login](https://github.com/ZhuBrocadeSoar/callme/blob/master/docs/api.md#login)
     "seller_list"
     "menu"
     "fetch"
