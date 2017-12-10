@@ -15,33 +15,33 @@ POST JSON https://callme.brocadesoar.cn/
 
 [login](#login)
 
-seller\_list
+[seller\_list](#seller\_list)
 
-menu
+[menu](#menu)
 
-fetch
+[fetch](#fetch)
 
-note
+[note](#note)
 
-push
+[push](#push)
 
-hungry
+[hungry](#hungry)
 
-call
+[call](#call)
 
-done
+[done](#done)
 
-signup
+[signup](#signup)
 
-info
+[info](#info)
 
-admin
+[admin](#admin)
 
-renew
+[renew](#renew)
 
-update
+[update](#update)
 
-qrcode
+[qrcode](#qrcode)
 
     response
 
@@ -229,4 +229,300 @@ qrcode
 
     {
         "query" : "fetch",
+        "sessionKey" : sessionKey
+    }
+
+    response
+
+    {
+        "fetchSuccess" : "success",
+        "marchSn" : marchSn
+    }
+
+    {
+        "fetchSuccess" : "fail",
+        "failMsg" : "No Sn Valid" | "Out Of Duty Error"
+    }
+
+### note
+
+商家获取备注关联情况
+
+    request
+
+    {
+        "query" : "note",
+        "sessionKey" : sessionKey
+    }
+
+    response
+
+    {
+        "noteSuccess" : "success",
+        "sellerId" : sellerId,
+        "orderList" : {
+            "notedList" : [
+                {
+                    "marchSn" : marchSn,
+                    "noteContent" : noteContent
+                },
+                ...
+            ],
+            "unnotedList" : [
+                {
+                    "marchSn" : marchSn,
+                    "noteContent" : NULL
+                },
+                ...
+            ]
+        }
+    }
+
+### push
+
+用户推送备注
+
+    request
+
+    {
+        "query" : "push",
+        "sessionKey" : sessionKey,
+        "sellerId" : sellerId,
+        "marchSn" : marchSn,
+        "noteContent" : noteContent
+    }
+
+    response
+
+    {
+        "pushSuccess" : "success"
+    }
+
+    {
+        "pushSuccess" : "fail",
+        "failMsg" : "Taken Error" | "Invalid Sn Error"
+    }
+
+### hungry
+
+    request
+
+    {
+        "query" : "hungry",
+        "sessionKey" : sessionKey,
+        "sellerId" : sellerId,
+        "marchSn" : marchSn
+    }
+
+    response
+
+    {
+        "hungrySuccess" : "success"
+    }
+
+    {
+        "hungrySuccess" : "fail",
+        "failMsg" : "Not Ready Yet"
+    }
+
+### call
+
+    request
+
+    {
+        "query" : "call",
+        "sessionKey" : sessionKey,
+        "marchSn" : marchSn
+    }
+
+    response
+
+    {
+        "callSuccess" : "success"
+    }
+
+### done
+
+    request
+
+    {
+        "query" : "done",
+        "sessionKey" : sessionKey
+        "isseller" : "yes",
+        "marchSn" : marchSn
+    }
+
+    response
+
+    {
+        "doneSuccess" : "success"
+    }
+
+    request
+
+    {
+        "query" : "done",
+        "sessionKey" : sessionKey,
+        "sellerId" : sellerId,
+        "marchSn" : marchSn
+    }
+
+    response
+
+    {
+        "doneSuccess" : "success"
+    }
+
+### signup
+
+    request
+
+    {
+        "query" : "signup",
+        "sessionKey" : sessionKey,
+        "telNum" : telNum,
+        "sellerName" : sellerName,
+        "personName" : personName
+    }
+
+    response
+
+    {
+        "signupSuccess" : "success"
+    }
+
+    {
+        "signupSuccess" : "fail",
+        "failMsg" : "Need Renew Error" | "Invalid Tel Error"
+    }
+
+### info
+
+    request
+
+    {
+        "query" : "info",
+        "sessionKey" : sessionKey
+    }
+
+    response
+
+    {
+        "infoSuccess" : "success",
+        "sellerName" : sellerName,
+        "imageUrl" : imageUrl,
+        "menuList" : [
+            menuStr1,
+            ...
+        ],
+        "balanceMon" : balanceMon,
+        "personName" : personName
+    }
+
+    {
+        "infoSuccess" : "fail",
+        "failMsg" : "Invalid Session Error"
+    }
+
+### admin
+
+    request
+
+    {
+        "query" : "admin",
+        "sessionKey" : sessionKey
+    }
+
+    response
+
+    {
+        "adminSuccess" : "success",
+        "sellerList" : [
+            {
+                "sellerName" : sellerName,
+                "personName" : personName,
+                "telNum" : telNum,
+                "balanceMon" : balanceMon
+            },
+            ...
+        ]
+    }
+
+    {
+        "adminSuccess" : "fail",
+        "failMsg" : "Not Admin Error"
+    }
+
+### renew
+
+    request
+
+    {
+        "query" : "renew",
+        "sessionKey" : sessionKey,
+        "telNum" : telNum,
+        "term" : term
+    }
+
+    response
+
+    {
+        "renewSuccess" : "success"
+    }
+
+    {
+        "renewSuccess" : "fail",
+        "failMsg" : "Not Admin Error"
+    }
+
+### update
+
+    request
+
+    {
+        "query" : "update",
+        "sessionKey" : sessionKey,
+        "sellerName" : sellerName,
+        "imageName" : "sellerImage",
+        "menuList" : menuListStr,
+        "personName" : personName
+    }
+
+    response
+
+    {
+        "updateSuccess" : "success",
+        "updateImageSuccess" : "success"
+    }
+
+    {
+        "updateSuccess" : "success",
+        "updateImageSuccess" : "fail",
+        "failMsg" : "No Error" | "Unlink Error" | "Move 1 Error" | "Move 2 Error" | "Size Error" | "No File Uploaded"
+    }
+
+    {
+        "updateSuccess" : "fail",
+        "failMsg" : "Need Renew Error" | "Need Signup Error"
+    }
+
+### qrcode
+
+    request
+
+    {
+        "query" : "qrcode",
+        "sessionKey" : sessionKey
+    }
+
+    response
+
+    {
+        "qrcodeSuccess" : "success",
+        "qrcodeImageUrl" : qrcodeImageUrl
+    }
+
+    {
+        "qrcodeSuccess" : "fail",
+        "failMsg" : "Invalid Session Error"
     }
