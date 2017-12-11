@@ -121,6 +121,11 @@ POST JSON https://callme.brocadesoar.cn/
         "sessionKey" : sessionKey,
         "balanceMon" : balanceMon
     }
+    
+    {
+        "loginSuccess" : "success",
+        "sessionKey" : sessionKey
+    }
 
     {
         "loginSuccess" : "fail",
