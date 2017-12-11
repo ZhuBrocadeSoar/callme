@@ -83,13 +83,10 @@
             // 响应
             if($loginInfo == NULL){
                 // API 错误
-                $loginSuccess = "fail";
-                $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => "API Error");
+                $resultArray = array('loginSuccess' => "fail", 'failMsg' => "API Error");
             }else if(isset($loginInfo['errcode'])){
                 // 登陆错误
-                $loginSuccess = "fail";
-                $failMsg = "Login Error";
-                $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg);
+                $resultArray = array('loginSuccess' => "fail", 'failMsg' => "login Error");
             /*
             }else if($_POST['isseller'] == "yes" && $sellerJustice == false){
                 // 商家id不匹配错误
