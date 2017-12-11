@@ -447,7 +447,8 @@ POST JSON https://callme.brocadesoar.cn/
                 "sellerName" : sellerName,
                 "personName" : personName,
                 "telNum" : telNum,
-                "balanceMon" : balanceMon
+                "balanceMon" : balanceMon,
+                "open" : false
             },
             ...
         ]

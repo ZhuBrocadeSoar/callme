@@ -104,7 +104,7 @@
                 $loginSuccess = "success";
                 // 生成3rd_session
                 $sessionKey = sha1($loginInfo['openid']/* . $loginInfo['session_key']*/);
-                if($_POST['isseller'] == 'yes' 1){
+                if($_POST['isseller'] == 'yes'){
                     $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $sessionKey, 'balanceMon' => $balanceMon /*, 'testOpenid' => $loginInfo['openid'], 'testHashOpenid' => sha1($loginInfo['openid'])*/);
                 }else{
                     $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $sessionKey);
@@ -420,7 +420,7 @@
                 $sql = "SELECT name_seller, name_person, tel_banding, mon_balance FROM seller_list";
                 $retval = mysqli_query($connToMysql, $sql);
                 while(($row = mysqli_fetch_array($retval, MYSQLI_NUM)) != NULL){
-                    $sellerList[$i] = array('sellerName' => $row[0], 'personName' => $row[1], 'telNum' => $row[2], 'balanceMon' => $row[3]);
+                    $sellerList[$i] = array('sellerName' => $row[0], 'personName' => $row[1], 'telNum' => $row[2], 'balanceMon' => $row[3], 'open' => false);
                     $i++;
                 }
                 $resultArray = array('adminSuccess' => 'success', 'sellerList' => $sellerList);
