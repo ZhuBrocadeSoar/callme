@@ -104,7 +104,7 @@
                 $loginSuccess = "success";
                 // 生成3rd_session
                 $sessionKey = sha1($loginInfo['openid']/* . $loginInfo['session_key']*/);
-                if(/*$_POST['isseller'] == 'yes'*/ 1){
+                if($_POST['isseller'] == 'yes' 1){
                     $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $sessionKey, 'balanceMon' => $balanceMon /*, 'testOpenid' => $loginInfo['openid'], 'testHashOpenid' => sha1($loginInfo['openid'])*/);
                 }else{
                     $resultArray = array('loginSuccess' => $loginSuccess, 'sessionKey' => $sessionKey);
