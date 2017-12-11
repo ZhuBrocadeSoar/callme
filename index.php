@@ -26,7 +26,7 @@
             $flagQueryErr = true;
         }
         // 处理请求
-        if($_POST['query'] == "login"){ // (Q00) 登陆请求
+        if($_POST['query'] == 'login'){ // (Q00) 登陆请求
             // 决定使用哪个小程序信息
             if($_POST['isseller']){
                 $idWxAppInfo = 2;
@@ -84,8 +84,7 @@
             if($loginInfo == NULL){
                 // API 错误
                 $loginSuccess = "fail";
-                $failMsg = "API Error";
-                $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => $failMsg);
+                $resultArray = array('loginSuccess' => $loginSuccess, 'failMsg' => "API Error");
             }else if(isset($loginInfo['errcode'])){
                 // 登陆错误
                 $loginSuccess = "fail";
