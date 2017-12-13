@@ -364,6 +364,14 @@
             $sql = "DELETE FROM order_list WHERE sn_march = $marchSn AND id_seller = $sellerId";
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array('doneSuccess' => 'success');
+        }else if($_POST['query'] == 'clear'){
+            $sessionKey = $_POST['sessionKey'];
+            $sql = "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'";
+            $retval = mysqli_query($connToMysql, $sql);
+            $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            $sellerId = $row[0];
+            $sql = "DELETE FROM order_list WHERE id_seller = $sellerId";
+            $resultArray = array('clearSuccess' => 'success');
         }else if($_POST['query'] == 'signup'){
             $sessionKey = $_POST['sessionKey'];
             $telNum = $_POST['telNum'];

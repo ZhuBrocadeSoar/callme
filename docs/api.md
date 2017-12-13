@@ -31,6 +31,8 @@ POST JSON https://callme.brocadesoar.cn/
 
 [done](#done)
 
+[clear](#clear)
+
 [signup](#signup)
 
 [info](#info)
@@ -376,6 +378,21 @@ POST JSON https://callme.brocadesoar.cn/
 
     {
         "doneSuccess" : "success"
+    }
+
+### clear
+
+    request
+
+    {
+        "query" : "clear",
+        "sessionKey" : sessionKey
+    }
+
+    response
+
+    {
+        "clearSuccess" : "success"
     }
 
 ### signup
