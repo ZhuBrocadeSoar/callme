@@ -319,7 +319,9 @@
                     // 没有备注
                     $sql2 = "UPDATE order_list SET note_order = '$noteContent', session_key_client = '$sessionKey' WHERE sn_march = $marchSn AND id_seller = $sellerId";
                     $retval = mysqli_query($connToMysql, $sql2);
-                    $mysqlierror = mysqli_error();
+                    // 计数
+                    $sql3 = "UPDATE seller_list SET count_noted_order = count_noted_order + 1 WHERE id_seller = $sellerId";
+                    $retval = mysqli_query($connToMysql, $sql3);
                     $resultArray = array('pushSuccess' => 'success' /*, 'testMsg1' => $sql2, 'testMsg2' => $retval, 'testMsg3' => $mysqlierror*/);
                 }
             }else{
@@ -370,7 +372,7 @@
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             $sellerId = $row[0];
-            $sql = "DELETE FROM order_list WHERE id_seller = $sellerId AND note_order is NULL";
+            $sql = "DELETE FROM order_list WHERE id_seller = $sellerId AND note_order IS NULL";
             $retval = mysqli_query($connToMysql, $sql);
             $resultArray = array('clearSuccess' => 'success');
         }else if($_POST['query'] == 'signup'){
