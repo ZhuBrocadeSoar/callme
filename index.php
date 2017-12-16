@@ -366,11 +366,14 @@
             $resultArray = array('doneSuccess' => 'success');
         }else if($_POST['query'] == 'clear'){
             $sessionKey = $_POST['sessionKey'];
-            $sql = "SELECT id_seller FROM session_record WHERE session_key_seller = '$sessionKey'";
+            $sql = "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'";
+            var_dump($sql);
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
+            var_dump($row);
             $sellerId = $row[0];
             $sql = "DELETE FROM order_list WHERE id_seller = $sellerId";
+            var_dump($sql);
             $resultArray = array('clearSuccess' => 'success');
         }else if($_POST['query'] == 'signup'){
             $sessionKey = $_POST['sessionKey'];
