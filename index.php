@@ -195,7 +195,7 @@
             }else{
                 $resultArray = array('menuSuccess' => 'fail', 'failMsg' => 'Illegal Seller Error');
             }
-        }else if($_POST['query'] == "fetch"){ // (Q05) 取号
+        }else if($_POST['query'] == 'fetch'){ // (Q05) 取号
             // 获得商家id
             $sessionKey = $_POST['sessionKey'];
             $sql = "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'";
