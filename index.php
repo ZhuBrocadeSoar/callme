@@ -366,7 +366,7 @@
             $resultArray = array('doneSuccess' => 'success');
         }else if($_POST['query'] == 'clear'){
             $sessionKey = $_POST['sessionKey'];
-            $sql = "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'";
+            $sql = "SELECT id_seller FROM session_record WHERE session_key_seller = '$sessionKey'";
             $retval = mysqli_query($connToMysql, $sql);
             $row = mysqli_fetch_array($retval, MYSQLI_NUM);
             $sellerId = $row[0];
