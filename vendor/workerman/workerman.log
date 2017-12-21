@@ -1,0 +1,8 @@
+2017-12-21 23:55:19 pid:1577 Workerman[callme.php] start in DEBUG mode
+2017-12-21 23:55:19 pid:1577 Warning: You must have the root privileges to change uid and gid.
+2017-12-21 23:55:19 pid:1578 Warning: User apache not exsits
+2017-12-21 23:55:19 pid:1579 Warning: User apache not exsits
+2017-12-21 23:55:19 pid:1580 Warning: User apache not exsits
+2017-12-21 23:55:19 pid:1581 Warning: User apache not exsits
+2017-12-21 23:55:26 pid:1577 Workerman[callme.php] stopping ...
+2017-12-21 23:55:26 pid:1577 Workerman[callme.php] has been stopped

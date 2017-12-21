@@ -341,7 +341,7 @@
                 // 餐未完成
                 $resultArray = array('hungrySuccess' => 'fail', 'failMsg' => 'Not Ready Yet');
             }
-        }else if($_POST['query'] == "call"){ // (Q09) 卖家叫号
+        }else if($_POST['query'] == 'call'){ // (Q09) 卖家叫号
             // 获得商家id
             $sessionKey = $_POST['sessionKey'];
             $sql = "SELECT id_seller FROM session_record WHERE sessionkey = '$sessionKey'";
