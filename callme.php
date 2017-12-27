@@ -99,6 +99,8 @@ $callme->onWorkerStart = function($callme){
     $stmt->fetch();
     $stmt->close();
     $connToMysql->close();
+    var_dump($GLOBALS['wxAppId']);
+    var_dump($GLOBALS['wxSecret']);
 };
 
 $callme->onConnect = function($connection){
