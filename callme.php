@@ -121,7 +121,7 @@ $callme->onMessage = function($connection, $query){
                     $responseArr = array('push' => 'hi');
                     $connection->send(arr2msg($responseArr));
                 }else if($queryArr['query'] == 'accessToken'){
-                    updateAccessToken();
+                    updateAccessToken(1);
                 }else{
                     // 请求无效
                     $responseArr = array('push' => 'error', 'msg' => 'wrong query');
