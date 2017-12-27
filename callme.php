@@ -52,11 +52,35 @@ $callme->onWorkerStart = function($callme){
      */
 };
 
-$callme->onMessage = function($connection, $data){
+$callme->onMessage = function($connection, $query){
     $connection->lastMessageTime = time();
-    $dataObj = json_decode(urldecode($data));
-    var_dump($dataObj);
-    $connection->send(urlencode(json_encode($dataObj)));
+    $queryArr = json_decode(urldecode($query), true);
+    if($queryArr != NULL){
+        // 请求格式正确
+        if(isset($queryArr['query'])){
+            // 请求格式正确
+            if($queryArr['query'] == 'hello'){
+                // hello 请求
+                $responseArr = array('push' => 'hi');
+                $connection->send(urlencode(json_encode($responseArr)));
+            }else{
+                // 请求无效
+                $responseArr = array('push' => 'error', 'msg' => 'wrong query');
+                $connection->send(urlencode(json_encode($responseArr)));
+            }
+        }else{
+            // 请求格式不正确
+            $responseArr = array('push' => 'error', 'msg' => 'wrong format');
+            $connection->send(urlencode(json_encode($responseArr)));
+        }
+    }else{
+        // 请求格式不正确
+        $responseArr = array('push' => 'error', 'msg' => 'wrong format');
+        $connection->send(urlencode(json_encode($responseArr)));
+    }
+    // test
+    // var_dump($queryArr);
+    // $connection->send(urlencode(json_encode($queryArr)));
 };
 
 $callme->onClose = function($connection){
