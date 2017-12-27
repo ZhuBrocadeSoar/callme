@@ -3,18 +3,23 @@
 $accessToken = array(1 => array('accessToken' => 'TOKEN', 'expiresIn' => 7200, 'timeStamp' => time()),
                      2 => array('accessToken' => 'TOKEN', 'expiresIn' => 7200, 'timeStamp' => time()));
 
+$wxAppId = 'WXAPPID';
+$wxSecret = 'WXSECRET';
+
 function updateAccessToken($id){
     // 更新accessToken
+    /*
     $connToMysql = new mysqli("localhost", "nitmaker_cn", "nitmaker.cn", "callme");
     $stmt = $connToMysql->prepare("SELECT wxappid, wxsecret FROM wxapp_info WHERE id_wxappInfo = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $stmt->bind_result($wxAppId, $wxSecret);
     if($stmt->fetch()){
+     */
         $wxGrantType = 'client_credential';
         // cURL 获取 accessToken
         $connToWxApi = curl_init();
-        $urlWithGet = "https://api.weixin.qq.com/cgi-bin/token?appid=" . $wxAppId . "&secret=" . $wxSecret . "&grant_type=" . $wxGrantType;
+        $urlWithGet = "https://api.weixin.qq.com/cgi-bin/token?appid=" . $GLOBALS['wxAppId'] . "&secret=" . $GLOBALS['wxSecret'] . "&grant_type=" . $wxGrantType;
         curl_setopt($connToWxApi, CURLOPT_URL, $urlWithGet);
         curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($connToWxApi, CURLOPT_HEADER, false);
@@ -30,11 +35,13 @@ function updateAccessToken($id){
             return 0;
         }
         $GLOBALS['accessToken'][$id]['accessToken'];
+        /*
     }else{
         return 2;
     }
     $stmt->close();
     $connToMysql->close();
+         */
 }
 
 function arr2msg($arr){
@@ -84,17 +91,18 @@ $callme->onWorkerStart = function($callme){
             }
         }
     });
-    /*
-    Timer::add(TESTMSG_TIME, function()use($callme){
-        foreach($callme->connections as $connection){
-            $time_now_arr = array('timeStamp' => time());
-            var_dump($time_now_arr);
-            var_dump(json_encode($time_now_arr));
-            var_dump(urlencode(json_encode($time_now_arr)));
-            $connection->send(urlencode(json_encode($time_now_arr)));
-        }
-    });
-     */
+    $connToMysql = new mysqli("localhost", "nitmaker_cn", "nitmaker.cn", "callme");
+    $stmt = $connToMysql->prepare("SELECT wxappid, wxsecret FROM wxapp_info WHERE id_wxappInfo = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->bind_result($GLOBALS['wxAppId'], $GLOBALS['wxSecret']);
+    $stmt->fetch();
+    $stmt->close();
+    $connToMysql->close();
+};
+
+$callme->onConnect = function($connection){
+    $connection->connToMysql = new mysqli("localhost", "nitmaker_cn", "nitmaker.cn", "callme");
 };
 
 $callme->onMessage = function($connection, $query){
@@ -150,6 +158,7 @@ $callme->onMessage = function($connection, $query){
 };
 
 $callme->onClose = function($connection){
+    $connection->connToMysql->close();
     var_dump('A connection closed');
     var_dump($connection);
 };

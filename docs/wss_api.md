@@ -71,7 +71,8 @@ var\_dump(          json\_decode(urldecode( $data ))                      );
 ```javascript
 {
     "query" : "login",
-    "code" : code
+    "code" : code,
+    "id" : id
 }
 
 {
