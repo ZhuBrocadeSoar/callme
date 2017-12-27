@@ -1,6 +1,6 @@
 <?php
 
-$accessToken = array('accessToken' => 'TOKEN', 'expiresIn' => 7200, 'timeStamp' => now());
+$accessToken = array('accessToken' => 'TOKEN', 'expiresIn' => 7200, 'timeStamp' => time());
 
 function updateAccessToken(){
     // 更新accessToken
