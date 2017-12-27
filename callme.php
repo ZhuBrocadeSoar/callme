@@ -38,7 +38,7 @@ $callme->onWorkerStart = function($callme){
             }
         }
     });
-    Timer:add(TESTMSG_TIME, function()use($callme){
+    Timer::add(TESTMSG_TIME, function()use($callme){
         foreach($callme->connections as $connection){
             $time_now_arr = array('timeStamp' => time());
             var_dump($time_now_arr);
