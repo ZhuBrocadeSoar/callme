@@ -41,6 +41,7 @@ $callme->onWorkerStart = function($callme){
 
 $callme->onMessage = function($connection, $data){
     $connection->lastMessageTime = time();
+    var_dump($data);
     $connection->send('time stamp = ' . $connection->lastMessageTime . '\t data from client = '. json_decode($data));
 };
 
