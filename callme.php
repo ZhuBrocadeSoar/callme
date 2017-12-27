@@ -1,9 +1,41 @@
 <?php
 
-$accessToken = array('accessToken' => 'TOKEN', 'expiresIn' => 7200, 'timeStamp' => time());
+$accessToken = array(1 => array('accessToken' => 'TOKEN', 'expiresIn' => 7200, 'timeStamp' => time()),
+                     2 => array('accessToken' => 'TOKEN', 'expiresIn' => 7200, 'timeStamp' => time()));
 
-function updateAccessToken(){
+function updateAccessToken($id){
     // 更新accessToken
+    $connToMysql = new mysqli("localhost", "nitmaker_cn", "nitmaker.cn", "callme");
+    $stmt = $connToMysql->prepare("SELECT wxappid, wxsecret FROM wxapp_info WHERE id_wxappInfo = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->bind_result($wxAppId, $wxSecret);
+    if($stmt->fetch()){
+        $wxGrantType = 'client_credential';
+        // cURL 获取 accessToken
+        $connToWxApi = curl_init();
+        $urlWithGet = "https://api.weixin.qq.com/cgi-bin/token?appid=" . $wxAppId . "&secret=" . $wxSecret . "&grant_type=" . $wxGrantType;
+        curl_setopt($connToWxApi, CURLOPT_URL, $urlWithGet);
+        curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($connToWxApi, CURLOPT_HEADER, false);
+        $tokenInfo = json_decode(curl_exec($connToWxApi), true);
+        if(isset($tokenInfo['errcode'])){
+            // api错误
+            var_dump($tokenInfo);
+            return 1;
+        }else{
+            $GLOBALS['accessToken'][$id]['accessToken'] = $tokenInfo['access_token'];
+            $GLOBALS['accessToken'][$id]['expiresIn'] = $tokenInfo['expires_in'];
+            $GLOBALS['accessToken'][$id]['timeStamp'] = time();
+            return 0;
+        }
+        $GLOBALS['accessToken'][$id]['accessToken'];
+    }else{
+        return 2;
+    }
+    $stmt->close();
+    $connToMysql->close();
+    var_dump($GLOBALS['accessToken']);
 }
 
 function arr2msg($arr){
@@ -88,13 +120,8 @@ $callme->onMessage = function($connection, $query){
                     // hello 请求
                     $responseArr = array('push' => 'hi');
                     $connection->send(arr2msg($responseArr));
-                }else if($queryArr['query'] == 'login'){
-                    // 登陆请求
-                    // 换取openid
-                    $code = $queryArr['code'];
-                    // 记录openid
-                    $openid = 'test'; // test
-                    $connection->openid = $openid;
+                }else if($queryArr['query'] == 'accessToken'){
+                    updateAccessToken();
                 }else{
                     // 请求无效
                     $responseArr = array('push' => 'error', 'msg' => 'wrong query');
