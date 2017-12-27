@@ -55,7 +55,16 @@ $callme->onWorkerStart = function($callme){
 $callme->onMessage = function($connection, $query){
     $connection->lastMessageTime = time();
     $queryArr = json_decode(urldecode($query), true);
-    if(isset($connection->openid)){
+    if($queryArr != NULL && $queryArr['query'] == 'login'){
+        // 登陆请求
+        // 换取openid
+        $code = $queryArr['code'];
+        // 记录openid
+        $openid = 'test'; // test
+        $connection->openid = $openid;
+        $responseArr = array('push' => 'login', 'state' => 'success');
+        $connection->send(urlencode(json_encode($responseArr)));
+    }else if(isset($connection->openid)){
         // 有openid
         if($queryArr != NULL){
             // 请求格式正确
