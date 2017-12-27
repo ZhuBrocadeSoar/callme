@@ -38,6 +38,7 @@ $callme->onWorkerStart = function($callme){
             }
         }
     });
+    /*
     Timer::add(TESTMSG_TIME, function()use($callme){
         foreach($callme->connections as $connection){
             $time_now_arr = array('timeStamp' => time());
@@ -47,14 +48,13 @@ $callme->onWorkerStart = function($callme){
             $connection->send(urlencode(json_encode($time_now_arr)));
         }
     });
+     */
 };
 
 $callme->onMessage = function($connection, $data){
-    $connection->lastMessageTime = time();
-    var_dump($data);
-    var_dump(urldecode($data));
-    var_dump(json_decode(urldecode($data)));
-    $connection->send('time stamp = ' . $connection->lastMessageTime . '\t data from client = '. $data);
+    $dataObj = json_decode(urldecode($data));
+    var_dump($dataObj);
+    $connection->send(urlencode(json_encode($dataObj)));
 };
 
 Worker::runAll();
