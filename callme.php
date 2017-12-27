@@ -6,6 +6,7 @@ require_once __DIR__ .  '/vendor/autoload.php';
 
 define('HEARTBEAT_TIME', 600);
 define('HEARTBEAT_CHECK_TIME', HEARTBEAT_TIME / 10);
+define('TESTMSG_TIME', 10);
 
 $context = array(
     'ssl' => array(
@@ -35,6 +36,15 @@ $callme->onWorkerStart = function($callme){
             if($time_now - $connection->lastMessageTime > HEARTBEAT_TIME){
                 $connection->close();
             }
+        }
+    });
+    Timer:add(TESTMSG_TIME, function()use($callme){
+        foreach($callme->connections as $connection){
+            $time_now_arr = array('timeStamp' => time());
+            var_dump($time_now_arr);
+            var_dump(json_encode($time_now_arr));
+            var_dump(urlencode(json_encode($time_now_arr)));
+            $connection->send();
         }
     });
 };
