@@ -4,7 +4,7 @@ use Workerman\Worker;
 use Workerman\Lib\Timer;
 require_once __DIR__ .  '/vendor/autoload.php';
 
-define('HEARTBEAT_TIME', 600);
+define('HEARTBEAT_TIME', 10);
 define('HEARTBEAT_CHECK_TIME', HEARTBEAT_TIME / 10);
 define('TESTMSG_TIME', 10);
 
@@ -34,6 +34,7 @@ $callme->onWorkerStart = function($callme){
             }
             // 上次通信时间超过心跳间隔
             if($time_now - $connection->lastMessageTime > HEARTBEAT_TIME){
+                $connection->send(urlencode(json_encode(array('push' => 'timeOut'))));
                 $connection->close();
             }
         }
@@ -52,9 +53,14 @@ $callme->onWorkerStart = function($callme){
 };
 
 $callme->onMessage = function($connection, $data){
+    $connection->lastMessageTime = time();
     $dataObj = json_decode(urldecode($data));
     var_dump($dataObj);
     $connection->send(urlencode(json_encode($dataObj)));
+};
+
+$callme->onClose = function($connection){
+    echo 'connection: ' . $connection . 'closed';
 };
 
 Worker::runAll();
