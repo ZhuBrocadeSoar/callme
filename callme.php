@@ -122,6 +122,9 @@ $callme->onMessage = function($connection, $query){
                 }else if($queryArr['query'] == 'accessToken'){
                     updateAccessToken($queryArr['id']);
                     var_dump($GLOBALS['accessToken']);
+                    $id = $queryArr['id'];
+                    $responseArr = array('push' => 'accessToken', 'id' => $id, 'info' => $GLOBALS['accessToken'][$id]);
+                    $connection->send(arr2msg($responseArr));
                 }else{
                     // 请求无效
                     $responseArr = array('push' => 'error', 'msg' => 'wrong query');
