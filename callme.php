@@ -60,7 +60,7 @@ $callme->onMessage = function($connection, $data){
 };
 
 $callme->onClose = function($connection){
-    echo 'connection: ' . $connection . 'closed';
+    var_dump('connection: ' . $connection . 'closed');
 };
 
 Worker::runAll();
