@@ -41,7 +41,7 @@ $callme->onWorkerStart = function($callme){
 
 $callme->onMessage = function($connection, $data){
     $connection->lastMessageTime = time();
-    $connection->send('time stamp = ' . $connection->lastMessageTime . '\t data from client = '. data);
+    $connection->send('time stamp = ' . $connection->lastMessageTime . '\t data from client = '. $data);
 };
 
 Worker::runAll();
