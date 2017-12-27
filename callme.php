@@ -93,11 +93,13 @@ $callme->onWorkerStart = function($callme){
     });
     $connToMysql = new mysqli("localhost", "nitmaker_cn", "nitmaker.cn", "callme");
     $stmt = $connToMysql->prepare("SELECT wxappid, wxsecret FROM wxapp_info WHERE id_wxappInfo = ?");
-    $stmt->bind_param("i", 1);
+    $id = 1;
+    $stmt->bind_param("i", $id);
     $stmt->execute();
     $stmt->bind_result($GLOBALS['wxAppInfo'][1]['wxAppId'], $GLOBALS['wxAppInfo'][1]['wxSecret']);
     $stmt->fetch();
-    $stmt->bind_param("i", 2);
+    $id = 2;
+    $stmt->bind_param("i", $id);
     $stmt->execute();
     $stmt->bind_result($GLOBALS['wxAppInfo'][2]['wxAppId'], $GLOBALS['wxAppInfo'][2]['wxSecret']);
     $stmt->fetch();
