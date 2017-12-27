@@ -6,7 +6,7 @@ require_once __DIR__ .  '/vendor/autoload.php';
 
 define('HEARTBEAT_TIME', 600);
 define('HEARTBEAT_CHECK_TIME', HEARTBEAT_TIME / 10);
-define('TESTMSG_TIME', 10);
+define('TESTMSG_TIME', 10000);
 
 $context = array(
     'ssl' => array(
@@ -44,7 +44,7 @@ $callme->onWorkerStart = function($callme){
             var_dump($time_now_arr);
             var_dump(json_encode($time_now_arr));
             var_dump(urlencode(json_encode($time_now_arr)));
-            $connection->send();
+            $connection->send('test');
         }
     });
 };
