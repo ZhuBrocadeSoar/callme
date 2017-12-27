@@ -1,5 +1,19 @@
 <?php
 
+$accessToken = array('accessToken' => 'TOKEN', 'expiresIn' => 7200, 'timeStamp' => now());
+
+function updateAccessToken(){
+    // 更新accessToken
+}
+
+function arr2msg($arr){
+    return urlencode(json_encode($arr));
+}
+
+function msg2arr($msg){
+    return json_decode(urldecode($msg), true);
+}
+
 use Workerman\Worker;
 use Workerman\Lib\Timer;
 require_once __DIR__ .  '/vendor/autoload.php';
@@ -34,7 +48,7 @@ $callme->onWorkerStart = function($callme){
             }
             // 上次通信时间超过心跳间隔
             if($time_now - $connection->lastMessageTime > HEARTBEAT_TIME){
-                $connection->send(urlencode(json_encode(array('push' => 'timeOut'))));
+                $connection->send(arr2msg(array('push' => 'timeOut')));
                 $connection->close();
             }
         }
@@ -54,7 +68,7 @@ $callme->onWorkerStart = function($callme){
 
 $callme->onMessage = function($connection, $query){
     $connection->lastMessageTime = time();
-    $queryArr = json_decode(urldecode($query), true);
+    $queryArr = msg2arr($query);
     if($queryArr != NULL && $queryArr['query'] == 'login'){
         // 登陆请求
         // 换取openid
@@ -63,7 +77,7 @@ $callme->onMessage = function($connection, $query){
         $openid = 'test'; // test
         $connection->openid = $openid;
         $responseArr = array('push' => 'login', 'state' => 'success');
-        $connection->send(urlencode(json_encode($responseArr)));
+        $connection->send(arr2msg($responseArr));
     }else if(isset($connection->openid)){
         // 有openid
         if($queryArr != NULL){
@@ -73,7 +87,7 @@ $callme->onMessage = function($connection, $query){
                 if($queryArr['query'] == 'hello'){
                     // hello 请求
                     $responseArr = array('push' => 'hi');
-                    $connection->send(urlencode(json_encode($responseArr)));
+                    $connection->send(arr2msg($responseArr));
                 }else if($queryArr['query'] == 'login'){
                     // 登陆请求
                     // 换取openid
@@ -84,21 +98,21 @@ $callme->onMessage = function($connection, $query){
                 }else{
                     // 请求无效
                     $responseArr = array('push' => 'error', 'msg' => 'wrong query');
-                    $connection->send(urlencode(json_encode($responseArr)));
+                    $connection->send(arr2msg($responseArr));
                 }
             }else{
                 // 请求格式不正确
                 $responseArr = array('push' => 'error', 'msg' => 'wrong format');
-                $connection->send(urlencode(json_encode($responseArr)));
+                $connection->send(arr2msg($responseArr));
             }
         }else{
             // 请求格式不正确
             $responseArr = array('push' => 'error', 'msg' => 'wrong format');
-            $connection->send(urlencode(json_encode($responseArr)));
+            $connection->send(arr2msg($responseArr));
         }
     }else{
         $responseArr = array('push' => 'whoareyou');
-        $connection->send(urlencode(json_encode($responseArr)));
+        $connection->send(arr2msg($responseArr));
     }
     // test
     // var_dump($queryArr);
