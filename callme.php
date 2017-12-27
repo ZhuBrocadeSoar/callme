@@ -4,7 +4,7 @@ use Workerman\Worker;
 use Workerman\Lib\Timer;
 require_once __DIR__ .  '/vendor/autoload.php';
 
-define('HEARTBEAT_TIME', 10);
+define('HEARTBEAT_TIME', 600);
 define('HEARTBEAT_CHECK_TIME', HEARTBEAT_TIME / 10);
 define('TESTMSG_TIME', 10);
 
