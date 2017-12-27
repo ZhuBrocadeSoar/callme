@@ -36,6 +36,7 @@ function updateAccessToken($id){
     $stmt->close();
     $connToMysql->close();
     var_dump($GLOBALS['accessToken']);
+    var_dump('test');
 }
 
 function arr2msg($arr){
@@ -122,6 +123,7 @@ $callme->onMessage = function($connection, $query){
                     $connection->send(arr2msg($responseArr));
                 }else if($queryArr['query'] == 'accessToken'){
                     updateAccessToken(1);
+                    var_dump($GLOBALS['accessToken']);
                 }else{
                     // 请求无效
                     $responseArr = array('push' => 'error', 'msg' => 'wrong query');
