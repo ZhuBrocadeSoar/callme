@@ -3,8 +3,8 @@
 $accessToken = array(1 => array('accessToken' => 'TOKEN', 'expiresIn' => 7200, 'timeStamp' => time()),
                      2 => array('accessToken' => 'TOKEN', 'expiresIn' => 7200, 'timeStamp' => time()));
 
-$wxAppId = 'WXAPPID';
-$wxSecret = 'WXSECRET';
+$wxAppInfo = array(1 => array('wxAppId' => 'WXAPPID', 'wxSecret' => 'WXSECRET'),
+                   2 => array('wxAppId' => 'WXAPPID', 'wxSecret' => 'WXSECRET'));
 
 function updateAccessToken($id){
     // 更新accessToken
@@ -19,7 +19,7 @@ function updateAccessToken($id){
         $wxGrantType = 'client_credential';
         // cURL 获取 accessToken
         $connToWxApi = curl_init();
-        $urlWithGet = "https://api.weixin.qq.com/cgi-bin/token?appid=" . $GLOBALS['wxAppId'] . "&secret=" . $GLOBALS['wxSecret'] . "&grant_type=" . $wxGrantType;
+        $urlWithGet = "https://api.weixin.qq.com/cgi-bin/token?appid=" . $GLOBALS['wxAppInfo'][$id]['wxAppId'] . "&secret=" . $GLOBALS['wxAppInfo'][$id]['wxSecret'] . "&grant_type=" . $wxGrantType;
         curl_setopt($connToWxApi, CURLOPT_URL, $urlWithGet);
         curl_setopt($connToWxApi, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($connToWxApi, CURLOPT_HEADER, false);
@@ -93,14 +93,16 @@ $callme->onWorkerStart = function($callme){
     });
     $connToMysql = new mysqli("localhost", "nitmaker_cn", "nitmaker.cn", "callme");
     $stmt = $connToMysql->prepare("SELECT wxappid, wxsecret FROM wxapp_info WHERE id_wxappInfo = ?");
-    $stmt->bind_param("i", $id);
+    $stmt->bind_param("i", 1);
     $stmt->execute();
-    $stmt->bind_result($GLOBALS['wxAppId'], $GLOBALS['wxSecret']);
+    $stmt->bind_result($GLOBALS['wxAppInfo'][1]['wxAppId'], $GLOBALS['wxAppInfo'][1]['wxSecret']);
+    $stmt->fetch();
+    $stmt->bind_param("i", 2);
+    $stmt->execute();
+    $stmt->bind_result($GLOBALS['wxAppInfo'][2]['wxAppId'], $GLOBALS['wxAppInfo'][2]['wxSecret']);
     $stmt->fetch();
     $stmt->close();
     $connToMysql->close();
-    var_dump($GLOBALS['wxAppId']);
-    var_dump($GLOBALS['wxSecret']);
 };
 
 $callme->onConnect = function($connection){
