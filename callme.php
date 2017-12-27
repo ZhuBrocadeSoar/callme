@@ -44,7 +44,7 @@ $callme->onWorkerStart = function($callme){
             var_dump($time_now_arr);
             var_dump(json_encode($time_now_arr));
             var_dump(urlencode(json_encode($time_now_arr)));
-            $connection->send('test');
+            $connection->send(urlencode(json_encode($time_now_arr)));
         }
     });
 };
