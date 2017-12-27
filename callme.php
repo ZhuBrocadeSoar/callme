@@ -55,17 +55,31 @@ $callme->onWorkerStart = function($callme){
 $callme->onMessage = function($connection, $query){
     $connection->lastMessageTime = time();
     $queryArr = json_decode(urldecode($query), true);
-    if($queryArr != NULL){
-        // 请求格式正确
-        if(isset($queryArr['query'])){
+    if(isset($connection->openid)){
+        // 有openid
+        if($queryArr != NULL){
             // 请求格式正确
-            if($queryArr['query'] == 'hello'){
-                // hello 请求
-                $responseArr = array('push' => 'hi');
-                $connection->send(urlencode(json_encode($responseArr)));
+            if(isset($queryArr['query'])){
+                // 请求格式正确
+                if($queryArr['query'] == 'hello'){
+                    // hello 请求
+                    $responseArr = array('push' => 'hi');
+                    $connection->send(urlencode(json_encode($responseArr)));
+                }else if($queryArr['query'] == 'login'){
+                    // 登陆请求
+                    // 换取openid
+                    $code = $queryArr['code'];
+                    // 记录openid
+                    $openid = 'test'; // test
+                    $connection->openid = $openid;
+                }else{
+                    // 请求无效
+                    $responseArr = array('push' => 'error', 'msg' => 'wrong query');
+                    $connection->send(urlencode(json_encode($responseArr)));
+                }
             }else{
-                // 请求无效
-                $responseArr = array('push' => 'error', 'msg' => 'wrong query');
+                // 请求格式不正确
+                $responseArr = array('push' => 'error', 'msg' => 'wrong format');
                 $connection->send(urlencode(json_encode($responseArr)));
             }
         }else{
@@ -74,8 +88,7 @@ $callme->onMessage = function($connection, $query){
             $connection->send(urlencode(json_encode($responseArr)));
         }
     }else{
-        // 请求格式不正确
-        $responseArr = array('push' => 'error', 'msg' => 'wrong format');
+        $responseArr = array('push' => 'whoareyou');
         $connection->send(urlencode(json_encode($responseArr)));
     }
     // test
